@@ -11,5 +11,5 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#dossier dossier1/test2/
-dossier/test2/ere.txt
+#exemple de pour un dossier : dossier1/test2/
+#dossier/test2/
