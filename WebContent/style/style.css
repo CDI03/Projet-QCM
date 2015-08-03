@@ -109,6 +109,7 @@ article{
 
 footer
 {
+	clear : both;
 	border-top : dashed 1px;
 	text-align: center;
 	font-size: xx-small;
