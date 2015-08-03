@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource
+		name="jdbc/TP_QCM"
+		type="javax.sql.DataSource"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433;databasename=TP_QCM"
+		username="sa"
+		password="Pa$$w0rd"
+		maxActive="20"
+		maxIdle="10"
+		minIdle="5"
+		maxWait="60000"
+		removeAbandoned="true"
+		removeAbandonedTimeout="2"
+	/>
+</Context>
