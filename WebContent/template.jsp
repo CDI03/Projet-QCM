@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+ 
 <%! String enTete = "/fragment/enTete.jsp"; %>
 <%! String menu = "/fragment/menu.jsp"; %>
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
@@ -17,5 +17,4 @@
 			</p>
 		</article>
 </section>
-
 <jsp:include page="<%=piedDePage%>"></jsp:include>

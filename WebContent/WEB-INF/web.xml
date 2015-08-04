@@ -14,4 +14,14 @@
     <res-ref-name>jdbc/TP_QCM</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
   </resource-ref>
+  <servlet>
+    <description></description>
+    <display-name>GestionThemes</display-name>
+    <servlet-name>GestionThemes</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.GestionThemes</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionThemes</servlet-name>
+    <url-pattern>/GestionThemes</url-pattern>
+  </servlet-mapping>
 </web-app>

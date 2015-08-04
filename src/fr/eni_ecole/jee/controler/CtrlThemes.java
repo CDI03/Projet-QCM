@@ -1,7 +1,10 @@
 package fr.eni_ecole.jee.controler;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.NamingException;
 
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.dal.DalThemes;
@@ -10,8 +13,8 @@ public class CtrlThemes {
 	
 	private List<Theme> listThemes;
 	
-	public static List<Theme> GetAll() {
-		return DalThemes.GetAll();
+	public static List<Theme> SelectAll() throws SQLException, NamingException {
+		return DalThemes.SelectAll();
 	}
 	
 	public static boolean Insert(Theme theme) {
