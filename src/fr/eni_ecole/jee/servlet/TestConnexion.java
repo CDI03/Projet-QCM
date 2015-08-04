@@ -6,25 +6,22 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.outils.PoolConnection;
 
-
 /**
- * Servlet implementation class TestConnection
+ * Servlet implementation class TestConnexion
  */
-@WebServlet("/TestConnection")
-public class TestConnection extends HttpServlet {
+public class TestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestConnection() {
+    public TestConnexion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,14 +30,12 @@ public class TestConnection extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			Connection cnx = PoolConnection.getConnection();
+		try (Connection cnx = PoolConnection.getConnection()) {
 			System.out.println("ok!!!");	
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

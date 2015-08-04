@@ -24,4 +24,14 @@
     <servlet-name>GestionThemes</servlet-name>
     <url-pattern>/GestionThemes</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestConnexion</display-name>
+    <servlet-name>TestConnexion</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.TestConnexion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestConnexion</servlet-name>
+    <url-pattern>/TestConnexion</url-pattern>
+  </servlet-mapping>
 </web-app>
