@@ -3,7 +3,9 @@ package fr.eni_ecole.jee.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -35,15 +37,18 @@ public class GestionThemes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Theme> listThemes = new ArrayList<Theme>();
+		Map<String, ArrayList> hashMapThemes = new HashMap<String, ArrayList>();
 		try {
-			listThemes = DalThemes.SelectAll();
+			hashMapThemes = DalThemes.SelectAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("listThemes", listThemes);
+				
+		request.setAttribute("listThemes", hashMapThemes.get("listThemes"));
+		request.setAttribute("listCompetences", hashMapThemes.get("listCompetences"));
+
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionThemes/gestionThemes.jsp");
 		rd.forward(request, response);
 	}

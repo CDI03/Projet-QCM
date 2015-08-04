@@ -2,7 +2,9 @@ package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
@@ -13,7 +15,7 @@ public class CtrlThemes {
 	
 	private List<Theme> listThemes;
 	
-	public static List<Theme> SelectAll() throws SQLException, NamingException {
+	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
 		return DalThemes.SelectAll();
 	}
 	

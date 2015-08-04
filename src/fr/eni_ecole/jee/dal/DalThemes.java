@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
@@ -17,8 +19,10 @@ public class DalThemes {
 
 	private final static String SELECTALL = "{ call SelectAll_Themes }";
 	
-	public static List<Theme> SelectAll() throws SQLException, NamingException {
+	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
 		List<Theme> listThemes = new ArrayList<Theme>();
+		List<Competence> listCompetences = new ArrayList<Competence>();
+		Map<String, ArrayList> hashMapThemes = new HashMap<String, ArrayList>();
 		
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cstmt = null;
@@ -34,6 +38,7 @@ public class DalThemes {
 				Competence uneCompetence = new Competence();
 				uneCompetence.setId(competenceId);
 				uneCompetence.setLibelle(competenceLibelle);
+				listCompetences.add(uneCompetence);
 				
 				Theme unTheme = new Theme();
 				unTheme.setId(themeId);
@@ -43,7 +48,9 @@ public class DalThemes {
 			}
 		}
 		
-		return listThemes;
+		hashMapThemes.put("listThemes", (ArrayList) listThemes);
+		hashMapThemes.put("listCompetences", (ArrayList) listCompetences);
+		return hashMapThemes;
 	}
 
 	public static boolean Insert(Theme theme) {
@@ -69,7 +76,6 @@ public class DalThemes {
 
 	public static Theme GetOne(Theme theme) {
 		//Récupérer l'info des questions et des réponses associées
-		
 		
 		
 		return null;

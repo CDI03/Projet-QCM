@@ -1,12 +1,14 @@
-<%@page import="fr.eni_ecole.jee.bo.Formation"%>
+<%@page import="fr.eni_ecole.jee.bo.Competence"%>
 <%@page import="fr.eni_ecole.jee.bo.Reponse"%>
 <%@page import="fr.eni_ecole.jee.bo.Question"%>
 <%@page import="fr.eni_ecole.jee.bo.Theme"%>
 <%@page import="java.util.ArrayList"%>
 
-<%ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");%>
+<%
+ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
+ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
+%>
 <%-- 
-ArrayList<Formation> listeFormation = (ArrayList<Formation>)request.getAttribute("listFormations"); 
 ArrayList<Question> listeQuestion = (ArrayList<Question>)request.getAttribute("listQuestions"); 
 ArrayList<Reponse> listeReponse = (ArrayList<Reponse>)request.getAttribute("listReponses"); 
 listeFormation = null;
@@ -17,25 +19,20 @@ listeTheme = null;
 
 	<form action="/Projet-QCM/TODO" method="post" name="selectFormation">
 		<select name="lesFormations" onchange="submit">
-			<%-- 
+			<% 
 				int i = 0;		
-				for (Formation laFormation : listeFormation) 
+				for (Competence uneCompetence : listCompetences) 
 				{
-			 --%>
-			<option><%-- laFormation.getTitre().toString() --%></option>
-			<%--
-				i++;}
-			--%>
+			 %>
+			<option><%=uneCompetence.getLibelle()%></option>
+			<%	i++;
+				}
+			%>
 		</select> 
 	</form>
 	<form action="/Projet-QCM/TODO" method="post" name="crudTheme">
 		<select size="10" name="lesThemes" onchange="submit">
 			<% 
-				if (listThemes.isEmpty()) {
-					%><p>vide</p><%
-				} else {
-					%><p>plein</p><%
-				};
 				int j = 0;		
 				for (Theme unTheme : listThemes) 
 				{
