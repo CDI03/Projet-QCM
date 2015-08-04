@@ -1,39 +1,43 @@
 @CHARSET "ISO-8859-1";
 
-@CHARSET "ISO-8859-1";
+/****************
+ * STYLE GLOBAL *
+ ****************/
 
-*
-{
+* {
 	color: #3d3d3d;
 	font-family: segoe ui;	
 }
-
 body {
-    margin-top : 10px;
+	margin-top : 10px;
     margin-left : 20px;
     margin-right : 20px;
 }
+
+
+/**********
+ * HEADER *
+ **********/
 
 header{
 	margin-bottom: 20px;
 	border : solid 1px;
 }
 
-h1{
-	text-align: center;
-}
+/********
+ * MENU *
+ ********/
 
-nav
-{
+nav {
 	float:top;
 }
 
-#menu {
+nav ul {
     list-style:none;
     height: 30px;
 }
 
-#menu a {
+nav ul a {
 	float: left;
 	background-color: #333333;
     color:white;
@@ -48,74 +52,100 @@ nav
     display: block;
 }
 
-#menu a:hover
-{
+nav ul a:hover {
 	background-color: #336666;
 	color: white;
 }
 
-section
-{
+/******************************
+ * MISE EN FORME TEXTE GLOBAL *
+ ******************************/
+ 
+h1{
+	text-align: center;
+}
+
+/************
+ * SECTIONS *
+ ************/
+
+section {
 	min-height: 150px;
 	border : solid 1px;
 	margin-bottom : 10px;
 }
 
+#gestionThemes {
+	min-height: 450px;
+}
+
+/********************************
+ * MISE EN FORME TEXTE SECTIONS *
+ ********************************/
 section p{
 	padding: 5px;
 }
 
-section label
-{
+/*************************************
+ * MISE EN FORME FORMULAIRE SECTIONS *
+ *************************************/
+section label {
 	float:left;
 	width:150px;
 	margin:1px;
 }
-
-section input[type=button]
-{
+section input[type=button] {
 	background-color: white;
 	margin-left:153px;
 }
 
-section input
-{
+section input {
 	border-style: solid;
 	margin:1px;
 }
 
-article{ 
+/************
+ * ARTICLES *
+ ************/
+ 
+article { 
 	display: inline-block;
 	border : solid 1px;
  	margin: 1em;
- 	}
+}
  	
-#articleCrudTheme{
+#articleCrudTheme {
 	width:45%;
 	float:left;
 	height:90%;
 }
-#articleCrudQuestions{
+#articleCrudQuestions {
 	width:45%;
 	heigth:45%;
 	float:right;
 }
-#articleCrudReponses{
+#articleCrudReponses {
 	width:45%;
 	heigth:45%;
 	float:right;
 }
 
+/**********
+ * FOOTER *
+ **********/
 
-footer
-{
+footer {
 	clear : both;
 	border-top : dashed 1px;
 	text-align: center;
 	font-size: xx-small;
 }
 
-footer a
-{
+footer a {
 	text-decoration: none;
+}
+
+
+
+
 }
