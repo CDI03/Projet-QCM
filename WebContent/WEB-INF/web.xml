@@ -9,18 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <context-param>
-    <param-name>url</param-name>
-    <param-value>jdbc:sqlserver://localhost;databasename=TP_QCM</param-value>
-  </context-param>
-  <context-param>
-    <param-name>user</param-name>
-    <param-value>sa</param-value>
-  </context-param>
-  <context-param>
-    <param-name>mdp</param-name>
-    <param-value>Pa$$w0rd</param-value>
-  </context-param>
   <resource-ref>
     <description>Pool de connection</description>
     <res-ref-name>jdbc/TP_QCM</res-ref-name>
