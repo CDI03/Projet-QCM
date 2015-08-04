@@ -16,21 +16,12 @@ public class PoolConnection implements AutoCloseable {
 	private static Connection cnx = null;
 	private static InitialContext contexte = null;
 	
-	
-	public static Connection getConnection(Map<String, String> paramBDD) throws SQLException
-	{
-		if(cnx == null || cnx.isClosed())
-		{
-			DriverManager.registerDriver(new SQLServerDriver());
-			cnx = DriverManager.getConnection(paramBDD.get("url"),paramBDD.get("user"),paramBDD.get("mdp"));
-		}
-		return cnx;
-	}
-	
-	public static Connection getPoolConnection() throws SQLException, NamingException
+	public static Connection getConnection() throws SQLException, NamingException
 	{
 
 		contexte = new InitialContext();
+		// Fichier de contexte XML dans dossier META-INF du Web-Content
+		// Déclaration du Datasource dans fichier web.xml du dossier WEB-INF
 		DataSource ds = (DataSource) contexte.lookup("java:comp/env/jdbc/TP_QCM");
 		cnx = ds.getConnection();
 		

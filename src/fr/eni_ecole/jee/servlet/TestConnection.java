@@ -34,7 +34,7 @@ public class TestConnection extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Connection cnx = PoolConnection.getPoolConnection();
+			Connection cnx = PoolConnection.getConnection();
 			System.out.println("ok!!!");	
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
