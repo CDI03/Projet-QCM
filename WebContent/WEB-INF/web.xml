@@ -14,4 +14,14 @@
     <res-ref-name>jdbc/TP_QCM</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
   </resource-ref>
+  <servlet>
+    <description></description>
+    <display-name>AuthentificationCandidat</display-name>
+    <servlet-name>AuthentificationCandidat</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.AuthentificationCandidat</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthentificationCandidat</servlet-name>
+    <url-pattern>/AuthentificationCandidat</url-pattern>
+  </servlet-mapping>
 </web-app>
