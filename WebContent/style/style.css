@@ -1,10 +1,17 @@
 @CHARSET "ISO-8859-1";
 
+<<<<<<< HEAD
 /****************
  * STYLE GLOBAL *
  ****************/
 
 * {
+=======
+/***************
+* STYLE GLOBAL *
+****************/
+*{
+>>>>>>> devAnthony
 	color: #3d3d3d;
 	font-family: segoe ui;	
 }
@@ -14,16 +21,24 @@ body {
     margin-right : 20px;
 }
 
+<<<<<<< HEAD
 
 /**********
  * HEADER *
  **********/
 
 header{
+=======
+/*********
+* HEADER *
+**********/
+header {
+>>>>>>> devAnthony
 	margin-bottom: 20px;
 	border : solid 1px;
 }
 
+<<<<<<< HEAD
 /********
  * MENU *
  ********/
@@ -32,12 +47,24 @@ nav {
 	float:top;
 }
 
+=======
+/*******
+* MENU *
+********/
+nav {
+	float:top;
+}
+>>>>>>> devAnthony
 nav ul {
     list-style:none;
     height: 30px;
 }
+<<<<<<< HEAD
 
 nav ul a {
+=======
+nav ul  a {
+>>>>>>> devAnthony
 	float: left;
 	background-color: #333333;
     color:white;
@@ -52,11 +79,16 @@ nav ul a {
     display: block;
 }
 
+<<<<<<< HEAD
 nav ul a:hover {
+=======
+nav ul  a:hover {
+>>>>>>> devAnthony
 	background-color: #336666;
 	color: white;
 }
 
+<<<<<<< HEAD
 /******************************
  * MISE EN FORME TEXTE GLOBAL *
  ******************************/
@@ -68,6 +100,18 @@ h1{
 /************
  * SECTIONS *
  ************/
+=======
+/*****************************
+* MISE EN FORME TEXTE GLOBAL *
+******************************/
+h1 {
+	text-align: center;
+}
+
+/***********
+* SECTIONS *
+************/
+>>>>>>> devAnthony
 
 section {
 	min-height: 150px;
@@ -79,6 +123,7 @@ section {
 	min-height: 450px;
 }
 
+<<<<<<< HEAD
 /********************************
  * MISE EN FORME TEXTE SECTIONS *
  ********************************/
@@ -89,11 +134,28 @@ section p{
 /*************************************
  * MISE EN FORME FORMULAIRE SECTIONS *
  *************************************/
+=======
+
+/********************************
+* MISE EN FORME TEXTE SECTIONS  *
+*********************************/
+section p {
+	padding: 5px;
+}
+
+/*********************
+*FORMULAIRE SECTIONS *
+**********************/
+>>>>>>> devAnthony
 section label {
 	float:left;
 	width:150px;
 	margin:1px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> devAnthony
 section input[type=button] {
 	background-color: white;
 	margin-left:153px;
@@ -104,15 +166,27 @@ section input {
 	margin:1px;
 }
 
+<<<<<<< HEAD
 /************
  * ARTICLES *
  ************/
  
+=======
+
+/************
+* ARTICLES  *
+*************/
+
+>>>>>>> devAnthony
 article { 
 	display: inline-block;
 	border : solid 1px;
  	margin: 1em;
+<<<<<<< HEAD
 }
+=======
+ }
+>>>>>>> devAnthony
  	
 #articleCrudTheme {
 	width:45%;
@@ -131,8 +205,13 @@ article {
 }
 
 /**********
+<<<<<<< HEAD
  * FOOTER *
  **********/
+=======
+* FOOTER  *
+***********/
+>>>>>>> devAnthony
 
 footer {
 	clear : both;
