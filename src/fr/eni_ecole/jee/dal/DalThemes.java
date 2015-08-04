@@ -20,10 +20,13 @@ public class DalThemes {
 	private final static String SELECTALL = "{ call SelectAll_Themes }";
 	
 	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
+		//Déclaration d'une HashMap qui sera retourné en contenant deux listes : Themes et Compétences 
 		List<Theme> listThemes = new ArrayList<Theme>();
 		List<Competence> listCompetences = new ArrayList<Competence>();
 		Map<String, ArrayList> hashMapThemes = new HashMap<String, ArrayList>();
-		
+		//variable permettant de limiter la liste des compétences à des compétences uniques
+		int competenceIdPrecedent = 0;
+		//récupération des données
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cstmt = null;
 			cstmt = cnx.prepareCall(SELECTALL);
@@ -33,21 +36,27 @@ public class DalThemes {
 				String themeLibelle = rs.getString("Theme_Libelle");
 				int competenceId = rs.getInt("Competence_Id");
 				String competenceLibelle = rs.getString("Competence_Libelle");
-				String formationId = rs.getString("Formation_Id");
-				
+		//construction d'une compétence
 				Competence uneCompetence = new Competence();
 				uneCompetence.setId(competenceId);
 				uneCompetence.setLibelle(competenceLibelle);
-				listCompetences.add(uneCompetence);
-				
+		//construction de la liste des compétences
+				if (competenceIdPrecedent != competenceId) {
+					listCompetences.add(uneCompetence);
+					competenceIdPrecedent = competenceId;
+					System.out.println(competenceLibelle);
+				}
+		//construction d'un theme
 				Theme unTheme = new Theme();
 				unTheme.setId(themeId);
 				unTheme.setLibelle(themeLibelle);
 				unTheme.setCompetence(uneCompetence);
+		//construction de la liste des themes
 				listThemes.add(unTheme);
+				System.out.println(themeLibelle);
 			}
 		}
-		
+		//construction de la hashmap
 		hashMapThemes.put("listThemes", (ArrayList) listThemes);
 		hashMapThemes.put("listCompetences", (ArrayList) listCompetences);
 		return hashMapThemes;
