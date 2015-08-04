@@ -2,6 +2,7 @@ package fr.eni_ecole.jee.bo;
 
 public class Employe {
 	
+	private String id;
 	private String matricule;
 	private String nom;
 	private String prenom;
@@ -12,14 +13,21 @@ public class Employe {
 		super();
 	}
 
-	public Employe(String matricule, String nom, String prenom,
+	public Employe(String id, String matricule, String nom, String prenom,
 			String courriel, String fonction) {
 		super();
+		this.id = id;
 		this.matricule = matricule;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.courriel = courriel;
 		this.fonction = fonction;
+	}
+
+	
+	
+	public String getId() {
+		return id;
 	}
 
 	public String getMatricule() {
@@ -62,4 +70,8 @@ public class Employe {
 		this.fonction = fonction;
 	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+
 }

@@ -2,7 +2,6 @@ package fr.eni_ecole.jee.bo;
 
 public class Section {
 
-	private int numero;
 	private Test test;
 	private Theme theme;
 	private int nombreQuestion;
@@ -11,16 +10,11 @@ public class Section {
 		super();
 	}
 
-	public Section(int numero, Test test, Theme theme, int nombreQuestion) {
+	public Section(Test test, Theme theme, int nombreQuestion) {
 		super();
-		this.numero = numero;
 		this.test = test;
 		this.theme = theme;
 		this.nombreQuestion = nombreQuestion;
-	}
-
-	public int getNumero() {
-		return numero;
 	}
 
 	public Test getTest() {
@@ -33,10 +27,6 @@ public class Section {
 
 	public int getNombreQuestion() {
 		return nombreQuestion;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
 	}
 
 	public void setTest(Test test) {

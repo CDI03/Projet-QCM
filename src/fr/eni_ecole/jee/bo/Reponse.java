@@ -2,7 +2,7 @@ package fr.eni_ecole.jee.bo;
 
 public class Reponse {
 	
-	private String identifiant; 
+	private String id; 
 	private Question question;
 	private String libelle;
 	private boolean estCorrect;
@@ -11,17 +11,17 @@ public class Reponse {
 		super();
 	}
 
-	public Reponse(String identifiant, Question question, String libelle,
+	public Reponse(String id, Question question, String libelle,
 			boolean estCorrect) {
 		super();
-		this.identifiant = identifiant;
+		this.id = id;
 		this.question = question;
 		this.libelle = libelle;
 		this.estCorrect = estCorrect;
 	}
 
-	public String getIdentifiant() {
-		return identifiant;
+	public String getid() {
+		return id;
 	}
 
 	public Question getQuestion() {
@@ -36,8 +36,8 @@ public class Reponse {
 		return estCorrect;
 	}
 
-	public void setIdentifiant(String identifiant) {
-		this.identifiant = identifiant;
+	public void setid(String id) {
+		this.id = id;
 	}
 
 	public void setQuestion(Question question) {

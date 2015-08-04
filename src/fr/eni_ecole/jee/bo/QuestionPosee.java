@@ -3,8 +3,8 @@ package fr.eni_ecole.jee.bo;
 public class QuestionPosee {
 	
 	private Examen examen;
-	private Question question;
 	private int ordre;
+	private Question question;
 	private boolean repondu;
 	private boolean marque;
 	public QuestionPosee() {
@@ -15,19 +15,19 @@ public class QuestionPosee {
 			boolean repondu, boolean marque) {
 		super();
 		this.examen = examen;
-		this.question = question;
 		this.ordre = ordre;
+		this.question = question;
 		this.repondu = repondu;
 		this.marque = marque;
 	}
 	public Examen getExamen() {
 		return examen;
 	}
-	public Question getQuestion() {
-		return question;
-	}
 	public int getOrdre() {
 		return ordre;
+	}
+	public Question getQuestion() {
+		return question;
 	}
 	public boolean isRepondu() {
 		return repondu;
@@ -38,11 +38,11 @@ public class QuestionPosee {
 	public void setExamen(Examen examen) {
 		this.examen = examen;
 	}
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
 	public void setOrdre(int ordre) {
 		this.ordre = ordre;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 	public void setRepondu(boolean repondu) {
 		this.repondu = repondu;

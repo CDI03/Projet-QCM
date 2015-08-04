@@ -2,19 +2,23 @@ package fr.eni_ecole.jee.bo;
 
 public class Theme {
 	
+	private int id;
 	private String libelle;
 	private Competence competence;
-	private Formation formation;
 	
 	public Theme() {
 		super();
 	}
 
-	public Theme(String libelle, Competence competence, Formation formation) {
+	public Theme(int id, String libelle, Competence competence) {
 		super();
+		this.id = id;
 		this.libelle = libelle;
 		this.competence = competence;
-		this.formation = formation;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getLibelle() {
@@ -25,8 +29,8 @@ public class Theme {
 		return competence;
 	}
 
-	public Formation getFormation() {
-		return formation;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setLibelle(String libelle) {
@@ -37,9 +41,6 @@ public class Theme {
 		this.competence = competence;
 	}
 
-	public void setFormation(Formation formation) {
-		this.formation = formation;
-	}
 	
 	
 	

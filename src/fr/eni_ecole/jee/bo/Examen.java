@@ -1,14 +1,13 @@
 package fr.eni_ecole.jee.bo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class Examen {
 	
-	private String identifiant;
+	private String id;
 	private Test test;
 	private Candidat candidat;
-	private Timestamp tempsRestant;
+	private int tempsRestant;
 	private Date datePassage;
 	private String etat;
 	
@@ -16,10 +15,10 @@ public class Examen {
 		super();
 	}
 
-	public Examen(String identifiant, Test test, Candidat candidat,
-			Timestamp tempsRestant, Date datePassage, String etat) {
+	public Examen(String id, Test test, Candidat candidat,
+			int tempsRestant, Date datePassage, String etat) {
 		super();
-		this.identifiant = identifiant;
+		this.id = id;
 		this.test = test;
 		this.candidat = candidat;
 		this.tempsRestant = tempsRestant;
@@ -27,8 +26,8 @@ public class Examen {
 		this.etat = etat;
 	}
 
-	public String getIdentifiant() {
-		return identifiant;
+	public String getid() {
+		return id;
 	}
 
 	public Test getTest() {
@@ -39,7 +38,7 @@ public class Examen {
 		return candidat;
 	}
 
-	public Timestamp getTempsRestant() {
+	public int getTempsRestant() {
 		return tempsRestant;
 	}
 
@@ -51,8 +50,8 @@ public class Examen {
 		return etat;
 	}
 
-	public void setIdentifiant(String identifiant) {
-		this.identifiant = identifiant;
+	public void setid(String id) {
+		this.id = id;
 	}
 
 	public void setTest(Test test) {
@@ -63,7 +62,7 @@ public class Examen {
 		this.candidat = candidat;
 	}
 
-	public void setTempsRestant(Timestamp tempsRestant) {
+	public void setTempsRestant(int tempsRestant) {
 		this.tempsRestant = tempsRestant;
 	}
 

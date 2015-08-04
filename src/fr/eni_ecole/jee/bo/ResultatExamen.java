@@ -1,9 +1,14 @@
 package fr.eni_ecole.jee.bo;
 
+/**
+ * @author abernard2015
+ *
+ */
 public class ResultatExamen {
 
 	private Examen examen;
-	private Section section;
+	private Test test;
+	private Theme theme;
 	private int nbrQuestionsReussies;
 	private int nbrQuestionsTotales;
 	
@@ -11,11 +16,12 @@ public class ResultatExamen {
 		super();
 	}
 
-	public ResultatExamen(Examen examen, Section section,
+	public ResultatExamen(Examen examen, Test test, Theme theme,
 			int nbrQuestionsReussies, int nbrQuestionsTotales) {
 		super();
 		this.examen = examen;
-		this.section = section;
+		this.test = test;
+		this.theme = theme;
 		this.nbrQuestionsReussies = nbrQuestionsReussies;
 		this.nbrQuestionsTotales = nbrQuestionsTotales;
 	}
@@ -24,8 +30,12 @@ public class ResultatExamen {
 		return examen;
 	}
 
-	public Section getSection() {
-		return section;
+	public Test getTest() {
+		return test;
+	}
+
+	public Theme getTheme() {
+		return theme;
 	}
 
 	public int getNbrQuestionsReussies() {
@@ -40,8 +50,12 @@ public class ResultatExamen {
 		this.examen = examen;
 	}
 
-	public void setSection(Section section) {
-		this.section = section;
+	public void setTest(Test test) {
+		this.test = test;
+	}
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
 	}
 
 	public void setNbrQuestionsReussies(int nbrQuestionsReussies) {

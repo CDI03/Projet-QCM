@@ -2,7 +2,7 @@ package fr.eni_ecole.jee.bo;
 
 public class Candidat {
 	
-	private String identifiant;
+	private String id;
 	private String nom;
 	private String prenom;
 	private String motDePasse;
@@ -11,17 +11,17 @@ public class Candidat {
 		super();
 	}
 
-	public Candidat(String identifiant, String nom, String prenom,
+	public Candidat(String id, String nom, String prenom,
 			String motDePasse) {
 		super();
-		this.identifiant = identifiant;
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.motDePasse = motDePasse;
 	}
 
-	public String getIdentifiant() {
-		return identifiant;
+	public String getid() {
+		return id;
 	}
 
 	public String getNom() {
@@ -36,8 +36,8 @@ public class Candidat {
 		return motDePasse;
 	}
 
-	public void setIdentifiant(String identifiant) {
-		this.identifiant = identifiant;
+	public void setid(String id) {
+		this.id = id;
 	}
 
 	public void setNom(String nom) {
