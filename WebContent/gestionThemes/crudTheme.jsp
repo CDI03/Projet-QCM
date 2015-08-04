@@ -17,7 +17,7 @@ listeTheme = null;
  
 <article id="articleCrudTheme">
 
-	<form action="/Projet-QCM/TODO" method="post" name="selectFormation">
+	<form action="/Projet-QCM/TODO" method="post" name="selectCompetence">
 		<select name="lesFormations" onchange="submit">
 			<% 
 				int i = 0;		
@@ -41,13 +41,15 @@ listeTheme = null;
 			<%
 				j++;}
 			%>
-		</select> 
-		<label for="libelleTheme" >Libelle</label>
-		<input type="text" name="libelleTheme" value="TODO">
+		</select><br>
+		<input type="text" name="libelleTheme" value="TODO"><br>
+		<button type="button" name="modification" value="modification">Modifier</button>
+		<button type="button" name="suppression" value="suppression">Supprimer</button>
+	</form>
+	<form action="/Projet-QCM/GestionThemes" method="post" name="crudTheme">
+		<input type="text" name="libelleThemeAAjouter" value="TODO">
 		<button type="submit" name="ajout">Ajouter</button>
-		<button type="submit" name="modification">Modifier</button>
-		<button type="submit" name="suppression">Supprimer</button>
-	</form>		
+	</form>
 	
 	
 </article>
