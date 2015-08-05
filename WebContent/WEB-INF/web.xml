@@ -33,5 +33,14 @@
   <servlet-mapping>
     <servlet-name>TestConnexion</servlet-name>
     <url-pattern>/TestConnexion</url-pattern>
+   </servlet-mapping>
+   <servlet>
+    <display-name>AuthentificationCandidat</display-name>
+    <servlet-name>AuthentificationCandidat</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.AuthentificationCandidat</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthentificationCandidat</servlet-name>
+    <url-pattern>/AuthentificationCandidat</url-pattern>
   </servlet-mapping>
 </web-app>

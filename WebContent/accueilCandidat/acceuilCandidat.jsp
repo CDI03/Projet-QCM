@@ -8,7 +8,7 @@
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
 
 <% 
-Candidat leCandidat = (Candidat)request.getAttribute("leCandidat");
+Candidat leCandidat = (Candidat)request.getSession().getAttribute("leCandidat");
 ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribute("listeExamenDuCandidat");
 %>
 
@@ -26,7 +26,7 @@ ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribut
 		<article class="examensCandidat">
 			<form action="/Projet-QCM/TODO" method="post" class="selectExamen">
 			<label for="libelleExamen"><%= lExamen.getTest().getLibelle()%></label>
-			<input type="hidden" value=<%= lExamen.getIdentifiant()%>>
+			<input type="hidden" value=<%= lExamen.getid()%>>
 			<button type="submit" name="commencerExamen">Commencer</button>
 			<button type="submit" name="reprendreExamen">Reprendre</button>
 			<button type="submit" name="resultatExamen">Résultats</button>

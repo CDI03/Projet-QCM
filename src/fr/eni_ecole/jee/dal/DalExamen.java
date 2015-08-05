@@ -9,7 +9,7 @@ import fr.eni_ecole.jee.bo.Examen;
 public class DalExamen {
 
 	//Récupérer tous les examens du candidat
-	public static List<Examen> GetAll(Candidat leCandidat) {
+	public static List<Examen> SelectAll(Candidat leCandidat) {
 		List<Examen> listExamen = new ArrayList<Examen>();
 		return listExamen;
 	}
