@@ -7,6 +7,7 @@
 <%
 ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
+int idCompetenceSelectionnee;
 %>
 <%-- 
 ArrayList<Question> listeQuestion = (ArrayList<Question>)request.getAttribute("listQuestions"); 
@@ -16,40 +17,47 @@ listeTheme = null;
 --%>
  
 <article id="articleCrudTheme">
-
-	<form action="/Projet-QCM/TODO" method="post" name="selectCompetence">
-		<select name="lesFormations" onchange="submit">
-			<% 
-				int i = 0;		
-				for (Competence uneCompetence : listCompetences) 
-				{
-			 %>
-			<option><%=uneCompetence.getLibelle()%></option>
-			<%	i++;
-				}
-			%>
-		</select> 
-	</form>
-	<form action="/Projet-QCM/TODO" method="post" name="crudTheme">
-		<select size="10" name="lesThemes" onchange="submit">
-			<% 
-				int j = 0;		
-				for (Theme unTheme : listThemes) 
-				{
-			 %>
-			<option><%=unTheme.getLibelle()%></option>
-			<%
-				j++;}
-			%>
-		</select><br>
-		<input type="text" name="libelleTheme" value="TODO"><br>
-		<button type="button" name="modification" value="modification">Modifier</button>
+	
+	<form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
+		<!--  Affichage des compétences disponibles -->
+		<select id="lesCompetences" name="lesCompetences" onchange="selectionCompetenceThemes()">
+			<% for (Competence uneCompetence : listCompetences) { %>
+			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
+			<% } 
+			idCompetenceSelectionnee = 1;%>
+		</select>
+		<br><br><br>
+		<!--  Affichage des themes  -->
+		<select size="10" id="lesThemes" name="lesThemes" onchange="selectionTheme()">
+			<% for (Theme unTheme : listThemes) { 
+				 if (unTheme.getCompetence().getId() == idCompetenceSelectionnee) { %>
+			<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
+			<% 	} } %>
+		</select>
+		<br>
+		<input type="text" id="unLibelleTheme" name="unLibelleTheme" value="">
+		<br>
+		<select id="lesCompetences" name="lesCompetences" onchange="submit">
+			<% 	for (Competence uneCompetence : listCompetences) { %>
+			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
+			<%	} %>
+		</select>
+		<br> 
+		<button type="submit" name="modification" value="modification">Modifier</button>
 		<button type="button" name="suppression" value="suppression">Supprimer</button>
 	</form>
-	<form action="/Projet-QCM/GestionThemes" method="post" name="crudTheme">
-		<input type="text" name="libelleThemeAAjouter" value="TODO">
-		<button type="submit" name="ajout">Ajouter</button>
+	
+	<br><br><br>
+	
+	<form action="/Projet-QCM/GestionThemes" method="post" name="formInsertThemes">
+		<input type="text" name="libelleThemeAAjouter" value="">
+		<select name="uneCompetenceAssocie" onchange="submit">
+			<% for (Competence uneCompetence : listCompetences) { %>
+			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
+			<% } %>
+		</select> 
+		<button type="submit" name="ajout" value="ajouterTheme">Ajouter</button>
 	</form>
 	
-	
+	<script type="text/javascript" src="./javascript/gestionThemes.js"></script>
 </article>

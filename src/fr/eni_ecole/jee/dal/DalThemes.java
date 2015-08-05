@@ -18,6 +18,8 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalThemes {
 
 	private final static String SELECTALL = "{ call SelectAll_Themes }";
+	private final static String INSERT = "{ call Insert_Themes (?,?) }";
+	private final static String UPDATE = "{ call Update_Themes (?,?,?) }";
 	
 	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
 		//Déclaration d'une HashMap qui sera retourné en contenant deux listes : Themes et Compétences 
@@ -44,7 +46,6 @@ public class DalThemes {
 				if (competenceIdPrecedent != competenceId) {
 					listCompetences.add(uneCompetence);
 					competenceIdPrecedent = competenceId;
-					System.out.println(competenceLibelle);
 				}
 		//construction d'un theme
 				Theme unTheme = new Theme();
@@ -53,7 +54,6 @@ public class DalThemes {
 				unTheme.setCompetence(uneCompetence);
 		//construction de la liste des themes
 				listThemes.add(unTheme);
-				System.out.println(themeLibelle);
 			}
 		}
 		//construction de la hashmap
@@ -62,17 +62,30 @@ public class DalThemes {
 		return hashMapThemes;
 	}
 
-	public static boolean Insert(Theme theme) {
+	public static boolean Insert(Theme theme) throws SQLException, NamingException {
 		boolean insertOk = false;
-		
-		
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = null;
+			cstmt = cnx.prepareCall(INSERT);
+			cstmt.setString(1, theme.getLibelle());
+			cstmt.setInt(2, theme.getCompetence().getId());
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
 		return insertOk;
 	}
 
-	public static boolean Update(Theme theme) {
+	public static boolean Update(Theme theme) throws SQLException, NamingException {
 		boolean updateOk = false;
-		
-		
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = null;
+			cstmt = cnx.prepareCall(UPDATE);
+			cstmt.setInt(1, theme.getId());
+			cstmt.setString(2, theme.getLibelle());
+			cstmt.setInt(3, theme.getCompetence().getId());
+			int intUpdate = cstmt.executeUpdate();
+			updateOk = (intUpdate != 0)?true:false;
+		}
 		return updateOk;	
 	}
 
