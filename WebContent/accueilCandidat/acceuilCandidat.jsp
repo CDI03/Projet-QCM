@@ -8,8 +8,8 @@
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
 
 <% 
-Candidat leCandidat = (Candidat)request.getSession().getAttribute("leCandidat");
-ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribute("listeExamenDuCandidat");
+Candidat leCandidatEnCours = (Candidat)request.getSession().getAttribute("candidatConnecte");
+ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribute("examenDuCandidat");
 %>
 
 <jsp:include page="<%=enTete%>">
@@ -19,22 +19,29 @@ ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribut
 <jsp:include page="<%=menu%>"></jsp:include>
 
 <Section>
-	<h1>Bonjour <%=leCandidat.getPrenom()+" "+leCandidat.getNom() %></h1>
-	<% for (Examen lExamen : listeExamenDuCandidat) 
+	<h1>Bonjour <%=leCandidatEnCours.getPrenom()+" "+leCandidatEnCours.getNom() %></h1>
+	<% for (Examen lExamen : listeExamenDuCandidat)
 				{ 
 	%>
 		<article class="examensCandidat">
-			<form action="/Projet-QCM/TODO" method="post" class="selectExamen">
+			<form action="/Projet-QCM/PassageTest" method="post" class="selectExamen">
 			<label for="libelleExamen"><%= lExamen.getTest().getLibelle()%></label>
-			<input type="hidden" value=<%= lExamen.getid()%>>
-			<button type="submit" name="commencerExamen">Commencer</button>
-			<button type="submit" name="reprendreExamen">Reprendre</button>
-			<button type="submit" name="resultatExamen">Résultats</button>
+			<input type="hidden" name="lExamen" value=<%= lExamen.getId()%>>
+			<%if (lExamen.getEtat().equals("EA")) {%>
+			<button type="button" name="commencerExamen" onclick="choixBouton(this.form,'commencerExamen');" >Commencer</button>
+			<%} else if (lExamen.getEtat().equals("EC")) {%>
+			<button type="button" name="reprendreExamen" onclick="choixBouton(this.form,'reprendreExamen');">Reprendre</button>
+			<%} else if (lExamen.getEtat().equals("FN")) {%>
+			<button type="button" name="resultatExamen" onclick="choixBouton(this.form,'resultatExamen');">Résultats</button>
+			<%}%>
+			<input type="hidden" name="hiddenField"/>
 			</form>
 		</article>
 	<%
 				}
 	%>
 </section>
+
+<script type="text/javascript" src="./javascript/choixBouton.js"></script>
 
 <jsp:include page="<%=piedDePage%>"></jsp:include>

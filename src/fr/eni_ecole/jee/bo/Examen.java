@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Examen {
 	
-	private String id;
+	private int id;
 	private Test test;
 	private Candidat candidat;
 	private int tempsRestant;
@@ -15,7 +15,7 @@ public class Examen {
 		super();
 	}
 
-	public Examen(String id, Test test, Candidat candidat,
+	public Examen(int id, Test test, Candidat candidat,
 			int tempsRestant, Date datePassage, String etat) {
 		super();
 		this.id = id;
@@ -26,7 +26,7 @@ public class Examen {
 		this.etat = etat;
 	}
 
-	public String getid() {
+	public int getId() {
 		return id;
 	}
 
@@ -50,7 +50,7 @@ public class Examen {
 		return etat;
 	}
 
-	public void setid(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

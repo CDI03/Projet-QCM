@@ -33,8 +33,8 @@
   <servlet-mapping>
     <servlet-name>TestConnexion</servlet-name>
     <url-pattern>/TestConnexion</url-pattern>
-   </servlet-mapping>
-   <servlet>
+  </servlet-mapping>
+  <servlet>
     <display-name>AuthentificationCandidat</display-name>
     <servlet-name>AuthentificationCandidat</servlet-name>
     <servlet-class>fr.eni_ecole.jee.servlet.AuthentificationCandidat</servlet-class>
@@ -42,5 +42,25 @@
   <servlet-mapping>
     <servlet-name>AuthentificationCandidat</servlet-name>
     <url-pattern>/AuthentificationCandidat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AccueilCandidat</display-name>
+    <servlet-name>AccueilCandidat</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.AccueilCandidat</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccueilCandidat</servlet-name>
+    <url-pattern>/AccueilCandidat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PassageTest</display-name>
+    <servlet-name>PassageTest</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.PassageTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PassageTest</servlet-name>
+    <url-pattern>/PassageTest</url-pattern>
   </servlet-mapping>
 </web-app>
