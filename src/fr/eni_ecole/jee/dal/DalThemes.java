@@ -30,8 +30,7 @@ public class DalThemes {
 		int competenceIdPrecedent = 0;
 		//récupération des données
 		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cstmt = null;
-			cstmt = cnx.prepareCall(SELECTALL);
+			CallableStatement cstmt = cnx.prepareCall(SELECTALL);
 			ResultSet rs = cstmt.executeQuery();
 			while (rs.next()) {
 				int themeId = rs.getInt("Theme_Id");
@@ -65,8 +64,7 @@ public class DalThemes {
 	public static boolean Insert(Theme theme) throws SQLException, NamingException {
 		boolean insertOk = false;
 		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cstmt = null;
-			cstmt = cnx.prepareCall(INSERT);
+			CallableStatement cstmt = cnx.prepareCall(INSERT);
 			cstmt.setString(1, theme.getLibelle());
 			cstmt.setInt(2, theme.getCompetence().getId());
 			int intInsert = cstmt.executeUpdate();
@@ -78,8 +76,7 @@ public class DalThemes {
 	public static boolean Update(Theme theme) throws SQLException, NamingException {
 		boolean updateOk = false;
 		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cstmt = null;
-			cstmt = cnx.prepareCall(UPDATE);
+			CallableStatement cstmt = cnx.prepareCall(UPDATE);
 			cstmt.setInt(1, theme.getId());
 			cstmt.setString(2, theme.getLibelle());
 			cstmt.setInt(3, theme.getCompetence().getId());
@@ -96,7 +93,7 @@ public class DalThemes {
 		return deleteOk;
 	}
 
-	public static Theme GetOne(Theme theme) {
+	public static Theme SelectOne(Theme theme) {
 		//Récupérer l'info des questions et des réponses associées
 		
 		

@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.naming.NamingException;
 
+import fr.eni_ecole.jee.bo.Competence;
 import fr.eni_ecole.jee.bo.Theme;
+import fr.eni_ecole.jee.dal.DalCompetences;
 import fr.eni_ecole.jee.dal.DalThemes;
 
 public class CtrlThemes {
@@ -16,7 +18,10 @@ public class CtrlThemes {
 	private List<Theme> listThemes;
 	
 	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
-		return DalThemes.SelectAll();
+		Map<String, ArrayList> mapThemes = DalThemes.SelectAll();
+		ArrayList<Competence> listAllCompetences = DalCompetences.SelectAllSimple();
+		mapThemes.put("listAllCompetences", (ArrayList) listAllCompetences);
+		return mapThemes;
 	}
 	
 	public static boolean Insert(Theme theme) throws SQLException, NamingException {
@@ -31,8 +36,8 @@ public class CtrlThemes {
 		return DalThemes.Delete(theme);
 	}
 	
-	public static Theme GetOne(Theme theme) {
-		return DalThemes.GetOne(theme);
+	public static Theme SelectOne(Theme theme) {
+		return DalThemes.SelectOne(theme);
 	}
 	
 	

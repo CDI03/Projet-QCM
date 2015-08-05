@@ -7,6 +7,7 @@
 <%
 ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
+ArrayList<Competence> listAllCompetences = (ArrayList<Competence>)request.getAttribute("listAllCompetences");
 int idCompetenceSelectionnee;
 %>
 <%-- 
@@ -38,7 +39,7 @@ listeTheme = null;
 		<input type="text" id="unLibelleTheme" name="unLibelleTheme" value="">
 		<br>
 		<select id="lesCompetences" name="lesCompetences" onchange="submit">
-			<% 	for (Competence uneCompetence : listCompetences) { %>
+			<% 	for (Competence uneCompetence : listAllCompetences) { %>
 			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 			<%	} %>
 		</select>
@@ -52,7 +53,7 @@ listeTheme = null;
 	<form action="/Projet-QCM/GestionThemes" method="post" name="formInsertThemes">
 		<input type="text" name="libelleThemeAAjouter" value="">
 		<select name="uneCompetenceAssocie" onchange="submit">
-			<% for (Competence uneCompetence : listCompetences) { %>
+			<% for (Competence uneCompetence : listAllCompetences) { %>
 			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 			<% } %>
 		</select> 

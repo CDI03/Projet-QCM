@@ -76,6 +76,7 @@ public class GestionThemes extends HttpServlet {
 		}		
 		request.setAttribute("listThemes", hashMapThemes.get("listThemes"));
 		request.setAttribute("listCompetences", hashMapThemes.get("listCompetences"));
+		request.setAttribute("listAllCompetences", hashMapThemes.get("listAllCompetences"));
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionThemes/gestionThemes.jsp");
 		rd.forward(request, response);	
 	}
