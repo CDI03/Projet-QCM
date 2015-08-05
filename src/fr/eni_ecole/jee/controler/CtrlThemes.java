@@ -19,11 +19,11 @@ public class CtrlThemes {
 		return DalThemes.SelectAll();
 	}
 	
-	public static boolean Insert(Theme theme) {
+	public static boolean Insert(Theme theme) throws SQLException, NamingException {
 		return DalThemes.Insert(theme);
 	}
 	
-	public static boolean Update(Theme theme) {
+	public static boolean Update(Theme theme) throws SQLException, NamingException {
 		return DalThemes.Update(theme);
 	}
 	
