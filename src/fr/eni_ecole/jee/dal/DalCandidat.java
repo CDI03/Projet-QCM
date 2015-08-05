@@ -14,7 +14,6 @@ public class DalCandidat {
 	
 	// A réfléchir : transaction(commit) au sein de java utile? ou déjà effetué au sein des procédures stockées
 
-	
 	//ajouter un candidat
 	public static boolean Insert(Candidat candidat) throws SQLException, NamingException {
 		boolean insertOk = false;
@@ -45,30 +44,29 @@ public class DalCandidat {
 		Candidat leCandidat = null;
 		try (Connection cnx = PoolConnection.getConnection();)
 		{
-			//cnx.setAutoCommit(false);
+			cnx.setAutoCommit(false);
 			
-			CallableStatement cmd = cnx.prepareCall("{?=call SELECT_ONE_CANDIDAT (?,?) }", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			//parametre qui compte le nombre de ligne dans le ResultSet
-			cmd.registerOutParameter(1, java.sql.Types.INTEGER);
-			cmd.setString(2, id);
-			cmd.setString(3, motDePasse);
+			CallableStatement cmd = cnx.prepareCall("{call SELECT_ONE_CANDIDAT (?,?) }", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			cmd.setString(1, id);
+			cmd.setString(2, motDePasse);
 			
 			ResultSet rs = cmd.executeQuery();
 			
-			//test si le ResultSet ne contient qu'une seule ligne
-			int test = cmd.getInt(1);
+			int taille = 0;
+			while (rs.next()) {
+				taille+=1;
+			}
 			
-			if (test==1)
+			//test si le ResultSet ne contient qu'une seule ligne
+			if (taille==1)
 				{
-					rs.first();
-					
-					String nom = rs.getString("Nom");
-				
-					leCandidat.setNom(nom);
+					rs.first();	
+					leCandidat = new Candidat();
+					leCandidat.setid(id);
+					leCandidat.setNom(rs.getString("Nom"));
 					leCandidat.setPrenom(rs.getString("Prenom"));
 				}					
-
-			//cnx.commit();
+			cnx.commit();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

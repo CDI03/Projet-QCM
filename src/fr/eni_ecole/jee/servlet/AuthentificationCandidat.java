@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.bo.Candidat;
+import fr.eni_ecole.jee.controler.CtrlCandidat;
 import fr.eni_ecole.jee.dal.DalCandidat;
 
 /**
@@ -50,18 +51,18 @@ public class AuthentificationCandidat extends HttpServlet {
 			String mdp = request.getParameter("mdpCandidat");
 			if (mdp == null && id == null)
 			{
-				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/accueilCandidat/connexionCandidat.jsp.jsp");
+				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/accueilCandidat/connexionCandidat.jsp");
 				rd.forward(request, response);
 			}
 			else 
 				{
-				Candidat candidatConnecte = DalCandidat.SelectOne(id, mdp);
+				Candidat candidatConnecte = CtrlCandidat.SelectOne(id, mdp);
 					if(candidatConnecte!=null)
 					{
 						//C'est qu'on a reçu un bon couple login/mdp
 						request.getSession().setAttribute("candidatConnecte", candidatConnecte);
 						request.getSession().setMaxInactiveInterval(600);
-						RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/acceuilCandidat/acceuilCandidat.jsp");
+						RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 						rd.forward(request, response);
 					}
 					else
