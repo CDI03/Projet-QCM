@@ -34,7 +34,7 @@ ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribut
 			<%} else if (lExamen.getEtat().equals("FN")) {%>
 			<button type="button" name="resultatExamen" onclick="choixBouton(this.form,'resultatExamen');">Résultats</button>
 			<%}%>
-			<input type="hidden" name="hiddenField"/>
+			<input type="hidden" name="hiddenField" id="hiddenField"/>
 			</form>
 		</article>
 	<%
