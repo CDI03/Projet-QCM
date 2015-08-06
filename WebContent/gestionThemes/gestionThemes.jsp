@@ -27,8 +27,7 @@ ArrayList<Reponse> listeReponse = (ArrayList<Reponse>)request.getAttribute("list
 <section id="gestionThemes">
 	
 	<jsp:include page="crudTheme.jsp"></jsp:include>
-	<%-- <jsp:include page="crudQuestions.jsp"></jsp:include>
-	<jsp:include page="crudReponses.jsp"></jsp:include>  --%>
+	<%-- <jsp:include page="crudReponses.jsp"></jsp:include>  --%>
 
 </section>
 

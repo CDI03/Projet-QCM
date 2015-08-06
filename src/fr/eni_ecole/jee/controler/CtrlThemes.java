@@ -32,7 +32,7 @@ public class CtrlThemes {
 		return DalThemes.Update(theme);
 	}
 	
-	public static boolean Delete(Theme theme) {
+	public static boolean Delete(Theme theme) throws SQLException, NamingException {
 		return DalThemes.Delete(theme);
 	}
 	

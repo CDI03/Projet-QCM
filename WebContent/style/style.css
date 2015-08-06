@@ -28,7 +28,7 @@ header {
  ********/
 
 nav {
-	float:top;
+	
 }
 
 nav ul {
@@ -62,6 +62,11 @@ nav ul  a:hover {
  * MISE EN FORME TEXTE GLOBAL *
  ******************************/
 h1{
+	text-align: center;
+}
+
+h2{
+	font-size : 0.8em;
 	text-align: center;
 }
 
@@ -129,12 +134,12 @@ article {
 }
 #articleCrudQuestions {
 	width:45%;
-	heigth:45%;
+	height:45%;
 	float:right;
 }
 #articleCrudReponses {
 	width:45%;
-	heigth:45%;
+	height:45%;
 	float:right;
 }
 
@@ -150,9 +155,4 @@ footer {
 
 footer a {
 	text-decoration: none;
-}
-
-
-
-
 }

@@ -20,6 +20,7 @@ public class DalThemes {
 	private final static String SELECTALL = "{ call SelectAll_Themes }";
 	private final static String INSERT = "{ call Insert_Themes (?,?) }";
 	private final static String UPDATE = "{ call Update_Themes (?,?,?) }";
+	private final static String DELETE = "{ call Delete_Themes (?) }";
 	
 	public static Map<String, ArrayList> SelectAll() throws SQLException, NamingException {
 		//Déclaration d'une HashMap qui sera retourné en contenant deux listes : Themes et Compétences 
@@ -86,10 +87,14 @@ public class DalThemes {
 		return updateOk;	
 	}
 
-	public static boolean Delete(Theme theme) {
+	public static boolean Delete(Theme theme) throws SQLException, NamingException {
 		boolean deleteOk = false;
-		
-		
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DELETE);
+			cstmt.setInt(1, theme.getId());
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
 		return deleteOk;
 	}
 

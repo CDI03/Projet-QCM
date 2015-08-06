@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.bo.Competence;
+import fr.eni_ecole.jee.bo.Question;
 import fr.eni_ecole.jee.bo.Theme;
+import fr.eni_ecole.jee.controler.CtrlQuestions;
 import fr.eni_ecole.jee.controler.CtrlThemes;
 import fr.eni_ecole.jee.dal.DalThemes;
 
@@ -49,21 +51,34 @@ public class GestionThemes extends HttpServlet {
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getMethod().equalsIgnoreCase("GET")) {
+		
+		if (request.getMethod().equalsIgnoreCase("GET") ) {
+			processRequestSelectAll (request, response);
+		} else if (request.getAttribute("action") == null && request.getParameter("action") == null){
 			processRequestSelectAll (request, response);
 		} else {
-			System.out.println(request.getAttribute("operationTheme"));
-			if (request.getAttribute("operationTheme") != null) {
-				if (request.getAttribute("operationTheme").toString().equalsIgnoreCase("themeAjoute")) {
+			if (request.getAttribute("action") != null) {
+				if (request.getAttribute("action").toString().equalsIgnoreCase("ok")) {
 					processRequestSelectAll (request, response);
 				}
 			} else {
-				System.out.println("test04");
-				processRequestInsert (request, response);
+				if (request.getParameter("action").toString().equalsIgnoreCase("insert")) {
+					processRequestInsert (request, response);
+				} else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
+					processRequestUpdate (request, response);
+				} else if (request.getParameter("action").toString().equalsIgnoreCase("delete")) {
+					processRequestDelete (request, response);
+				} else if (request.getParameter("action").toString().equalsIgnoreCase("load")) {
+					processRequestLoad (request, response);
+				} else {
+					processRequestSelectAll (request, response);
+				}
 			}
 		}
 	}
 	
+
+
 	private void processRequestSelectAll (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, ArrayList> hashMapThemes = new HashMap<String, ArrayList>();
 		try {
@@ -91,7 +106,7 @@ public class GestionThemes extends HttpServlet {
 		//insertion dans la base		
 		try {
 			CtrlThemes.Insert(unTheme);
-			request.setAttribute("operationTheme", "themeAjoute");
+			request.setAttribute("action", "ok");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
@@ -107,25 +122,49 @@ public class GestionThemes extends HttpServlet {
 		Theme unTheme =  new Theme();
 		Competence uneCompetence = new Competence();
 		//Récupération et affection des données
-		unTheme.setLibelle(request.getParameter("libelleThemeAAjouter"));
-		uneCompetence.setId( Integer.parseInt(request.getParameter("uneCompetenceAssocie")) );
+		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")));
+		unTheme.setLibelle(request.getParameter("unLibelleTheme"));
+		uneCompetence.setId( Integer.parseInt(request.getParameter("lesCompetencesPourModification")) );
 		unTheme.setCompetence(uneCompetence);
 		//insertion dans la base		
 		try {
-			CtrlThemes.Insert(unTheme);
-			request.setAttribute("operationTheme", "themeAjoute");
+			CtrlThemes.Update(unTheme);
+			request.setAttribute("action", "ok");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
 		rd.forward(request, response);
 	}
 
+	private void processRequestDelete (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Theme unTheme =  new Theme();
+		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")));
+		request.setAttribute("action", "ok");
+		try {
+			CtrlThemes.Delete(unTheme);
+			request.setAttribute("action", "ok");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
+		rd.forward(request, response);
+	}
 	
-	
+	private void processRequestLoad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Question uneQuestion =  new Question();
+		List<Question> listQuestions = new ArrayList<Question>();
+		listQuestions = CtrlQuestions.SelectByTheme();
+		request.setAttribute("listQuestions", listQuestions);
+		request.setAttribute("action", "ok");
+		
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
+		rd.forward(request, response);
+	}
 	
 	
 	
