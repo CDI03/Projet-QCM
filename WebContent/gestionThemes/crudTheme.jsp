@@ -16,7 +16,7 @@ ArrayList<Reponse> listeReponse = (ArrayList<Reponse>)request.getAttribute("list
 listeFormation = null;
 listeTheme = null;
 --%>
- 
+<script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
 <article id="articleCrudTheme">
 	
 	<form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
@@ -28,8 +28,10 @@ listeTheme = null;
 			idCompetenceSelectionnee = 1;%>
 		</select>
 		<br><br><br>
+		
 		<!--  Affichage des themes  -->
 		<select size="10" id="lesThemes" name="lesThemes" onchange="selectionTheme()">
+			<script type="text/javascript">affichageListe('test');</script>
 			<% for (Theme unTheme : listThemes) { 
 				 if (unTheme.getCompetence().getId() == idCompetenceSelectionnee) { %>
 			<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
@@ -47,7 +49,7 @@ listeTheme = null;
 		<button type="submit" name="modification" value="modification">Modifier</button>
 		<button type="button" name="suppression" value="suppression">Supprimer</button>
 	</form>
-	
+
 	<br><br><br>
 	
 	<form action="/Projet-QCM/GestionThemes" method="post" name="formInsertThemes">
@@ -60,5 +62,5 @@ listeTheme = null;
 		<button type="submit" name="ajout" value="ajouterTheme">Ajouter</button>
 	</form>
 	
-	<script type="text/javascript" src="./javascript/gestionThemes.js"></script>
+	
 </article>

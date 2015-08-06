@@ -12,3 +12,10 @@ function selectionCompetenceThemes() {
 	alert("test");
 	listeLesThemes.options[0].text = "testtest";
 }
+
+function affichageListe(test) {
+	var test2 = "${listThemes}";
+	document.write("<option>"+test2[0]+"</option>");
+	document.write("<option>"+test+"</option>");
+	document.write("<option>test21</option>");
+}
