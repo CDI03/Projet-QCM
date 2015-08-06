@@ -1,7 +1,13 @@
 package fr.eni_ecole.jee.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.bo.Candidat;
 import fr.eni_ecole.jee.bo.Examen;
+import fr.eni_ecole.jee.bo.Test;
 import fr.eni_ecole.jee.controler.CtrlExamen;
+import fr.eni_ecole.jee.controler.CtrlTest;
 
 /**
  * Servlet implementation class PassageTest
@@ -50,6 +58,8 @@ public class PassageTest extends HttpServlet {
 			if(choixBouton.equals("commencerExamen"))
 			{
 				System.out.println("commence Examen");
+				int numQuestionEnCours = 0;
+				request.setAttribute("numQuestionEnCours", numQuestionEnCours);
 				recupTestCandidat(request,response);
 			}
 			else if (choixBouton.equals("reprendreExamen"))
@@ -73,6 +83,12 @@ public class PassageTest extends HttpServlet {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
@@ -80,16 +96,24 @@ public class PassageTest extends HttpServlet {
 	}
 
 	private void recupTestCandidat(HttpServletRequest request,
-			HttpServletResponse response)  {
+			HttpServletResponse response) throws SQLException, NamingException  {
 		try {
 			int idExamen = Integer.parseInt(request.getParameter("lExamen"));
 			Candidat leCandidatEnCours = (Candidat)request.getSession().getAttribute("candidatConnecte");
-			Examen lExamen = new Examen();
-			lExamen.setId(idExamen);
-			lExamen.setCandidat(leCandidatEnCours);
-			
-			// recupérer via l'examen : le test, les section, thèmes, questions, réponses et enregistrer questions poséees
-			CtrlExamen.SelectOne(lExamen);
+			ArrayList<Examen> examensDuCandidat = (ArrayList<Examen>)request.getAttribute("examenDuCandidat");
+			Examen examenChoisit = null;
+			for (Examen examen : examensDuCandidat) {
+				if ((examen.getId()) == idExamen) {
+					examenChoisit = examen;
+				}
+			}
+			// recupérer via le test: les section, thèmes, questions, réponses et enregistrer questions poséees
+			Map<String, ArrayList> hashMapDeLExamen = new HashMap<String, ArrayList>();
+			hashMapDeLExamen = CtrlExamen.SelectOne(examenChoisit);
+
+			request.setAttribute("listQuestionExamen", hashMapDeLExamen.get("listQuestionExamen"));
+			request.setAttribute("listReponseExamen", hashMapDeLExamen.get("listReponseExamen"));
+			request.setAttribute("lExamenEnCours", examenChoisit);
 			
 			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	
 			rd.forward(request, response);
