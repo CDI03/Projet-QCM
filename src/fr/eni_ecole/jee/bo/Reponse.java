@@ -2,7 +2,7 @@ package fr.eni_ecole.jee.bo;
 
 public class Reponse {
 	
-	private String id; 
+	private int id; 
 	private Question question;
 	private String libelle;
 	private boolean estCorrect;
@@ -11,7 +11,7 @@ public class Reponse {
 		super();
 	}
 
-	public Reponse(String id, Question question, String libelle,
+	public Reponse(int id, Question question, String libelle,
 			boolean estCorrect) {
 		super();
 		this.id = id;
@@ -20,7 +20,7 @@ public class Reponse {
 		this.estCorrect = estCorrect;
 	}
 
-	public String getid() {
+	public int getId() {
 		return id;
 	}
 
@@ -36,7 +36,7 @@ public class Reponse {
 		return estCorrect;
 	}
 
-	public void setid(String id) {
+	public void setid(int id) {
 		this.id = id;
 	}
 

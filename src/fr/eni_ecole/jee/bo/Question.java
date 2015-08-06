@@ -4,7 +4,7 @@ import java.awt.Image;
 
 public class Question {
 	
-	private String id;
+	private int id;
 	private String enonce;
 	private Theme theme;
 	private int nbReponses;
@@ -14,7 +14,7 @@ public class Question {
 		super();
 	}
 
-	public Question(String id, String enonce, Theme theme, int nbReponses, Image illustration) {
+	public Question(int id, String enonce, Theme theme, int nbReponses, Image illustration) {
 		super();
 		this.id = id;
 		this.enonce = enonce;
@@ -23,7 +23,7 @@ public class Question {
 		this.illustration = illustration;
 	}
 
-	public String getid() {
+	public int getId() {
 		return id;
 	}
 
@@ -43,7 +43,7 @@ public class Question {
 		return illustration;
 	}
 
-	public void setid(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

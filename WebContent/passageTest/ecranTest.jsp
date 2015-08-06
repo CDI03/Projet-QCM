@@ -7,24 +7,32 @@
 <% 
 Examen lExamenEnCours = (Examen)request.getAttribute("lExamenEnCours");
 
-ArrayList<Section> listeDesSectionsDuTest =  (ArrayList<Section>)request.getAttribute("listeDesSectionsDuTest");
-Section sectionEnCours = listeDesSectionsDuTest.get(0);
+ArrayList<Question> listQuestionExamen = (ArrayList<Question>)request.getAttribute("listQuestionExamen");
+int numQuestionEnCours = (int)request.getAttribute("numQuestionEnCours");
+Question questionEnCours = listQuestionExamen.get(numQuestionEnCours);
 
-ArrayList<Question> listeDesQuestionsDeLaSection = (ArrayList<Question>)request.getAttribute("listeDesQuestionsDeLaSection");
-Question questionEnCours = (Question)request.getAttribute("questionEnCours");
-
-ArrayList<Reponse> reponsesDeLaQuestion = (ArrayList<Reponse>)request.getAttribute("reponsesDeLaQuestion");
+ArrayList<Reponse> listReponseExamen = (ArrayList<Reponse>)request.getAttribute("listReponseExamen");
+ArrayList<Reponse> reponseQuestionEnCOurs = new ArrayList<Reponse>();
+for (Reponse reponse : listReponseExamen) 
+{
+	if (reponse.getQuestion().getId() == questionEnCours.getId())
+	{	
+		reponseQuestionEnCOurs.add(reponse);
+	}
+}
 
 int nbrReponsesCorrectes=0;
-for (Reponse laReponse : reponsesDeLaQuestion) 
+for (Reponse laReponse : reponseQuestionEnCOurs) 
 	{
 		if (laReponse.isEstCorrect())
 		{
 			nbrReponsesCorrectes += 1;
 		}
 	}
+
 String typesReponses;
 String typesBoutons;
+
 if (nbrReponsesCorrectes>0)
 	{typesReponses="[Plusieurs réponses possible]";
 	 typesBoutons="checkbox";}
