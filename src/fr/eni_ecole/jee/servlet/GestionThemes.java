@@ -61,7 +61,6 @@ public class GestionThemes extends HttpServlet {
 				System.out.println("test04");
 				processRequestInsert (request, response);
 			}
-			
 		}
 	}
 	
