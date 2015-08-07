@@ -19,7 +19,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalQuestion {
 	
-	private final static String SELECTALLBYTHEME = "{ call SelectAllByTheme_Questions (?) }";
+	private final static String SELECTALLBYTHEME = "{ call SelectAllByTheme_Question (?) }";
 
 	public static ArrayList<Question> SelectAll(Section section) throws SQLException, NamingException {
 		// recuperer une liste de question au hasard en fonction du nombre définit par la section	

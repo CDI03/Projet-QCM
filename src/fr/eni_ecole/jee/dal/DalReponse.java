@@ -15,7 +15,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalReponse {
 
-	private final static String SELECTALLBYQUESTION = "{ call SelectAllByQuestion_Reponses (?) }";
+	private final static String SELECTALLBYQUESTION = "{ call SelectAllByQuestion_Reponse (?) }";
 	
 	public static ArrayList<Reponse> SelectAll(Question question) throws SQLException, NamingException {
 	

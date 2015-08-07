@@ -1,4 +1,4 @@
-CREATE PROCEDURE SelectAllByTheme_Questions
+CREATE PROCEDURE SelectAllByTheme_Question
 	@Theme_Id integer
 AS
 BEGIN

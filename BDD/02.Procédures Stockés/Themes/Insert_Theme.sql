@@ -1,4 +1,4 @@
-CREATE PROCEDURE Insert_Themes
+CREATE PROCEDURE Insert_Theme
 	@Libelle varchar(50),
 	@Competence_Id int
 AS

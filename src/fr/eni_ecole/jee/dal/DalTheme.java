@@ -15,7 +15,10 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalTheme {
 
-	private final static String SELECTALLBYCOMPETENCE = "{ call SelectAllByCompetence_Themes (?) }";
+	private final static String SELECTALLBYCOMPETENCE = "{ call SelectAllByCompetence_Theme (?) }";
+	private final static String INSERT = "{ call Insert_Theme (?,?) }";
+	private final static String UPDATE = "{ call Update_Theme (?,?,?) }";
+	private final static String DELETE = "{ call Delete_Theme (?) }";
 	
 	public static List<Theme> SelectAllByCompetence(int idCompetence) throws SQLException, NamingException {
 		
@@ -44,6 +47,42 @@ public class DalTheme {
 		}	
 
 		return listThemes;
+	}
+	
+	public static boolean Insert(Theme theme) throws SQLException, NamingException {
+		boolean insertOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(INSERT);
+			cstmt.setString(1, theme.getLibelle());
+			cstmt.setInt(2, theme.getCompetence().getId());
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
+		return insertOk;
+	}
+
+	public static boolean Update(Theme theme) throws SQLException, NamingException {
+		boolean updateOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(UPDATE);
+			cstmt.setInt(1, theme.getId());
+			cstmt.setString(2, theme.getLibelle());
+			cstmt.setInt(3, theme.getCompetence().getId());
+			int intUpdate = cstmt.executeUpdate();
+			updateOk = (intUpdate != 0)?true:false;
+		}
+		return updateOk;	
+	}
+
+	public static boolean Delete(Theme theme) throws SQLException, NamingException {
+		boolean deleteOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DELETE);
+			cstmt.setInt(1, theme.getId());
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
+		return deleteOk;
 	}
 	
 }

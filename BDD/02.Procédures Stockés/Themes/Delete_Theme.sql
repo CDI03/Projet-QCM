@@ -1,4 +1,4 @@
-ALTER PROCEDURE Delete_Themes
+CREATE PROCEDURE Delete_Theme
 	@Id int
 AS
 BEGIN

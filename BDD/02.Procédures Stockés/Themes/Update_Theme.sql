@@ -1,4 +1,4 @@
-CREATE PROCEDURE Update_Themes
+CREATE PROCEDURE Update_Theme
 	@Id int,
 	@Libelle varchar(50),
 	@Competence_Id int

@@ -15,7 +15,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalCompetence {
 
-	private final static String SELECTALLBYFORMATION = "{ call SelectAllByFormation_Competences (?) }";
+	private final static String SELECTALLBYFORMATION = "{ call SelectAllByFormation_Competence (?) }";
 	
 	public static List<Competence> SelectAllByFormation(String idFormation) throws SQLException, NamingException {
 		

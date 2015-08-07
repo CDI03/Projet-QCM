@@ -1,4 +1,4 @@
-CREATE PROCEDURE SelectAllByQuestion_Reponses
+CREATE PROCEDURE SelectAllByQuestion_Reponse
 	@Question_Id integer
 AS
 BEGIN
