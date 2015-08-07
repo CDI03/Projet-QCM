@@ -29,7 +29,7 @@ public class DalQuestion {
 				// TODO recup illustration Question
 				int nbReponse = rs.getInt("NbReponses");
 				String enonce = rs.getString("Enonce");
-				int questionID = rs.getInt("Id_Question");
+				int questionID = rs.getInt("Id");
 		//construction d'une question
 				Question uneQuestion = new Question();
 				uneQuestion.setId(questionID);

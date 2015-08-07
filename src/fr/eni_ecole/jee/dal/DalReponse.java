@@ -25,8 +25,8 @@ public class DalReponse {
 			
 			while (rs.next()) {
 			boolean estCorrect = rs.getBoolean("EstCorrect");
-			String reponseLibelle = rs.getString("Libelle_Reponse");
-			int reponseID = rs.getInt("Id_Reponse");
+			String reponseLibelle = rs.getString("Libelle");
+			int reponseID = rs.getInt("Id");
 			//construction d'une reponse
 			Reponse uneReponse = new Reponse();
 			uneReponse.setid(reponseID);

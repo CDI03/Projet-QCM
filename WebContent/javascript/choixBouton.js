@@ -5,5 +5,4 @@ function choixBouton(leForm,nomDuBoutonClique)
 	{
 		document.getElementById('hiddenField').value=nomDuBoutonClique;
 		leForm.submit();
-		alert('ok');
 	}

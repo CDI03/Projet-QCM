@@ -14,7 +14,8 @@ public class CtrlCandidat {
 		return DalCandidat.Insert(candidat);
 	}
 
-	public static Candidat SelectOne(String id, String mdp) throws SQLException, NamingException {
+	public static Candidat SelectOne(String id, String mdp) throws SQLException, NamingException 
+	{
 		return DalCandidat.SelectOne(id, mdp);
 	}
 }

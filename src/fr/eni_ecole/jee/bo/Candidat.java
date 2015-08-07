@@ -20,7 +20,7 @@ public class Candidat {
 		this.motDePasse = motDePasse;
 	}
 
-	public String getid() {
+	public String getId() {
 		return id;
 	}
 
@@ -36,7 +36,7 @@ public class Candidat {
 		return motDePasse;
 	}
 
-	public void setid(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
