@@ -1,4 +1,10 @@
 
+function selectionFormation() {
+	
+}
+
+
+
 
 function selectionTheme(form, action) {
 	var listeLesThemes = document.getElementById("lesThemes");
@@ -38,4 +44,10 @@ function themesInsert(form, action) {
 		form.submit();	
 	}
 }	
+
+function selectionQuestion(form,idSelectionne, action) {
+	form.idQuestionSelectionne.value=idSelectionne;
+	form.action.value="selectQuestion";
+	form.submit();
+}
 

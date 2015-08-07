@@ -19,7 +19,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalQuestion {
 	
-	private final static String SELECTBYTHEME = "{ call SelectByTheme_Questions (?) }";
+	private final static String SELECTALLBYTHEME = "{ call SelectAllByTheme_Questions (?) }";
 
 	public static ArrayList<Question> SelectAll(Section section) throws SQLException, NamingException {
 		// recuperer une liste de question au hasard en fonction du nombre définit par la section	
@@ -49,11 +49,12 @@ public class DalQuestion {
 		return listQuestionSection;	
 	}
 
-	public static List<Question> SelectByTheme(Theme theme) throws SQLException, NamingException {
-		List<Question> listQuestionTheme = new ArrayList<Question>();
+
+	public static List<Question> SelectAllByTheme(int idTheme) throws SQLException, NamingException {
+		List<Question> listQuestions = new ArrayList<Question>();
 		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cmd = cnx.prepareCall(SELECTBYTHEME);
-			cmd.setInt(1, theme.getId());
+			CallableStatement cmd = cnx.prepareCall(SELECTALLBYTHEME);
+			cmd.setInt(1, idTheme);
 			ResultSet rs = cmd.executeQuery();		
 			while (rs.next()) {
 				// TODO recup illustration Question
@@ -68,10 +69,10 @@ public class DalQuestion {
 				uneQuestion.setNbReponses(nbReponse);
 				
 		//construction de la liste
-				listQuestionTheme.add(uneQuestion);
+				listQuestions.add(uneQuestion);
 			}
 		}	
-		return listQuestionTheme;
+		return listQuestions;
 	}
 
 }

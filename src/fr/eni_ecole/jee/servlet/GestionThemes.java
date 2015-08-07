@@ -16,9 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.bo.Competence;
+import fr.eni_ecole.jee.bo.Formation;
 import fr.eni_ecole.jee.bo.Question;
+import fr.eni_ecole.jee.bo.Reponse;
 import fr.eni_ecole.jee.bo.Theme;
-import fr.eni_ecole.jee.controler.CtrlQuestions;
+import fr.eni_ecole.jee.controler.CtrlCompetence;
+import fr.eni_ecole.jee.controler.CtrlCompetences;
+import fr.eni_ecole.jee.controler.CtrlFormation;
+import fr.eni_ecole.jee.controler.CtrlQuestion;
+import fr.eni_ecole.jee.controler.CtrlReponse;
+import fr.eni_ecole.jee.controler.CtrlTheme;
 import fr.eni_ecole.jee.controler.CtrlThemes;
 import fr.eni_ecole.jee.dal.DalThemes;
 
@@ -40,8 +47,13 @@ public class GestionThemes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setAttribute("indexFormationSelectionne","0");
+		request.setAttribute("indexCompetenceSelectionne","0");
 		request.setAttribute("indexThemeSelectionne", "0");
-		request.setAttribute("indexQuestionSelectionne", "1");
+		request.setAttribute("indexQuestionSelectionne", "0");
+		request.setAttribute("indexReponseSelectionne", "0");
+		request.setAttribute("action", "");
 		processRequest(request,response);
 	}
 
@@ -54,6 +66,8 @@ public class GestionThemes extends HttpServlet {
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		processRequestSelectAll (request, response);
+		/*
 		if (request.getMethod().equalsIgnoreCase("GET") ) {
 			processRequestSelectAll (request, response);
 		} else if (request.getAttribute("action") == null && request.getParameter("action") == null){
@@ -76,37 +90,41 @@ public class GestionThemes extends HttpServlet {
 					processRequestSelectAll (request, response);
 				}
 			}
-		}
+		}*/
 	}
 	
 
 
 	private void processRequestSelectAll (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Map<String, ArrayList> hashMapThemes = new HashMap<String, ArrayList>();
+				
+		String idFormation = "CDI";
+		int idCompetence = 1;
+		int idTheme = 1;
+		int idQuestion = 1;
+		
+		List<Formation> listFormations = new ArrayList<Formation>();
+		List<Competence> listCompetences = new ArrayList<Competence>();
+		List<Theme> listThemes = new ArrayList<Theme>();
+		List<Question> listQuestions = new ArrayList<Question>();
+		List<Reponse> listReponses = new ArrayList<Reponse>();
+		
 		try {
-			
-			hashMapThemes = CtrlThemes.SelectAll();
-			int indexThemeSelectionne = Integer.parseInt((String) request.getAttribute("indexThemeSelectionne"));
-			request.setAttribute("listThemes", hashMapThemes.get("listThemes"));
-			request.setAttribute("listCompetences", hashMapThemes.get("listCompetences"));
-			request.setAttribute("listAllCompetences", hashMapThemes.get("listAllCompetences"));
-			if (request.getParameter("indexThemeSelectionne") != null) {
-				request.setAttribute("indexThemeSelectionne", request.getParameter("indexThemeSelectionne"));
-			} 
-			Theme unTheme = new Theme();
-			if (request.getParameter("unIdTheme") != null) {
-				int unIdTheme = Integer.parseInt((String) request.getParameter("unIdTheme"));
-				unTheme.setId(unIdTheme);
-			}
-			else {
-				unTheme.setId(((Theme)(hashMapThemes.get("listThemes").get(0))).getId());
-			}
-			request.setAttribute("listQuestions", CtrlQuestions.SelectByTheme(unTheme));
+			listFormations = CtrlFormation.SelectAll();
+			listCompetences = CtrlCompetence.SelectAllByFormation(idFormation);
+			listThemes = CtrlTheme.SelectAllByCompetence(idCompetence);
+			listQuestions = CtrlQuestion.SelectAllByTheme(idTheme);
+			listReponses = CtrlReponse.SelectAllByQuestion(idQuestion);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
 			e.printStackTrace();
-		}		
+		}
+		
+		request.setAttribute("listFormations", listFormations);
+		request.setAttribute("listCompetences", listCompetences);
+		request.setAttribute("listThemes", listThemes);
+		request.setAttribute("listQuestions", listQuestions);
+		request.setAttribute("listReponses", listReponses);	
 		
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionThemes/gestionThemes.jsp");
 		rd.forward(request, response);	
@@ -116,10 +134,12 @@ public class GestionThemes extends HttpServlet {
 		//Déclaration d'un theme et de sa compétence associé
 		Theme unTheme =  new Theme();
 		Competence uneCompetence = new Competence();
+	
 		//Récupération et affection des données
 		unTheme.setLibelle(request.getParameter("libelleThemeAAjouter"));
 		uneCompetence.setId( Integer.parseInt(request.getParameter("uneCompetenceAssocie")) );
 		unTheme.setCompetence(uneCompetence);
+		
 		//insertion dans la base		
 		try {
 			CtrlThemes.Insert(unTheme);
@@ -130,6 +150,7 @@ public class GestionThemes extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//redirection
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
 		rd.forward(request, response);
 	}
@@ -181,7 +202,7 @@ public class GestionThemes extends HttpServlet {
 		request.setAttribute("indexThemeSelectionne", indexThemeSelectionne);
 		unTheme.setId(idTheme);
 		try {
-			listQuestions = CtrlQuestions.SelectByTheme(unTheme);
+			listQuestions = CtrlQuestion.SelectAllByTheme(unTheme.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
@@ -193,7 +214,5 @@ public class GestionThemes extends HttpServlet {
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
 		rd.forward(request, response);
 	}
-	
-	
 	
 }

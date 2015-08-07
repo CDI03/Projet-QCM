@@ -38,4 +38,9 @@ public class CtrlCompetences {
 	public static Competence SelectOne(Competence competence) {
 		return DalCompetences.SelectOne(competence);
 	}
+
+	public static List<Competence> SelectAllByFormation(int idFormation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
