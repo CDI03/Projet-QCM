@@ -9,10 +9,10 @@ import fr.eni_ecole.jee.bo.Question;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.dal.DalQuestion;
 
-public class CtrlQuestions {
+public class CtrlQuestion {
 
-	public static List<Question> SelectByTheme(Theme theme) throws SQLException, NamingException {
-		return DalQuestion.SelectByTheme(theme);
+	public static List<Question> SelectByTheme(int idTheme) throws SQLException, NamingException {
+		return DalQuestion.SelectAllByTheme(idTheme);
 	}
 
 }
