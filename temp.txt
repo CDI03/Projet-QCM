@@ -1,10 +1,11 @@
 [alias]
-    st = status
-	co = commit
+    s = status
+	a = add
+	c = commit
 	cm = commit -m
-	ch = checkout
+	co = checkout
 	cb = checkout -b
 	ph = push
 	pl = pull
-	br = branch
-	me = merge
+	b = branch
+	m = merge
