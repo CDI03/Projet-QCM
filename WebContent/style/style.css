@@ -128,20 +128,36 @@ article {
 }
  	
 #articleCrudTheme {
-	width:45%;
+	width:35%;
 	float:left;
 	height:90%;
 }
 #articleCrudQuestions {
-	width:45%;
+	width:55%;
 	height:45%;
 	float:right;
 }
 #articleCrudReponses {
-	width:45%;
+	width:55%;
 	height:45%;
 	float:right;
 }
+
+/********
+* TABLE *
+********/
+table {
+	
+	
+}
+
+#question .2emecolonne {
+	width : 400 px;
+	
+}
+
+
+
 
 /**********
 * FOOTER  *

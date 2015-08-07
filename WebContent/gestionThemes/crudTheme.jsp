@@ -8,7 +8,9 @@
 <% ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
 ArrayList<Competence> listAllCompetences = (ArrayList<Competence>)request.getAttribute("listAllCompetences");
-int idCompetenceSelectionnee; %>
+int idCompetenceSelectionnee; 
+ArrayList<Question> listQuestions = (ArrayList<Question>)request.getAttribute("listQuestions");
+%>
 
 <%-- 
 Theme leTheme = (Theme)request.getAttribute("leTheme"); 
@@ -21,7 +23,7 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 <script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
 <article id="articleCrudTheme">
 	
-	<form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
+		<fieldset>
 		<!--  Affichage des compétences disponibles -->
 		<select id="lesCompetences" name="lesCompetences" onchange="selectionCompetenceThemes()">
 			<% for (Competence uneCompetence : listAllCompetences) { %>
@@ -29,8 +31,7 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 			<% } 
 			idCompetenceSelectionnee = 1;%>
 		</select>
-		<br><br><br>
-		
+		<br>
 		<!--  Affichage des themes  -->
 		<select size="10" id="lesThemes" name="lesThemes" onchange="selectionTheme(this.form,'load')">
 			<!--  <script type="text/javascript">affichageListe('test');</script> -->
@@ -39,7 +40,11 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 			<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 			<% 	} } %>
 		</select>
-		<br>
+		</fieldset>
+		<br><br>
+		<form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
+		<fieldset>
+		<input type="hidden" id="indexThemeSelectionne" name="indexThemeSelectionne" value="<%=request.getAttribute("indexThemeSelectionne")%>">
 		<input type="hidden" id="unIdTheme" name="unIdTheme" value="">
 		<input type="text" id="unLibelleTheme" name="unLibelleTheme" value="">
 		<br>
@@ -51,20 +56,24 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 		<br> 
 		<button type="button" id="update" onclick="themesUpdateDelete(this.form,'update')">Modifier</button>
 		<button type="button" id="delete" onclick="themesUpdateDelete(this.form,'delete')">Supprimer</button>
-		<input type="hidden" id="action" name ="action" value="">
+		<input type="hidden" id="action" name ="action" value="">`
+		</fieldset>
 	</form>
 
-	<br><br><br>
+	<br><br>
 	
 	<form action="/Projet-QCM/GestionThemes" method="post" name="formInsertThemes">
+		<fieldset>
 		<input type="text" id="libelleThemeAAjouter" name="libelleThemeAAjouter" value="">
 		<select id="lesCompetencesPourAjout" name="uneCompetenceAssocie" onchange="submit">
 			<% for (Competence uneCompetence : listAllCompetences) { %>
 			<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 			<% } %>
-		</select> 
+		</select>
+		<br>
 		<button type="button" id="insert" name="insert" onclick="themesInsert(this.form,'insert')">Ajouter</button>
 		<input type="hidden" id="action" name ="action" value="">
+		</fieldset>
 	</form>
 	
 </article>
@@ -77,8 +86,8 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 		<img alt="Illustration Question" src=<%--laQuestionSelectionne.getIllustration()--%> >
 		<br>
 		<label for="enonce" >Enoncé
-			<input type="text" id="enonce" name="enonce" value=<%--laQuestionSelectionne.getEnonce()--%> ></label>
-		<br>
+			<input style="width: 500px" type="text" id="enonce" name="enonce" value="<%=listQuestions.get( Integer.parseInt((String)request.getAttribute("indexQuestionSelectionne")) ).getEnonce()%>"></label>
+		<br><br>
 		<select id="leNbBonnesRéponses" name="leNbBonnesRéponses">
 			<option value="1">une seule bonne réponse</option>
 			<option value="2">plusieurs bonnes réponses</option>
@@ -90,23 +99,18 @@ Question laQuestionSelectionne = listeQuestion.get(0);
 		<button type="button" id="ajout" >Ajouter</button>
 		<button type="button" id="modification">Modifier</button>
 		<button type="button" id="suppression">Supprimer</button>
-		<table>
+		<table id="question">
 			<tr>
     			<th></th>
-    			<th>Enoncé</th>
+    			<th width="300">Enoncé </th>
   			</tr>
-			<%-- 
-				int i = 0;		
-				for (Question laQuestion : listeQuestion) 
-				{
-			 --%>
+			<%  int i = 1;		
+				for (Question uneQuestion : listQuestions) { %>
 			<tr>
 			<td><input type = "radio"  name = "laQuestionSelectionne"/></td>
-          	<td><label for = "laQuestionSelectionne">Question <%--i--%> : <%-- laQuestion.getEnonce().toString() --%></label></td>
+          	<td class="2emecolonne"><label for = "laQuestionSelectionne">Question <%= i %> : <%=uneQuestion.getEnonce()%></label></td>
 			</tr>
-			<%--
-				i++;}
-			--%>
+			<% i++; } %>
 		</table>
 	</form>		
 </article>
