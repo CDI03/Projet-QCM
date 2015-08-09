@@ -29,7 +29,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 	<input type="text" id="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
 	<input type="text" id="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
 	
-	<input type="hidden" id="action" name ="action" value="">
+	<input type="text" id="action" name ="action" value="">
 	<article id="articleThemeChoix">
 
 		<fieldset id="fieldsetSelectionTheme">
@@ -93,29 +93,30 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 
 
 <article  id="articleThemeQuestion">
-	<h2>Questions : Ajout / Modification / Suppression</h2>
+	<h2>Gestion des Questions</h2><button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
 		
 		<!-- --------------------------------------------- -->	
 		<!--  Formulaire de Insert/Update/Delete Question  -->
 		<!-- --------------------------------------------- -->	
+		<fieldset>
+		<legend id="legendQuestion">Modification de la question</legend>
+		<input type="text" id="modeQuestion" value="Mode modification" disabled><br>
 		<div id="blocImage">
 		<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
 		</div>
 		<div id="blocEnonce">
-			<!--  <input type="hidden" id="questionSelectionnee" name="questionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
+			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
 			<label for="enonce" >Enoncé</label>
-				<textarea id="enonce"><%=questionSelectionnee.getEnonce()%></textarea>
-			<select id="leNbBonnesReponses" name="leNbBonnesReponses">
+				<textarea id="enonceQuestionSelectionnee"><%=questionSelectionnee.getEnonce()%></textarea>
+			<label for="nbBonnesReponses">Type de question :</label>
+			<select id="nbBonnesReponsesQuestionSelectionnee" name="nbBonnesReponsesQuestionSelectionnee">
 				<option value="1">une seule bonne réponse</option>
 				<option value="2">plusieurs bonnes réponses</option>
-			</select>
+			</select><br>
+			<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
+			<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 		</div>
-		<div>
-		<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
-		<button type="button" id="cancelQestion" onclick="formulaireSubmit(this.form,'cancelQestion','')" >Annuler</button>
-		<button type="button" id="addQestion" onclick="formulaireSubmit(this.form,'addQestion','')">Ajouter</button>
-		<button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteQuestion','')">Supprimer</button>
-		</div>
+		</fieldset>
 		<!-- ------------------------------------- -->	
 		<!--  Formulaire de présentation Question  -->
 		<!-- ------------------------------------- -->
@@ -123,32 +124,41 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<tr>
     			<th></th>
     			<th class="enonce">Enoncé question</th>
+    			<th></th>
   			</tr>
 			<%  int i = 1;		
 				for (Question uneQuestion : listQuestions) { %>
 			<tr>
-			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" value="<%=uneQuestion.getId()%>" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"/></td>
+			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"
+							<% if (uneQuestion.getId() == questionSelectionnee.getId()) {%>
+									checked
+							<%}%>
+							value="<%=uneQuestion.getId()%>"/>
+			</td>
           	<td class="enonce"><label class="labelEnonceQuestion" for="<%=uneQuestion.getId()%>">n°<%= i %> : <%=uneQuestion.getEnonce()%></label></td>
+			<td><button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteQuestion','<%=uneQuestion.getId()%>')">Supprimer</button></td>
 			</tr>
 			<% i++; } %>
 		</table>	
 </article>
 
 <article  id="articleThemeReponse">
-	<h2>Réponses : Ajout / Modification / Suppression</h2>
-		<input type="hidden" id="idReponseSelectionnee" name="idReponseSelectionnee" value="<%= reponseSelectionnee.getId() %>">
-		<label for="labelLibelleReponse" >Libellé de la réponse : </label>
-		<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
-		<br>
-		<label for="labelReponseCorrecte" >La réponse est</label>
-		<select id="reponseCorrecteReponseSelectionnee">
-			<option>valide</option>
-			<option>invalide</option>
-		</select> 
-		<br>
-		<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>
-		<button type="button" id="cancelReponse" onclick="formulaireSubmit(this.form,'cancelReponse','')" >Annuler</button>
-		<button type="button" id="addReponse" onclick="formulaireSubmit(this.form,'addReponse','')" >Ajouter</button>
+	<h2>Gestion des Réponses </h2><button type="button" id="addReponse" onclick="formulaireReponseVide(this.form,'insertReponse')" >Passer en mode Ajout</button><br>
+		<fieldset>
+			<legend id="legendReponse">Modification de la reponse</legend>
+			<input type="hidden" id="idReponseSelectionnee" name="idReponseSelectionnee" value="<%= reponseSelectionnee.getId() %>">
+			<label for="labelLibelleReponse" >Libellé de la réponse : </label>
+			<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
+			<br>
+			<label for="labelReponseCorrecte" >La réponse est</label>
+			<select id="reponseCorrecteReponseSelectionnee">
+				<option>valide</option>
+				<option>invalide</option>
+			</select> 
+			<br>
+			<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>
+			<button type="button" id="cancelReponse" onclick="formulaireReponseVide(this.form,'cancelReponse')" >Annuler</button>
+		</fieldset>
 		<table>
 			<tr>
     			<th></th>
@@ -157,18 +167,29 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
     			<th></th>
   			</tr>
 			<% 
-				int j = 0;		
+				int j = 1;		
 				for (Reponse uneReponse : listReponses) 
 				{
 			%>
 			<tr>
-				<td><input type = "radio"  id="reponseSelectionnee" name="reponseSelectionnee" value="<%=uneReponse.getId()%>"/></td>
+				<td><input type = "radio"  id="listeReponseSelectionnee" name="listeReponseSelectionnee" onclick="formulaireSubmit(this.form,'choixReponse', this.value)" 
+							<% if (uneReponse.getId() == reponseSelectionnee.getId()) {%>
+									checked							
+							<% }%> 
+							value="<%=uneReponse.getId()%>"/>
+				</td>
 	          	<td><label for = "laReponseSelectionne">Reponse <%=j%> : <%= uneReponse.getLibelle() %></label></td>
-				<td>la réponse est <%=uneReponse.isEstCorrect()%></td>
+				<td>la réponse est 
+				<% if (uneReponse.isEstCorrect() == true) {%>
+					valide
+				<%} else {%>
+					invalide
+				<%}%>
+				</td>
 				<td><button type="button" id="deleteReponse" onclick="formulaireSubmit(this.form,'deleteReponse','<%=uneReponse.getId()%>')" >Supprimer</button></td>
 			</tr>
 			<%
-				i++;}
+				j++;}
 			%>
 		</table>
 	

@@ -1,19 +1,46 @@
 
-
-
+function formulaireReponseVide(form, action) {
+	if (action == 'insertReponse') {
+		form.action.value = action;
+		document.getElementById("legendReponse").innerHTML="Mode ajout";
+		document.getElementById("modeReponse").value="Mode ajout";
+	}
+	document.getElementById("libelleReponseSelectionnee").value ="";
+	document.getElementById("libelleReponseSelectionnee").focus();
+	
+}
+function formulaireQuestionVide(form, action) {
+	if (action == 'insertQuestion') {
+		form.action.value = action;
+		document.getElementById("legendQuestion").innerHTML="Mode ajout";
+	}
+	document.getElementById("enonceQuestionSelectionnee").value ="";
+	document.getElementById("libelleQuestionSelectionnee").focus();
+	
+}
 
 
 
 function formulaireSubmit(form, action, param) {
-	form.action.value = action;
-	if (form.action.value == 'deleteReponse') {
-		alert(form.idReponseSelectionnee.value);
+	
+	if (action == 'choixReponse') {
 		form.idReponseSelectionnee.value = param;
-		alert(form.idReponseSelectionnee.value);
+		form.action.value = action;
 	}
-	if  (form.action.value == '') {
+	if  (action == 'choixQuestion') {
 		form.idQuestionSelectionnee.value = param;
+		form.action.value = action;
 	}
+	if (action == 'deleteReponse') {
+		form.idReponseSelectionnee.value = param;
+		form.action.value = action;
+	}
+	if (action == 'insertUpdateReponse') {
+		if (form.action.value !=  'insertReponse') {
+			form.action.value = 'updateReponse';
+		}
+	}
+	
 	
 	form.submit();
 }
@@ -27,8 +54,6 @@ function indexListe(liste, idValue) {
 	}
 	return index;
 }
-
-
 
 function initialisation() {
 	var listFormations = document.getElementById("listFormations");
