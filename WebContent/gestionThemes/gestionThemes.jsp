@@ -10,13 +10,6 @@
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
  
 
-<%/* 
-ArrayList<Formation> listeFormation = (ArrayList<Formation>)request.getAttribute("listeFormation"); 
-ArrayList<Theme> listeTheme = (ArrayList<Theme>)request.getAttribute("listeTheme"); 
-ArrayList<Question> listeQuestion = (ArrayList<Question>)request.getAttribute("listeQuestion"); 
-ArrayList<Reponse> listeReponse = (ArrayList<Reponse>)request.getAttribute("listeReponse"); 
-*/%> 
-
 <jsp:include page="<%=enTete%>">
 	<jsp:param value="Projet QCM - Gestion des thèmes" name="titre"/>
 </jsp:include>
@@ -27,7 +20,6 @@ ArrayList<Reponse> listeReponse = (ArrayList<Reponse>)request.getAttribute("list
 <section id="gestionThemes">
 	
 	<jsp:include page="crudTheme.jsp"></jsp:include>
-	<%-- <jsp:include page="crudReponses.jsp"></jsp:include>  --%>
 
 </section>
 

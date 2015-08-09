@@ -11,7 +11,7 @@ import fr.eni_ecole.jee.dal.DalQuestion;
 
 public class CtrlQuestion {
 
-	public static List<Question> SelectByTheme(int idTheme) throws SQLException, NamingException {
+	public static List<Question> SelectAllByTheme(int idTheme) throws SQLException, NamingException {
 		return DalQuestion.SelectAllByTheme(idTheme);
 	}
 

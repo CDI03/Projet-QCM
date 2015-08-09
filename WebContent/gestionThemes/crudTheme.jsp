@@ -21,10 +21,15 @@ Theme themeSelectionne = (Theme)request.getAttribute("themeSelectionne");
 Question questionSelectionnee = (Question)request.getAttribute("questionSelectionnee");
 Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee");
 %>
-<script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
+
 
 <form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
-	<input type="hidden" id="action" name ="action" value="">`
+	
+	<input type="text" id="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
+	<input type="text" id="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
+	<input type="text" id="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
+	
+	<input type="hidden" id="action" name ="action" value="">
 	<article id="articleThemeChoix">
 
 		<fieldset id="fieldsetSelectionTheme">
@@ -32,9 +37,9 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ------------------------------------- -->
 			<!--  Affichage des Formations disponibles -->
 			<!-- ------------------------------------- -->
-			<select id="lesFormations" name="lesFormations" onchange="formulaireSubmit(this.form,'ChoixFormation','')">
+			<select id="listFormations" name="listFormations" onchange="formulaireSubmit(this.form,'ChoixFormation','')">
 				<% for (Formation uneFormation : listFormations) { %>
-				<option value="<%=uneFormation.getId()%>"><%=uneFormation.getTitre()%></option>
+				<option value="<%=uneFormation.getId().trim()%>"><%=uneFormation.getTitre()%></option>
 				<% } %>
 			</select>
 			<br>
@@ -43,7 +48,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- -------------------------------------- -->		
 			<!--  Affichage des compétences disponibles -->
 			<!-- -------------------------------------- -->	
-			<select id="lesCompetences" name="lesCompetences" onchange="formulaireSubmit(this.form,'ChoixCompétence','')">
+			<select id="listCompetences" name="listCompetences" onchange="formulaireSubmit(this.form,'ChoixCompétence','')">
 				<% for (Competence uneCompetence : listCompetences) { %>
 				<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 				<% } %>
@@ -54,7 +59,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ---------------------- -->	
 			<!--  Affichage des themes  -->
 			<!-- ---------------------- -->	
-			<select id="lesThemes" name="lesThemes" onchange="formulaireSubmit(this.form,'ChoixTheme','')">
+			<select id="listThemes" name="listThemes" onchange="formulaireSubmit(this.form,'ChoixTheme','')">
 				<% for (Theme unTheme : listThemes) { %>
 					<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 				<%  } %>
@@ -68,9 +73,9 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ------------------------------------ -->	
 				<h2> Theme : Ajout / Modification</h2>
 				<input type="hidden" id="unIdTheme" name="unIdTheme" value="<%= themeSelectionne.getId() %>"> 
-				<label>Libelle du Theme : </label><input type="text" id="unLibelleTheme" name="unLibelleTheme" value="<%= themeSelectionne.getLibelle() %>">
+				<label>Libelle du Theme : </label><input type="text" id="unLibelleTheme" value="<%= themeSelectionne.getLibelle() %>">
 				<br>
-				<select id="lesCompetencesPourModification" name="lesCompetencesPourModification">
+				<select id="listCompetencesUpdate">
 					<% 	for (Competence uneCompetence : listCompetences) { %>
 					<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 					<%	} %>
@@ -97,10 +102,10 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
 		</div>
 		<div id="blocEnonce">
-			<input type="hidden" id="unIdQuestion" name="unIdQuestion" value="<%= questionSelectionnee.getId() %>"> 
+			<!--  <input type="hidden" id="questionSelectionnee" name="questionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
 			<label for="enonce" >Enoncé</label>
-				<textarea id="enonce" name="enonce"><%=questionSelectionnee.getEnonce()%></textarea>
-			<select id="leNbBonnesRéponses" name="leNbBonnesRéponses">
+				<textarea id="enonce"><%=questionSelectionnee.getEnonce()%></textarea>
+			<select id="leNbBonnesReponses" name="leNbBonnesReponses">
 				<option value="1">une seule bonne réponse</option>
 				<option value="2">plusieurs bonnes réponses</option>
 			</select>
@@ -122,7 +127,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<%  int i = 1;		
 				for (Question uneQuestion : listQuestions) { %>
 			<tr>
-			<td><input type = "radio" id="ChoixQuestion" name = "ChoixQuestion" value="<%=uneQuestion.getId()%>" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"/></td>
+			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" value="<%=uneQuestion.getId()%>" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"/></td>
           	<td class="enonce"><label class="labelEnonceQuestion" for="<%=uneQuestion.getId()%>">n°<%= i %> : <%=uneQuestion.getEnonce()%></label></td>
 			</tr>
 			<% i++; } %>
@@ -131,25 +136,25 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 
 <article  id="articleThemeReponse">
 	<h2>Réponses : Ajout / Modification / Suppression</h2>
-		<input type="hidden" id="unIdReponse" name="unIdReponse" value="<%= reponseSelectionnee.getId() %>"> 
+		<input type="hidden" id="idReponseSelectionnee" name="idReponseSelectionnee" value="<%= reponseSelectionnee.getId() %>">
 		<label for="labelLibelleReponse" >Libellé de la réponse : </label>
-		<input type="text" id="unIdReponse" name="unLibelleReponse" value="<%=reponseSelectionnee.getLibelle()%>">
+		<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
 		<br>
-		<label for="lebelReponseCorrecte" >Réponse correcte ?</label>
-		<select id="reponseCorrecte" name="reponseCorrecte">
-			<option>true</option>
-			<option>false</option>
+		<label for="labelReponseCorrecte" >La réponse est</label>
+		<select id="reponseCorrecteReponseSelectionnee">
+			<option>valide</option>
+			<option>invalide</option>
 		</select> 
 		<br>
 		<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>
 		<button type="button" id="cancelReponse" onclick="formulaireSubmit(this.form,'cancelReponse','')" >Annuler</button>
 		<button type="button" id="addReponse" onclick="formulaireSubmit(this.form,'addReponse','')" >Ajouter</button>
-		<button type="button" id="deleteReponse" onclick="formulaireSubmit(this.form,'deleteReponse','')" >Supprimer</button>
 		<table>
 			<tr>
     			<th></th>
     			<th>Réponse</th>
-    			<th>Valide</th>
+    			<th>Validité</th>
+    			<th></th>
   			</tr>
 			<% 
 				int j = 0;		
@@ -157,9 +162,10 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 				{
 			%>
 			<tr>
-			<td><input type = "radio"  id="laReponseSelectionne" name = "laReponseSelectionne" value="<%=uneReponse.getId()%>"/></td>
-          	<td><label for = "laReponseSelectionne">Reponse <%=j%> : <%= uneReponse.getLibelle() %></label></td>
-			<td>la réponse est <%=uneReponse.isEstCorrect()%></td>
+				<td><input type = "radio"  id="reponseSelectionnee" name="reponseSelectionnee" value="<%=uneReponse.getId()%>"/></td>
+	          	<td><label for = "laReponseSelectionne">Reponse <%=j%> : <%= uneReponse.getLibelle() %></label></td>
+				<td>la réponse est <%=uneReponse.isEstCorrect()%></td>
+				<td><button type="button" id="deleteReponse" onclick="formulaireSubmit(this.form,'deleteReponse','<%=uneReponse.getId()%>')" >Supprimer</button></td>
 			</tr>
 			<%
 				i++;}
@@ -169,3 +175,4 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 </article>	
 	</form>	
 
+<script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
