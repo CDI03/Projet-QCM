@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import fr.eni_ecole.jee.bo.Candidat;
 import fr.eni_ecole.jee.bo.Competence;
 import fr.eni_ecole.jee.bo.Examen;
+import fr.eni_ecole.jee.bo.QuestionPosee;
 import fr.eni_ecole.jee.bo.Test;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.outils.PoolConnection;
@@ -59,5 +60,17 @@ public class DalExamen {
 			}
 		}
 		return listExamen;
+	}
+
+	public static boolean Update(Examen examenChoisit) throws SQLException, NamingException {
+		boolean updateOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall("{ call UPDATE_ETAT_EXAMEN (?,?)}");
+			cstmt.setInt(1, examenChoisit.getId());
+			cstmt.setString(2, examenChoisit.getEtat());
+			int intUpdate = cstmt.executeUpdate();
+			updateOk = (intUpdate != 0)?true:false;
+		}
+		return updateOk;	
 	}
 }

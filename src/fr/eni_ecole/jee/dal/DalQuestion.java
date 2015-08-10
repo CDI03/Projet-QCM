@@ -32,14 +32,12 @@ public class DalQuestion {
 			
 			while (rs.next()) {
 				String enonce = rs.getString("Enonce");
-				int nbReponse = rs.getInt("NbReponses");
 				int questionID = rs.getInt("Id");
 
 		//construction d'une question
 				Question uneQuestion = new Question();
 				uneQuestion.setId(questionID);
 				uneQuestion.setEnonce(enonce);
-				uneQuestion.setNbReponses(nbReponse);
 				uneQuestion.setTheme(section.getTheme());
 		//construction de la liste
 				listQuestionSection.add(uneQuestion);

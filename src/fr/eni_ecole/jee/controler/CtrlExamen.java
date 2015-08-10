@@ -14,4 +14,8 @@ public class CtrlExamen {
 	public static ArrayList<Examen> SelectAll(Candidat leCandidat) throws SQLException, NamingException {
 		return DalExamen.SelectAll(leCandidat);
 	}
+
+	public static boolean updateEtatTest(Examen examenChoisit) throws SQLException, NamingException {
+		return DalExamen.Update(examenChoisit);
+	}
 }

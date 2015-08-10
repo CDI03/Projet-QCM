@@ -25,7 +25,7 @@ for (Reponse laReponse : reponseQuestionEnCOurs)
 String typesReponses;
 String typesBoutons;
 
-if (nbrReponsesCorrectes>0)
+if (nbrReponsesCorrectes>1)
 	{typesReponses="[Plusieurs réponses possible]";
 	 typesBoutons="checkbox";}
 else
@@ -46,10 +46,13 @@ else
 		<form action="/Projet-QCM/PassageTest" method="post" name="repondreQuestion">
 			<%
 				int i = 0;
-				String leNomReponse;
+				String leNomReponse = "";
 				for (Reponse laReponse : reponseQuestionEnCOurs) 
 				{ 		
-					leNomReponse="laReponse" + i;
+					if (typesBoutons.equals("checkbox"))
+					{leNomReponse="laReponse" + i;}
+					else if (typesBoutons.equals("radio"))
+					{leNomReponse="laReponse";}
 			%>
 			<input type=<%=typesBoutons%> name=<%=leNomReponse%> value=<%=laReponse.getId()%>><%=laReponse.getLibelle()%>
 			<br>

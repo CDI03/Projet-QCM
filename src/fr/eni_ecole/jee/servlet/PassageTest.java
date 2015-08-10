@@ -84,6 +84,9 @@ public class PassageTest extends HttpServlet {
 				if (tailleDuTest != 0)
 				{
 					numQuestionEnCours = 1;
+					//modifier etat, mettre En Cours
+					examenChoisit.setEtat("EC");
+					CtrlExamen.updateEtatTest(examenChoisit);
 					affichageQuestion(request, response);		
 				}
 				else 
@@ -134,6 +137,10 @@ public class PassageTest extends HttpServlet {
 				}
 				else 
 				{
+					//enregistrer etat
+					examenChoisit.setEtat("FN");
+					CtrlExamen.updateEtatTest(examenChoisit);
+					//rediriger vers l'acceuil
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
 				}
@@ -148,6 +155,10 @@ public class PassageTest extends HttpServlet {
 				}
 				else 
 				{
+					//enregistrer etat
+					examenChoisit.setEtat("FN");
+					CtrlExamen.updateEtatTest(examenChoisit);
+					//rediriger vers l'acceuil
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
 				}
@@ -187,6 +198,10 @@ public class PassageTest extends HttpServlet {
 				}
 				else 
 				{
+					//enregistrer etat
+					examenChoisit.setEtat("FN");
+					CtrlExamen.updateEtatTest(examenChoisit);
+					//rediriger vers l'acceuil
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
 				}
