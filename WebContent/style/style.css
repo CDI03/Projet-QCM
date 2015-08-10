@@ -95,7 +95,7 @@ button{
 
 section {
 	min-height: 150px;
-	border : solid 1px;
+	/*border : solid 1px;*/
 	margin-bottom : 10px;
 }
 
@@ -136,7 +136,9 @@ textarea{
 	resize:none;
 }
 
-
+#enonceQuestionSelectionnee {
+	font-size : 0.8em;
+}
 
 /************
 * ARTICLES  *
@@ -146,6 +148,9 @@ article {
  	margin: 1em;
 }
  
+fieldset {
+	border-radius:1em;
+}
  
 #articleThemeChoix {
 	
@@ -158,7 +163,7 @@ article {
 #fieldsetUpdateTheme {
 	display : inline-block;
 	vertical-align: top;
-	width : 35%;
+	width : 45%;
 }
 
 
@@ -169,14 +174,12 @@ article {
 }
 
 #blocImage {
-	border : 1px solid yellow;
 	display : inline-block;
 	vertical-align: top;
  	width : 105px;
 }
 
 #blocEnonce {
-	border : 1px solid yellow;
 	display : inline-block;
 	vertical-align: top;
  	width : 50%;
@@ -215,17 +218,27 @@ table {
 	
 }
 
+#enonceQuestionSelectionnee {
+	width :500px;
+}
+
 .enonce {
-	border: 1px solid black;
-	width : 500px;	
+	/*border: 1px solid black;*/
+	width : 525px;	
 }
 
-.enonce .labelEnonce {
-	width : 500px;
-	font-size:10pt;	
+.labelEnonce {
+	width : 900px;	
 }
 
+.labelEnonceQuestion {
+	width :525px;
+}
 
+td {
+	//border : 1px solid red;
+	font-size:12pt;
+}
 
 
 /**********

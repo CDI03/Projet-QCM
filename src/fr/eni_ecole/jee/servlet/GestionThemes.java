@@ -135,8 +135,7 @@ public class GestionThemes extends HttpServlet {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 		
 	}
 
@@ -157,8 +156,7 @@ public class GestionThemes extends HttpServlet {
 			e.printStackTrace();
 		}
 		//redirection
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 		
 	}
 
@@ -182,8 +180,7 @@ public class GestionThemes extends HttpServlet {
 			}
 			
 			//redirection
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-			rd.forward(request, response);
+			processRequestSelectAll (request, response);
 		
 	}
 
@@ -208,8 +205,7 @@ public class GestionThemes extends HttpServlet {
 			e.printStackTrace();
 		}
 		//redirection
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 
 	}
 
@@ -230,8 +226,7 @@ public class GestionThemes extends HttpServlet {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 	}
 
 	private void processRequestInsertReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -254,8 +249,7 @@ public class GestionThemes extends HttpServlet {
 		}
 		
 		//redirection
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 		
 	}
 

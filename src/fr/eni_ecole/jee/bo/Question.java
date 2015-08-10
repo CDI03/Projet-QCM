@@ -7,7 +7,6 @@ public class Question {
 	private int id;
 	private String enonce;
 	private Theme theme;
-	private int nbReponses;
 	private Image illustration;
 	
 	public Question() {

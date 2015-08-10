@@ -105,7 +105,6 @@ CREATE TABLE Question
     (Id INTEGER NOT NULL IDENTITY(1, 1), 
      Enonce TEXT NOT NULL ,
      Theme_Id INTEGER NOT NULL , 
-     NbReponses INTEGER NOT NULL , 
      Illustration IMAGE , 
      CONSTRAINT Question_PK PRIMARY KEY (Id));
 

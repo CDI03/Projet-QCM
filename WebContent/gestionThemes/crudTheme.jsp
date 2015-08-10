@@ -33,7 +33,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 	<article id="articleThemeChoix">
 
 		<fieldset id="fieldsetSelectionTheme">
-			<h2>Theme : sélection</h2>
+			<legend>Choix du Themes à gérer :</legend>
 			<!-- ------------------------------------- -->
 			<!--  Affichage des Formations disponibles -->
 			<!-- ------------------------------------- -->
@@ -63,17 +63,19 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 				<% for (Theme unTheme : listThemes) { %>
 					<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 				<%  } %>
-			</select>
+			</select><button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteTheme','<%=themeSelectionne.getId()%>')">Supprimer le theme</button>
 			
 		</fieldset>
 		
 		<fieldset id="fieldsetUpdateTheme">
 			<!-- ------------------------------------ -->	
 			<!--  Affichage des Update/Delete Themes  -->
-			<!-- ------------------------------------ -->	
-				<h2> Theme : Ajout / Modification</h2>
-				<input type="hidden" id="unIdTheme" name="unIdTheme" value="<%= themeSelectionne.getId() %>"> 
-				<label>Libelle du Theme : </label><input type="text" id="unLibelleTheme" value="<%= themeSelectionne.getLibelle() %>">
+			<!-- ------------------------------------ -->
+				
+				<legend id="legendTheme">Modification du Theme  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" id="addTheme" onclick="formulaireThemeVide(form, action)">Passer en mode Ajout</button></legend>	
+				<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>"> 
+				<label>Libelle du Theme : </label><input type="text" id="libelleThemeSelectionne" name="libelleThemeSelectionne" value="<%= themeSelectionne.getLibelle() %>">
 				<br>
 				<select id="listCompetencesUpdate">
 					<% 	for (Competence uneCompetence : listCompetences) { %>
@@ -81,19 +83,18 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 					<%	} %>
 				</select>
 				<br> 
-				<button type="button" id="updateTheme" onclick="formulaireSubmit(this.form,'updateTheme','')">Modifier</button>
-				<button type="button" id="deleteTheme" onclick="formulaireSubmit(this.form,'deleteTheme','')">Supprimer</button>
-				<button type="button" id="InsertTheme" onclick="formulaireSubmit(this.form,'InsertTheme','')">Ajouter</button>
+				<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTheme','')">Modifier</button>
+				<button type="button" id="Annuler" onclick="formulaireThemeVide(form, action)">Supprimer</button>
+				
 		</fieldset>
 </article>
 
-<article id="articleThemeTitre">
-	<h1>Gestion du Theme : <input type=text id="unTitreTheme" value="" disabled></h1>
-</article>
-
+<div id="articleThemeTitre">
+	<fieldset>
+	<legend id="legendQuestion">Gestion du Theme : <input type=text id="unTitreTheme" value="" disabled></legend>
 
 <article  id="articleThemeQuestion">
-	<h2>Gestion des Questions</h2><button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
+	<button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
 		
 		<!-- --------------------------------------------- -->	
 		<!--  Formulaire de Insert/Update/Delete Question  -->
@@ -104,10 +105,8 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
 		</div>
 		<div id="blocEnonce">
-			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
-			<label for="enonce" >Enoncé</label>
-				<textarea id="enonceQuestionSelectionnee" cols="40" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
-
+			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>">
+			<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="40" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
 			<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
 			<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 		</div>
@@ -191,6 +190,8 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		</table>
 	
 </article>	
-	</form>	
+	</form>
+</fieldset>
+</div>	
 
 <script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
