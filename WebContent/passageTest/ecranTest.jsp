@@ -30,10 +30,11 @@ if (nbrReponsesCorrectes>1)
 	 typesBoutons="checkbox";}
 else
 	{typesReponses="[Une seule bonne réponse]";
-	 typesBoutons="radio";};%>
+	 typesBoutons="radio";};
+%>
  
 
-<article id="ecranTest">
+<article id="articleEcranTest">
 <h1>Theme : <%=questionEnCours.getQuestion().getTheme().getLibelle()%> </h1>
 		<h2>Question N° <%=questionEnCours.getOrdre()%></h2>
 		<p>

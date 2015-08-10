@@ -70,4 +70,9 @@ public class CtrlQuestionPosee {
 	public static boolean UpdateMarque(QuestionPosee questionPosee) throws SQLException, NamingException {
 		return DalQuestionPosee.UpdateMarque(questionPosee);
 	}
+
+	public static ArrayList<QuestionPosee> recupExamenEnCours(
+			Examen examenChoisit) throws SQLException, NamingException {
+		return DalQuestionPosee.SelectAll(examenChoisit);
+	}
 }

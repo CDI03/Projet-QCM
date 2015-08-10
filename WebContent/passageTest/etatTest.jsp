@@ -8,42 +8,52 @@
 <% 
 Examen lExamenEnCours = (Examen)request.getAttribute("lExamenEnCours");
 
-ArrayList<Section> listeDesSectionsDuTest =  (ArrayList<Section>)request.getAttribute("listeDesSectionsDuTest");
-Section sectionEnCours = listeDesSectionsDuTest.get(0);
+QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnCours");
 
-Question questionEnCours = (Question)request.getAttribute("questionEnCours");
+ArrayList<QuestionPosee> listeQuestionExamen = (ArrayList<QuestionPosee>)request.getAttribute("listeQuestionExamen");
 
-ArrayList<QuestionPosee> listeQuestionsPosees =  (ArrayList<QuestionPosee>)request.getAttribute("listeQuestionPosees");
-ArrayList<ReponseDonnee> listeReponsesDonnees =  (ArrayList<ReponseDonnee>)request.getAttribute("listeReponsesDonnees");
+String etatQuestion;
 %>
  
-<article id="etatTest">
+<article id="articleEtatTest">
 	<h1>Résumé du test</h1>
-	<form action="/Projet-QCM/TODO" method="post" name="reprendreQuestion">
+	<form action="/Projet-QCM/PassageTest" method="post" name="reprendreQuestion">
+	
 	<%
-	String etatQuestion = "nonVue";
-	for (QuestionPosee laQuestion:listeQuestionsPosees) 
+	for (QuestionPosee laQuestion:listeQuestionExamen) 
 		{
-			if(laQuestion.isMarque())
-			{etatQuestion="marquee";}
-			else if (laQuestion.isRepondu())
-			{etatQuestion="repondue";}
+			etatQuestion = "etatQuestion";
+			if (laQuestion.isRepondu())
+			{
+				etatQuestion+="Repondue";
+				}
+			else if(laQuestion.isMarque() && !laQuestion.isRepondu())
+			{
+				etatQuestion+="Marquee";
+			}
+			else if (!laQuestion.isMarque() && !laQuestion.isRepondu() && laQuestion.getOrdre()<questionEnCours.getOrdre())
+			{
+				etatQuestion+="Passee";
+			}
 			else
-			{etatQuestion="passee";}
+			{
+				etatQuestion+="NonVue";
+			}
 	%>
-	<button type="submit" name=<%=laQuestion.getOrdre()%> class=etatQuestion ><%=laQuestion.getOrdre()%></button>
+	<button type="button" name=<%=laQuestion.getOrdre()%> class=<%=etatQuestion%> value=<%=laQuestion.getOrdre()%> onClick="choixQuestion(this.form, this.name)"><%=laQuestion.getOrdre()%></button>
 	<%
 		}
 	%>
-	<!--TODO Il va manquer les cases représentant les questions qui n'ont pas encore été vues... à réfléchir pour l'affichage
-		De même, la variable question en cours permettantde faire de la mise en forme n'est pas encore utilisée
-		faire la mise en forme CSS : coloration des bouton en fonction du class=etatQuestion
-	-->
+	
+	
 	<br>
-	<button type="button" name="legendeEtatRepondue" class="repondue" >Question répondue</button>
-	<button type="button" name="legendeEtatMarquee" class="marquee" >Question marquée</button>
-	<button type="button" name="legendeEtatPassee" class="passee" >Question passée</button>
+	<input type="hidden" name="hiddenField" id="hiddenField"/>
+	<input type="hidden" name="choixNumQuestion" id="choixNumQuestion"/>
+	<input type="hidden" name="lExamen" value=<%= lExamenEnCours.getId()%>>
+	<button type="button" name="legendeEtatRepondue" class="etatQuestionRepondue" disabled="disabled">Question répondue</button>
+	<button type="button" name="legendeEtatMarquee" class="etatQuestionMarquee" disabled="disabled">Question marquée</button>
+	<button type="button" name="legendeEtatPassee" class="etatQuestionPassee" disabled="disabled">Question passée</button>
 	<br>
-	<button type="submit" name="finDuTest" >Terminer le test</button>
+	<button type="button" name="finDuTest" onclick="choixBouton(this.form,this.name,'FIN DU TEST')" >Terminer le test</button>
 	</form>
 </article>

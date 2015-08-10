@@ -28,9 +28,10 @@ public class DalQuestionPosee {
 		ArrayList<QuestionPosee> listQuestionPosee = new ArrayList<QuestionPosee>();
 		
 		//Enregistrer la liste des Questions
-		/*try (Connection cnx = PoolConnection.getConnection()) {
+		try (Connection cnx = PoolConnection.getConnection()) {
 			int position = 0;
 			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_QUESTIONPOSEE (?)}");
+			cmd.setInt(1, examenChoisit.getId());
 			ResultSet rs = cmd.executeQuery();
 			
 			while (rs.next())
@@ -38,14 +39,13 @@ public class DalQuestionPosee {
 				//faire la création de la liste de question posée
 				QuestionPosee laQuestionEnEnregistrement = new QuestionPosee();
 				laQuestionEnEnregistrement.setExamen(examenChoisit);
-				laQuestionEnEnregistrement.setMarque(rs.getBoolean(columnIndex));
-				laQuestionEnEnregistrement.setRepondu(rs.getBoolean(columnIndex));
-				//laQuestionEnEnregistrement.setQuestion(rs.get);
-				laQuestionEnEnregistrement.setOrdre(rs.getInt(columnIndex));
+				laQuestionEnEnregistrement.setMarque(rs.getBoolean("Marque"));
+				laQuestionEnEnregistrement.setRepondu(rs.getBoolean("Repondu"));
+				laQuestionEnEnregistrement.setOrdre(rs.getInt("Ordre"));
 				
 				listQuestionPosee.add(laQuestionEnEnregistrement);
 			}
-		}	*/
+		}	
 		return listQuestionPosee;	
 	}
 

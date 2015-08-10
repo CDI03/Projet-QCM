@@ -22,7 +22,9 @@ QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnC
 
 <Section>
 	<jsp:include page="./ecranTest.jsp"></jsp:include>
+	<jsp:include page="./etatTest.jsp"></jsp:include>
 </section>
 <script type="text/javascript" src="./javascript/choixBouton.js"></script>
+<script type="text/javascript" src="./javascript/choixQuestion.js"></script>
 <jsp:include page="<%=piedDePage%>"></jsp:include>
 

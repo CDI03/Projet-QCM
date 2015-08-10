@@ -34,6 +34,7 @@ public class PassageTest extends HttpServlet {
 	
 	private Examen examenChoisit;
 	private QuestionPosee questionEnCours;
+	private ArrayList<QuestionPosee> listeQuestionExamen;
 	private ArrayList<Reponse> reponseQuestionEnCours;
 	private int numQuestionEnCours;
 	private int tailleDuTest;
@@ -75,6 +76,7 @@ public class PassageTest extends HttpServlet {
 			
 			String choixBouton = request.getParameter("hiddenField");
 			request.setAttribute("choixBouton", choixBouton);
+			RequestDispatcher rd;
 			
 			switch (choixBouton) {
 			case "commencerExamen":
@@ -92,7 +94,7 @@ public class PassageTest extends HttpServlet {
 				else 
 				{
 					request.setAttribute("erreur", "Erreur creation du test");
-					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/erreur/erreur.jsp");
+					rd = this.getServletContext().getRequestDispatcher("/erreur/erreur.jsp");
 					rd.forward(request, response);
 				}
 				break;
@@ -141,7 +143,7 @@ public class PassageTest extends HttpServlet {
 					examenChoisit.setEtat("FN");
 					CtrlExamen.updateEtatTest(examenChoisit);
 					//rediriger vers l'acceuil
-					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
+					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
 				}
 				break;
@@ -149,19 +151,7 @@ public class PassageTest extends HttpServlet {
 				System.out.println("passe la question");
 				int numQuestionPosee2 = Integer.parseInt(request.getParameter("numQuestionPosee"));
 				numQuestionEnCours = numQuestionPosee2+1;
-				if (numQuestionEnCours<=tailleDuTest)
-				{
-					affichageQuestion(request, response);
-				}
-				else 
-				{
-					//enregistrer etat
-					examenChoisit.setEtat("FN");
-					CtrlExamen.updateEtatTest(examenChoisit);
-					//rediriger vers l'acceuil
-					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
-					rd.forward(request, response);
-				}
+				affichageQuestion(request, response);
 				break;
 			case "marquer":
 				System.out.println("marque la question");
@@ -202,14 +192,27 @@ public class PassageTest extends HttpServlet {
 					examenChoisit.setEtat("FN");
 					CtrlExamen.updateEtatTest(examenChoisit);
 					//rediriger vers l'acceuil
-					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
+					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
 				}
+				break;
+			case "repasserQuestion":
+				System.out.println("repasse la question");
+				numQuestionEnCours = Integer.parseInt(request.getParameter("choixNumQuestion"));
+				affichageQuestion(request, response);	
+				break;
+			case "finDuTest":
+				//enregistrer etat
+				examenChoisit.setEtat("FN");
+				CtrlExamen.updateEtatTest(examenChoisit);
+				//rediriger vers l'acceuil
+				rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
+				rd.forward(request, response);
 				break;
 			default:
 				System.out.println("ERREUR CHOIX BOUTON!!!!!!");
 				request.setAttribute("erreur", "Erreur Choix d'action");
-				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/erreur/erreur.jsp");
+				rd = this.getServletContext().getRequestDispatcher("/erreur/erreur.jsp");
 				rd.forward(request, response);
 				break;
 			}		
@@ -230,8 +233,10 @@ public class PassageTest extends HttpServlet {
 	{
 		try {
 			questionEnCours = CtrlQuestionPosee.recupQuestionEnCours(examenChoisit,numQuestionEnCours);
+			listeQuestionExamen = CtrlQuestionPosee.recupExamenEnCours(examenChoisit);
 			reponseQuestionEnCours = CtrlReponse.selectReponseQuestion(questionEnCours);
 			request.setAttribute("questionEnCours", questionEnCours);
+			request.setAttribute("listeQuestionExamen", listeQuestionExamen);
 			request.setAttribute("listReponseQuestionEnCours", reponseQuestionEnCours);
 			request.setAttribute("tailleDuTest", tailleDuTest);
 			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	

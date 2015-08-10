@@ -70,6 +70,25 @@ h2{
 	text-align: center;
 }
 
+/********************************
+ * MISE EN FORME BOUTONS *
+ ********************************/
+button{
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);	
+    background: rgb(105, 105, 105); /* this is dark gray */
+}
+.etatQuestionRepondue {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+.etatQuestionPassee {
+    background: rgb(202, 60, 60); /* this is a red */
+ }
+.etatQuestionMarquee {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
 /***********
 * SECTIONS *
 ************/
@@ -176,7 +195,18 @@ article {
  	vertical-align: top;
  	width : 40%
 }
- 	
+ 
+#articleEcranTest{
+ 	display : inline-block;
+ 	vertical-align: top;
+ 	width : 60%
+}
+
+#articleEtatTest{
+ 	display : inline-block;
+ 	vertical-align: top;
+ 	width : 30%
+}
 
 /********
 * TABLE *
