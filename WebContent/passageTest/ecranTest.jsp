@@ -1,25 +1,17 @@
+<%@page import="fr.eni_ecole.jee.bo.QuestionPosee"%>
 <%@page import="fr.eni_ecole.jee.bo.Reponse"%>
 <%@page import="fr.eni_ecole.jee.bo.Question"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="fr.eni_ecole.jee.bo.Section"%>
 <%@page import="fr.eni_ecole.jee.bo.Examen"%>
 
+
 <% 
 Examen lExamenEnCours = (Examen)request.getAttribute("lExamenEnCours");
 
-ArrayList<Question> listQuestionExamen = (ArrayList<Question>)request.getAttribute("listQuestionExamen");
-int numQuestionEnCours = (int)request.getAttribute("numQuestionEnCours");
-Question questionEnCours = listQuestionExamen.get(numQuestionEnCours);
+QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnCours");
 
-ArrayList<Reponse> listReponseExamen = (ArrayList<Reponse>)request.getAttribute("listReponseExamen");
-ArrayList<Reponse> reponseQuestionEnCOurs = new ArrayList<Reponse>();
-for (Reponse reponse : listReponseExamen) 
-{
-	if (reponse.getQuestion().getId() == questionEnCours.getId())
-	{	
-		reponseQuestionEnCOurs.add(reponse);
-	}
-}
+ArrayList<Reponse> reponseQuestionEnCOurs = (ArrayList<Reponse>)request.getAttribute("listReponseQuestionEnCours");
 
 int nbrReponsesCorrectes=0;
 for (Reponse laReponse : reponseQuestionEnCOurs) 
@@ -38,30 +30,39 @@ if (nbrReponsesCorrectes>0)
 	 typesBoutons="checkbox";}
 else
 	{typesReponses="[Une seule bonne réponse]";
-	 typesBoutons="radio";};
-%>
+	 typesBoutons="radio";};%>
  
 
 <article id="ecranTest">
-	<h1>Theme : <%=sectionEnCours.getTheme().getLibelle()%> </h1>
-		<h2>Question N° <%="TODO"%></h2>
+<h1>Theme : <%=questionEnCours.getQuestion().getTheme().getLibelle()%> </h1>
+		<h2>Question N° <%=questionEnCours.getOrdre()%></h2>
 		<p>
-			Enoncé : <%=questionEnCours.getEnonce() %>
+			<b>Enoncé : </b> <%=questionEnCours.getQuestion().getEnonce()%>
 		</p>
-		<img alt="Illustration Question" src=<%=questionEnCours .getIllustration()%>>
+		<!--img alt="Illustration Question" src="TODO"-->
 		<br>
 		<p><%=typesReponses%></p>
-		<form action="/Projet-QCM/TODO" method="post" name="repondreQuestion">
+		<br>
+		<form action="/Projet-QCM/PassageTest" method="post" name="repondreQuestion">
 			<%
-				for (Reponse laReponse : reponsesDeLaQuestion) 
+				int i = 0;
+				String leNomReponse;
+				for (Reponse laReponse : reponseQuestionEnCOurs) 
 				{ 		
+					leNomReponse="laReponse" + i;
 			%>
-			<input type=<%=typesBoutons%> name=<%=laReponse.getIdentifiant()%> value=<%=laReponse.isEstCorrect()%>><%=laReponse.getLibelle()%>
+			<input type=<%=typesBoutons%> name=<%=leNomReponse%> value=<%=laReponse.getId()%>><%=laReponse.getLibelle()%>
+			<br>
 			<%
-				}
+				i++;}
 			%>
-			<button type="submit" name="valider">Valider</button>
-			<button type="submit" name="passer">Passer</button>
-			<button type="button" name="marquer" >Marquer la question</button>
+			<button type="button" name="valider" onclick="choixBouton(this.form,'valider');">Valider</button>
+			<button type="button" name="passer" onclick="choixBouton(this.form,'passer');">Passer</button>
+			<button type="button" name="marquer" onclick="choixBouton(this.form,'marquer');">Marquer la question</button>
+			<input type="hidden" name="hiddenField" id="hiddenField"/>
+			<input type="hidden" name="numQuestionPosee" id="numQuestionPosee" value=<%=questionEnCours.getOrdre()%>>
+			<input type="hidden" name="idQuestion" id="idQuestion" value=<%=questionEnCours.getQuestion().getId()%>>
+			<input type="hidden" name="lExamen" value=<%= lExamenEnCours.getId()%>>
 		</form>	
 </article>
+

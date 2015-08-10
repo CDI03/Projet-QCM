@@ -9,7 +9,7 @@
 
 <% 
 Candidat leCandidatEnCours = (Candidat)request.getSession().getAttribute("candidatConnecte");
-ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribute("examenDuCandidat");
+ArrayList<Examen> examenDuCandidat = (ArrayList<Examen>)request.getSession().getAttribute("examenDuCandidat");
 %>
 
 <jsp:include page="<%=enTete%>">
@@ -20,7 +20,7 @@ ArrayList<Examen> listeExamenDuCandidat = (ArrayList<Examen>)request.getAttribut
 
 <Section>
 	<h1>Bonjour <%=leCandidatEnCours.getPrenom()+" "+leCandidatEnCours.getNom() %></h1>
-	<% for (Examen lExamen : listeExamenDuCandidat)
+	<% for (Examen lExamen : examenDuCandidat)
 				{ 
 	%>
 		<article class="examensCandidat">

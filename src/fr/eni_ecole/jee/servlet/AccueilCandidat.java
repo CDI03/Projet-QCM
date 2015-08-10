@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni_ecole.jee.bo.Candidat;
 import fr.eni_ecole.jee.bo.Examen;
@@ -46,11 +47,12 @@ public class AccueilCandidat extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Candidat leCandidatEnCours = (Candidat)request.getSession().getAttribute("candidatConnecte");
+			HttpSession session = request.getSession(true);   
 			
 			if (leCandidatEnCours != null)
 				{
 					ArrayList<Examen> examenDuCandidat = CtrlExamen.SelectAll(leCandidatEnCours);
-					request.setAttribute("examenDuCandidat", examenDuCandidat);
+					session.setAttribute("examenDuCandidat", examenDuCandidat);
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/accueilCandidat/acceuilCandidat.jsp");	
 					rd.forward(request, response);
 				}

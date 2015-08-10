@@ -28,7 +28,7 @@ public class DalExamen {
 		//Récupération des données
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_EXAMEN_CANDIDAT (?)}");
-			cmd.setString(1, leCandidat.getid());
+			cmd.setString(1, leCandidat.getId());
 			ResultSet rs = cmd.executeQuery();			
 			while (rs.next()) {
 				int testId = rs.getInt("Test_Id");

@@ -31,11 +31,10 @@ public class DalQuestion {
 			ResultSet rs = cmd.executeQuery();		
 			
 			while (rs.next()) {
-				int questionID = rs.getInt("Question_Id");
 				String enonce = rs.getString("Enonce");
 				int nbReponse = rs.getInt("NbReponses");
-				
-				
+				int questionID = rs.getInt("Id");
+
 		//construction d'une question
 				Question uneQuestion = new Question();
 				uneQuestion.setId(questionID);
