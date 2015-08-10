@@ -109,7 +109,6 @@ public class DalQuestionPosee {
 					laQuestion.setEnonce(rs.getString("Enonce"));
 					laQuestion.setId(rs.getInt("Question_Id"));
 					//laQuestion.setIllustration(illustration);
-					laQuestion.setNbReponses(rs.getInt("NbReponses"));
 					laQuestion.setTheme(leTheme);
 					//Créer une Question posée
 					laQuestionEnEnregistrement.setExamen(examenChoisit);
