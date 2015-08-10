@@ -34,6 +34,7 @@ public class PassageTest extends HttpServlet {
 	
 	private Examen examenChoisit;
 	private QuestionPosee questionEnCours;
+	private QuestionPosee derniereQuestionMarqueeouValidee;
 	private ArrayList<QuestionPosee> listeQuestionExamen;
 	private ArrayList<Reponse> reponseQuestionEnCours;
 	private int numQuestionEnCours;
@@ -235,8 +236,12 @@ public class PassageTest extends HttpServlet {
 			questionEnCours = CtrlQuestionPosee.recupQuestionEnCours(examenChoisit,numQuestionEnCours);
 			listeQuestionExamen = CtrlQuestionPosee.recupExamenEnCours(examenChoisit);
 			reponseQuestionEnCours = CtrlReponse.selectReponseQuestion(questionEnCours);
+			derniereQuestionMarqueeouValidee = CtrlQuestionPosee.recupDerniereQuestion(examenChoisit);
+			if (derniereQuestionMarqueeouValidee == null)
+				{derniereQuestionMarqueeouValidee = listeQuestionExamen.get(0);}
 			request.setAttribute("questionEnCours", questionEnCours);
 			request.setAttribute("listeQuestionExamen", listeQuestionExamen);
+			request.setAttribute("derniereQuestionMarqueeouValidee", derniereQuestionMarqueeouValidee);
 			request.setAttribute("listReponseQuestionEnCours", reponseQuestionEnCours);
 			request.setAttribute("tailleDuTest", tailleDuTest);
 			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	

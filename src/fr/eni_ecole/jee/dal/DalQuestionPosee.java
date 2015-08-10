@@ -146,4 +146,42 @@ public class DalQuestionPosee {
 		}
 		return updateOk;	
 	}
+
+	public static QuestionPosee SelectLast(Examen examenChoisit) throws SQLException, NamingException {
+		//Crer une question
+		QuestionPosee laQuestionEnEnregistrement = null;
+		try (Connection cnx = PoolConnection.getConnection()) 
+		{
+			
+			cnx.setAutoCommit(false);
+			
+			CallableStatement cmd = cnx.prepareCall("{ call SELECT_LAST_QUESTIONPOSEE (?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			cmd.setInt(1, examenChoisit.getId());
+			
+			ResultSet rs = cmd.executeQuery();
+			
+			//test si le ResultSet ne contient qu'une seule ligne
+			rs.last();	
+			laQuestionEnEnregistrement = new QuestionPosee();
+			//Créer un Theme
+			//Theme leTheme = new Theme();
+			//leTheme.setId(rs.getInt("Theme_Id"));
+			//leTheme.setLibelle(rs.getString("Libelle"));					
+			//Créer une Question
+			//Question laQuestion = new Question();
+			//laQuestion.setEnonce(rs.getString("Enonce"));
+			//laQuestion.setId(rs.getInt("Question_Id"));
+			//laQuestion.setIllustration(illustration);
+			//laQuestion.setNbReponses(rs.getInt("NbReponses"));
+			//laQuestion.setTheme(leTheme);
+			//Créer une Question posée
+			laQuestionEnEnregistrement.setExamen(examenChoisit);
+			laQuestionEnEnregistrement.setOrdre(rs.getInt("Ordre"));
+			//laQuestionEnEnregistrement.setQuestion(laQuestion);
+			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Marque"));
+			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Repondu"));	
+			cnx.commit();
+		}	
+		return laQuestionEnEnregistrement;	
+	}
 }

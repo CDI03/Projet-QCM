@@ -75,4 +75,8 @@ public class CtrlQuestionPosee {
 			Examen examenChoisit) throws SQLException, NamingException {
 		return DalQuestionPosee.SelectAll(examenChoisit);
 	}
+
+	public static QuestionPosee recupDerniereQuestion(Examen examenChoisit) throws SQLException, NamingException {
+		return DalQuestionPosee.SelectLast(examenChoisit);
+	}
 }
