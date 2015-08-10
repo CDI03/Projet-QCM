@@ -1,7 +1,6 @@
 package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
-
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -26,6 +25,19 @@ public class CtrlReponse {
 	public static ArrayList<Reponse> selectReponseQuestion(QuestionPosee questionEnCours) throws SQLException, NamingException {
 		
 		return DalReponse.SelectAll(questionEnCours.getQuestion());
+	}
+
+	public static Boolean Insert(Reponse uneReponse) throws SQLException, NamingException {
+		return DalReponse.Insert(uneReponse);
+		
+	}
+
+	public static Boolean Delete(int idReponse) throws SQLException, NamingException {
+		return DalReponse.Delete(idReponse);
+	}
+
+	public static Boolean Update(Reponse uneReponse) throws SQLException, NamingException {
+		return DalReponse.Update(uneReponse);
 	}
 
 }

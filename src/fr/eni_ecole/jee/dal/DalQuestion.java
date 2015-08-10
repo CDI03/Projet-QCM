@@ -20,6 +20,9 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalQuestion {
 	
 	private final static String SELECTALLBYTHEME = "{ call SelectAllByTheme_Question (?) }";
+	private final static String INSERT = "{ call Insert_Question (?,?,?) }";
+	private final static String DELETE = "{ call Delete_Question (?) }";
+	private final static String UPDATE = "{ call Update_Question (?,?,?) }";
 
 	public static ArrayList<Question> SelectAll(Section section) throws SQLException, NamingException {
 		// recuperer une liste de question au hasard en fonction du nombre définit par la section	
@@ -63,13 +66,54 @@ public class DalQuestion {
 				Question uneQuestion = new Question();
 				uneQuestion.setId(questionID);
 				uneQuestion.setEnonce(enonce);
-				uneQuestion.setNbReponses(nbReponse);
 				
 		//construction de la liste
 				listQuestions.add(uneQuestion);
 			}
 		}	
 		return listQuestions;
+	}
+
+
+	public static Boolean Insert(Question uneQuestion) throws SQLException, NamingException {
+		boolean insertOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(INSERT);
+			cstmt.setInt(1, uneQuestion.getId());
+			cstmt.setString(2, uneQuestion.getEnonce());
+			cstmt.setInt(3, uneQuestion.getTheme().getId());
+			//cstmt.setString(4, uneQuestion.getIllustration());
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
+		return insertOk;
+	}
+
+
+	public static Boolean Update(Question uneQuestion) throws SQLException, NamingException {
+		boolean updateOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(UPDATE);
+			cstmt.setInt(1, uneQuestion.getId());
+			cstmt.setString(2, uneQuestion.getEnonce());
+			cstmt.setInt(3, uneQuestion.getTheme().getId());
+			//cstmt.setString(4, uneQuestion.getIllustration());
+			int intUpdate = cstmt.executeUpdate();
+			updateOk = (intUpdate != 0)?true:false;
+		}
+		return updateOk;
+	}
+
+
+	public static Boolean Delete(int idQuestion) throws SQLException, NamingException {
+		boolean deleteOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DELETE);
+			cstmt.setInt(1, idQuestion);
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
+		return deleteOk;
 	}
 
 }

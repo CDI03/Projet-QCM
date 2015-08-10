@@ -25,11 +25,11 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 
 <form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
 	
-	<input type="text" id="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
-	<input type="text" id="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
-	<input type="text" id="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
+	<input type="hidden" id="idFormationSelectionnee" name="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
+	<input type="hidden" id="idCompetenceSelectionnee" name="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
+	<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
 	
-	<input type="text" id="action" name ="action" value="">
+	<input type="hidden" id="action" name ="action" value="">
 	<article id="articleThemeChoix">
 
 		<fieldset id="fieldsetSelectionTheme">
@@ -100,19 +100,14 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		<!-- --------------------------------------------- -->	
 		<fieldset>
 		<legend id="legendQuestion">Modification de la question</legend>
-		<input type="text" id="modeQuestion" value="Mode modification" disabled><br>
 		<div id="blocImage">
 		<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
 		</div>
 		<div id="blocEnonce">
 			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
 			<label for="enonce" >Enoncé</label>
-				<textarea id="enonceQuestionSelectionnee"><%=questionSelectionnee.getEnonce()%></textarea>
-			<label for="nbBonnesReponses">Type de question :</label>
-			<select id="nbBonnesReponsesQuestionSelectionnee" name="nbBonnesReponsesQuestionSelectionnee">
-				<option value="1">une seule bonne réponse</option>
-				<option value="2">plusieurs bonnes réponses</option>
-			</select><br>
+				<textarea id="enonceQuestionSelectionnee" cols="40" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
+
 			<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
 			<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 		</div>
@@ -129,7 +124,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<%  int i = 1;		
 				for (Question uneQuestion : listQuestions) { %>
 			<tr>
-			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"
+			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'choixQuestion', this.value)"
 							<% if (uneQuestion.getId() == questionSelectionnee.getId()) {%>
 									checked
 							<%}%>
@@ -151,9 +146,11 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
 			<br>
 			<label for="labelReponseCorrecte" >La réponse est</label>
-			<select id="reponseCorrecteReponseSelectionnee">
-				<option>valide</option>
-				<option>invalide</option>
+			<input type="hidden" id="reponseCorrecteReponseSelectionnee" name="reponseCorrecteReponseSelectionnee"
+				value="<%=reponseSelectionnee.isEstCorrect()%>">
+			<select id="validiteReponseSelectionnee" onchange="formulaireChangeValidite(this.form,this.value)">
+				<option value="1">valide</option>
+				<option value="0">invalide</option>
 			</select> 
 			<br>
 			<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>

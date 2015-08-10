@@ -1,14 +1,21 @@
 
+function formulaireChangeValidite(form, param) {
+	if (param == 1) {
+		document.getElementById("reponseCorrecteReponseSelectionnee").value = "true";
+	} else {
+		document.getElementById("reponseCorrecteReponseSelectionnee").value = "false";
+	}
+}
+
 function formulaireReponseVide(form, action) {
 	if (action == 'insertReponse') {
 		form.action.value = action;
 		document.getElementById("legendReponse").innerHTML="Mode ajout";
-		document.getElementById("modeReponse").value="Mode ajout";
 	}
 	document.getElementById("libelleReponseSelectionnee").value ="";
 	document.getElementById("libelleReponseSelectionnee").focus();
-	
 }
+
 function formulaireQuestionVide(form, action) {
 	if (action == 'insertQuestion') {
 		form.action.value = action;
@@ -16,10 +23,7 @@ function formulaireQuestionVide(form, action) {
 	}
 	document.getElementById("enonceQuestionSelectionnee").value ="";
 	document.getElementById("libelleQuestionSelectionnee").focus();
-	
 }
-
-
 
 function formulaireSubmit(form, action, param) {
 	
@@ -35,13 +39,23 @@ function formulaireSubmit(form, action, param) {
 		form.idReponseSelectionnee.value = param;
 		form.action.value = action;
 	}
+	if (action == 'deleteQuestion') {
+		form.idQuestionSelectionnee.value = param;
+		form.action.value = action;
+	}
 	if (action == 'insertUpdateReponse') {
 		if (form.action.value !=  'insertReponse') {
 			form.action.value = 'updateReponse';
 		}
 	}
+	if (action == 'insertUpdateQuestion') {
+		if (form.action.value !=  'insertQuestion') {
+			form.action.value = 'updateQuestion';
+		}
+	}
 	
 	
+	//alert(form.action.value);
 	form.submit();
 }
 
@@ -75,6 +89,11 @@ function initialisation() {
 	
 	document.getElementById("unTitreTheme").value=document.getElementById("unLibelleTheme").value;
 	
+	if (document.getElementById("reponseCorrecteReponseSelectionnee").value == 'true') {
+		document.getElementById("validiteReponseSelectionnee").selectedIndex = 0;
+	} else {
+		document.getElementById("validiteReponseSelectionnee").selectedIndex = 1;
+	}
 }
 window.onload = initialisation;
 
