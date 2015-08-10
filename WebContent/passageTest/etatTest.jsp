@@ -8,7 +8,7 @@
 <% 
 Examen lExamenEnCours = (Examen)request.getAttribute("lExamenEnCours");
 
-QuestionPosee derniereQuestionMarqueeouValidee = (QuestionPosee)request.getAttribute("derniereQuestionMarquee");
+QuestionPosee derniereQuestionMarqueeouValidee = (QuestionPosee)request.getAttribute("derniereQuestionMarqueeouValidee");
 
 ArrayList<QuestionPosee> listeQuestionExamen = (ArrayList<QuestionPosee>)request.getAttribute("listeQuestionExamen");
 

@@ -7,5 +7,5 @@ BEGIN
 		Marque,
 		Repondu
 	FROM QuestionPosee
-	WHERE Examen_Id = @Examen_Id
+	WHERE Examen_Id = @Examen_Id AND (Marque=1 OR Repondu=1);
 END

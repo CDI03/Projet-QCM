@@ -159,8 +159,8 @@ public class DalQuestionPosee {
 			cmd.setInt(1, examenChoisit.getId());
 			
 			ResultSet rs = cmd.executeQuery();
-			
-			//test si le ResultSet ne contient qu'une seule ligne
+			if (rs!=null)
+			{//test si le ResultSet ne contient qu'une seule ligne
 			rs.last();	
 			laQuestionEnEnregistrement = new QuestionPosee();
 			//Créer un Theme
@@ -179,7 +179,8 @@ public class DalQuestionPosee {
 			laQuestionEnEnregistrement.setOrdre(rs.getInt("Ordre"));
 			//laQuestionEnEnregistrement.setQuestion(laQuestion);
 			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Marque"));
-			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Repondu"));	
+			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Repondu"));
+			}
 			cnx.commit();
 		}	
 		return laQuestionEnEnregistrement;	
