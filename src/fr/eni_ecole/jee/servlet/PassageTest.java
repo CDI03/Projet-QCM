@@ -25,7 +25,7 @@ import fr.eni_ecole.jee.controler.CtrlExamen;
 import fr.eni_ecole.jee.controler.CtrlQuestionPosee;
 import fr.eni_ecole.jee.controler.CtrlReponse;
 import fr.eni_ecole.jee.controler.CtrlReponseDonnee;
-import fr.eni_ecole.jee.controler.CtrlResultatsExamen;
+/*import fr.eni_ecole.jee.controler.CtrlResultatsExamen;*/
 
 /**
  * Servlet implementation class PassageTest
@@ -148,7 +148,7 @@ public class PassageTest extends HttpServlet {
 					CtrlExamen.updateEtatTest(examenChoisit);
 					
 					//Enregistrer le résultat Examen
-					CtrlResultatsExamen.enregistreResultats(examenChoisit);
+					/*CtrlResultatsExamen.enregistreResultats(examenChoisit);*/
 					
 					//rediriger vers l'acceuil
 					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
@@ -201,7 +201,7 @@ public class PassageTest extends HttpServlet {
 					CtrlExamen.updateEtatTest(examenChoisit);
 					
 					//Enregistrer le résultat Examen
-					CtrlResultatsExamen.enregistreResultats(examenChoisit);
+					/*CtrlResultatsExamen.enregistreResultats(examenChoisit);*/
 					
 					//rediriger vers l'acceuil
 					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
@@ -219,7 +219,7 @@ public class PassageTest extends HttpServlet {
 				CtrlExamen.updateEtatTest(examenChoisit);
 				
 				//Enregistrer le résultat Examen
-				CtrlResultatsExamen.enregistreResultats(examenChoisit);
+				/*CtrlResultatsExamen.enregistreResultats(examenChoisit);*/
 				
 				//TODO Purger les questions posées/réponses données
 				

@@ -16,6 +16,16 @@
   </resource-ref>
   <servlet>
     <description></description>
+    <display-name>GestionTests</display-name>
+    <servlet-name>GestionTests</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.GestionTests</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionTests</servlet-name>
+    <url-pattern>/GestionTests</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>GestionThemes</display-name>
     <servlet-name>GestionThemes</servlet-name>
     <servlet-class>fr.eni_ecole.jee.servlet.GestionThemes</servlet-class>

@@ -21,13 +21,10 @@ import fr.eni_ecole.jee.bo.Question;
 import fr.eni_ecole.jee.bo.Reponse;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.controler.CtrlCompetence;
-import fr.eni_ecole.jee.controler.CtrlCompetences;
 import fr.eni_ecole.jee.controler.CtrlFormation;
 import fr.eni_ecole.jee.controler.CtrlQuestion;
 import fr.eni_ecole.jee.controler.CtrlReponse;
 import fr.eni_ecole.jee.controler.CtrlTheme;
-import fr.eni_ecole.jee.controler.CtrlThemes;
-import fr.eni_ecole.jee.dal.DalThemes;
 
 /**
  * Servlet implementation class gestionThemes
@@ -526,7 +523,5 @@ public class GestionThemes extends HttpServlet {
 		uneReponse.setQuestion(uneQuestion);
 		return uneReponse;
 	}
-	
-	
-	
+
 }

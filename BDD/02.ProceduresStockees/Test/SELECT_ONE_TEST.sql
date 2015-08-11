@@ -7,7 +7,6 @@ BEGIN
 			th.Id as Id_Theme,
 			th.Libelle as Libelle_Theme,
 			q.Illustration,
-			q.NbReponses,
 			q.Enonce,
 			q.Id as Id_Question,
 			r.EstCorrect,
