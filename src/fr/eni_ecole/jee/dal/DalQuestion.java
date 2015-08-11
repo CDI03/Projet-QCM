@@ -84,6 +84,7 @@ public class DalQuestion {
 			//cstmt.setString(4, uneQuestion.getIllustration());
 			int intInsert = cstmt.executeUpdate();
 			insertOk = (intInsert != 0)?true:false;
+			
 		}
 		return insertOk;
 	}

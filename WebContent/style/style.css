@@ -131,8 +131,6 @@ form input {
 }
 
 textarea{ 
-	cols : 15;
-	rows : 3;
 	resize:none;
 }
 
@@ -163,7 +161,7 @@ fieldset {
 #fieldsetUpdateTheme {
 	display : inline-block;
 	vertical-align: top;
-	width : 45%;
+	width : 40%;
 }
 
 
@@ -224,7 +222,7 @@ table {
 
 .enonce {
 	/*border: 1px solid black;*/
-	width : 525px;	
+	width : 475px;	
 }
 
 .labelEnonce {
@@ -232,7 +230,7 @@ table {
 }
 
 .labelEnonceQuestion {
-	width :525px;
+	width :475px;
 }
 
 td {

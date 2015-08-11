@@ -74,11 +74,11 @@ public class DalTheme {
 		return updateOk;	
 	}
 
-	public static boolean Delete(Theme theme) throws SQLException, NamingException {
+	public static boolean Delete(int idTheme) throws SQLException, NamingException {
 		boolean deleteOk = false;
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cstmt = cnx.prepareCall(DELETE);
-			cstmt.setInt(1, theme.getId());
+			cstmt.setInt(1, idTheme);
 			int intDelete = cstmt.executeUpdate();
 			deleteOk = (intDelete != 0)?true:false;
 		}

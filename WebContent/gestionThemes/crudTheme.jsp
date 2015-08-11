@@ -37,7 +37,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ------------------------------------- -->
 			<!--  Affichage des Formations disponibles -->
 			<!-- ------------------------------------- -->
-			<select id="listFormations" name="listFormations" onchange="formulaireSubmit(this.form,'ChoixFormation','')">
+			<select id="listFormations" name="listFormations" onchange="formulaireSubmit(this.form,'selectionFormations','')">
 				<% for (Formation uneFormation : listFormations) { %>
 				<option value="<%=uneFormation.getId().trim()%>"><%=uneFormation.getTitre()%></option>
 				<% } %>
@@ -48,7 +48,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- -------------------------------------- -->		
 			<!--  Affichage des compétences disponibles -->
 			<!-- -------------------------------------- -->	
-			<select id="listCompetences" name="listCompetences" onchange="formulaireSubmit(this.form,'ChoixCompétence','')">
+			<select id="listCompetences" name="listCompetences" onchange="formulaireSubmit(this.form,'selectionCompetences','')">
 				<% for (Competence uneCompetence : listCompetences) { %>
 				<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
 				<% } %>
@@ -59,7 +59,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ---------------------- -->	
 			<!--  Affichage des themes  -->
 			<!-- ---------------------- -->	
-			<select id="listThemes" name="listThemes" onchange="formulaireSubmit(this.form,'ChoixTheme','')">
+			<select id="listThemes" name="listThemes" onchange="formulaireSubmit(this.form,'selectionThemes','')">
 				<% for (Theme unTheme : listThemes) { %>
 					<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 				<%  } %>
@@ -73,7 +73,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<!-- ------------------------------------ -->
 				
 				<legend id="legendTheme">Modification du Theme  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" id="addTheme" onclick="formulaireThemeVide(form, action)">Passer en mode Ajout</button></legend>	
+				<button type="button" id="addTheme" onclick="formulaireThemeVide(form, 'insertTheme')">Passer en mode Ajout</button></legend>	
 				<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>"> 
 				<label>Libelle du Theme : </label><input type="text" id="libelleThemeSelectionne" name="libelleThemeSelectionne" value="<%= themeSelectionne.getLibelle() %>">
 				<br>
@@ -83,8 +83,8 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 					<%	} %>
 				</select>
 				<br> 
-				<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTheme','')">Modifier</button>
-				<button type="button" id="Annuler" onclick="formulaireThemeVide(form, action)">Supprimer</button>
+				<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTheme','')">Valider</button>
+				<button type="button" id="Annuler" onclick="formulaireThemeVide(form, 'cancelTheme)">Annuler</button>
 				
 		</fieldset>
 </article>
@@ -106,7 +106,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		</div>
 		<div id="blocEnonce">
 			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>">
-			<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="40" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
+			<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="20" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
 			<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
 			<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 		</div>

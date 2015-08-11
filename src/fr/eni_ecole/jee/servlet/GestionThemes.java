@@ -100,14 +100,25 @@ public class GestionThemes extends HttpServlet {
 				} else {
 				processRequestDeleteReponse (request, response);
 				}
-			} else if (request.getParameter("action").toString().equalsIgnoreCase("insert")) {
-				processRequestInsert (request, response);
-			} else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
-				processRequestUpdate (request, response);
-			} else if (request.getParameter("action").toString().equalsIgnoreCase("delete")) {
-				processRequestDelete (request, response);
-			} else if (request.getParameter("action").toString().equalsIgnoreCase("load")) {
-				processRequestLoad (request, response);
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("insertTheme")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestInsertTheme (request, response);
+				}
+				
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("updateTheme")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {		
+					processRequestUpdateTheme (request, response);
+				}
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("deleteTheme")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestDeleteTheme (request, response);
+				}
 			} else {
 				processRequestSelectAll (request, response);
 			}
@@ -293,15 +304,13 @@ public class GestionThemes extends HttpServlet {
 		try {
 			
 			listFormations = CtrlFormation.SelectAll();
-			if (request.getParameter("formationSelectionnee") != null ) {
-				idFormation = request.getParameter("formationSelectionnee");
+			if (request.getParameter("idFormationSelectionnee") != null ) {
+				idFormation = request.getParameter("idFormationSelectionnee");
 				for (Formation f : listFormations) {
 					if (f.getId().equalsIgnoreCase(idFormation)) {
 						formationSelectionnee = f;
 					}
 				}
-				
-
 			} else {
 				//TODO a corriger pour le cas de nullité
 				//la vrai ligne cidessous
@@ -311,8 +320,8 @@ public class GestionThemes extends HttpServlet {
 			}
 		
 			listCompetences = CtrlCompetence.SelectAllByFormation(idFormation);
-			if (request.getParameter("competenceSelectionnee") != null ) {
-				idCompetence = Integer.parseInt(request.getParameter("competenceSelectionnee"));
+			if (request.getParameter("idCompetenceSelectionnee") != null ) {
+				idCompetence = Integer.parseInt(request.getParameter("idCompetenceSelectionnee"));
 				for (Competence c : listCompetences) {
 					if (c.getId() == idCompetence) {
 						competenceSelectionnee = c;
@@ -324,8 +333,8 @@ public class GestionThemes extends HttpServlet {
 			}
 			
 			listThemes = CtrlTheme.SelectAllByCompetence(idCompetence);
-			if (request.getParameter("themeSelectionne") != null ) {
-				idTheme = Integer.parseInt(request.getParameter("themeSelectionne"));
+			if (request.getParameter("idThemeSelectionne") != null ) {
+				idTheme = Integer.parseInt(request.getParameter("idThemeSelectionne"));
 				for (Theme t : listThemes) {
 					if (idTheme == t.getId()) {
 						themeSelectionne = t ;
@@ -391,20 +400,18 @@ public class GestionThemes extends HttpServlet {
 	////////////////////////
 	// GESTION DES THEMES //
 	////////////////////////
-	private void processRequestInsert (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void processRequestInsertTheme (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Déclaration d'un theme et de sa compétence associé
-		Theme unTheme =  new Theme();
-		Competence uneCompetence = new Competence();
-	
-		//Récupération et affection des données
-		unTheme.setLibelle(request.getParameter("libelleThemeAAjouter"));
-		uneCompetence.setId( Integer.parseInt(request.getParameter("uneCompetenceAssocie")) );
-		unTheme.setCompetence(uneCompetence);
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
 		
 		//insertion dans la base		
 		try {
-			CtrlThemes.Insert(unTheme);
-			request.setAttribute("action", "ok");
+			CtrlTheme.Insert(unTheme);
+			request.setAttribute("action", "insertThemeOk");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
@@ -412,48 +419,47 @@ public class GestionThemes extends HttpServlet {
 			e.printStackTrace();
 		}
 		//redirection
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 	}
 	
-	private void processRequestUpdate (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void processRequestUpdateTheme (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Déclaration d'un theme et de sa compétence associé
-		Theme unTheme =  new Theme();
-		Competence uneCompetence = new Competence();
-		//Récupération et affection des données
-		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")));
-		unTheme.setLibelle(request.getParameter("unLibelleTheme"));
-		uneCompetence.setId( Integer.parseInt(request.getParameter("lesCompetencesPourModification")) );
-		unTheme.setCompetence(uneCompetence);
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
 		//insertion dans la base		
 		try {
-			CtrlThemes.Update(unTheme);
-			request.setAttribute("action", "ok");
+			CtrlTheme.Update(unTheme);
+			request.setAttribute("action", "updateThemeOk");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 	}
 
-	private void processRequestDelete (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Theme unTheme =  new Theme();
-		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")));
-		request.setAttribute("action", "ok");
+	private void processRequestDeleteTheme (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
 		try {
-			CtrlThemes.Delete(unTheme);
-			request.setAttribute("action", "ok");
+			CtrlTheme.Delete(unTheme.getId());
+			request.setAttribute("action", "deleteThemeOk");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
-		rd.forward(request, response);
+		processRequestSelectAll (request, response);
 	}
-	
+	/*
 	private void processRequestLoad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Question> listQuestions = new ArrayList<Question>();
 		Question uneQuestion =  new Question();
@@ -474,7 +480,7 @@ public class GestionThemes extends HttpServlet {
 		
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
 		rd.forward(request, response);
-	}
+	}*/
 	
 	
 	
@@ -496,8 +502,8 @@ public class GestionThemes extends HttpServlet {
 	
 	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence) {
 		Theme unTheme =  new Theme();
-		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")) );
-		unTheme.setLibelle(request.getParameter("unLibelleTheme"));
+		unTheme.setId(Integer.parseInt(request.getParameter("idThemeSelectionne")) );
+		unTheme.setLibelle(request.getParameter("libelleThemeSelectionne"));
 		unTheme.setCompetence(uneCompetence);
 		return unTheme;
 	}

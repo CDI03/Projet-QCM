@@ -22,7 +22,9 @@ import fr.eni_ecole.jee.bo.Reponse;
 import fr.eni_ecole.jee.bo.ReponseDonnee;
 import fr.eni_ecole.jee.bo.Test;
 import fr.eni_ecole.jee.controler.CtrlExamen;
+import fr.eni_ecole.jee.controler.CtrlQuestionPosee;
 import fr.eni_ecole.jee.controler.CtrlReponse;
+import fr.eni_ecole.jee.controler.CtrlReponseDonnee;
 
 /**
  * Servlet implementation class PassageTest

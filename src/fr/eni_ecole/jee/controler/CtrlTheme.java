@@ -15,4 +15,19 @@ public class CtrlTheme {
 		return DalTheme.SelectAllByCompetence(idCompetence);
 	}
 
+	public static boolean Insert(Theme unTheme) throws SQLException, NamingException {
+		return DalTheme.Insert(unTheme);
+		
+	}
+
+	public static boolean Update(Theme unTheme) throws SQLException, NamingException {
+		return DalTheme.Update(unTheme);
+		
+	}
+
+	public static boolean Delete(int idTheme) throws SQLException, NamingException {
+		return DalTheme.Delete(idTheme);
+		
+	}
+
 }

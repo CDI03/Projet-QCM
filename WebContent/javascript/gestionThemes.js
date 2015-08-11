@@ -34,6 +34,13 @@ function formulaireThemeVide(form, action) {
 	document.getElementById("libelleThemeSelectionne").focus();
 }
 
+function selection (form, action, liste) {
+	var indexSelectionnne = liste.selectedIndex;
+	var idListeSelectionnee = liste.options[indexSelectionnne].value;
+	form.action.value = action;
+	return idListeSelectionnee;
+}
+
 function formulaireSubmit(form, action, param) {
 	
 	if (action == 'choixReponse') {
@@ -70,6 +77,24 @@ function formulaireSubmit(form, action, param) {
 		if (form.action.value !=  'insertTheme') {
 			form.action.value = 'updateTheme';
 		}
+	}
+	if (action == 'selectionFormations') {
+		var liste = document.getElementById("listFormations");
+		var idSelectionnee = selection(form, action, liste);
+		document.getElementById("idFormationSelectionnee").value = idSelectionnee;
+		alert(idSelectionnee);
+	}
+	if (action == 'selectionCompetences') {
+		var liste = document.getElementById("listCompetences");
+		var idSelectionnee = selection(form, action, liste);
+		document.getElementById("idCompetenceSelectionnee").value = idSelectionnee;
+		alert(idSelectionnee);
+	}
+	if (action == 'selectionThemes') {
+		var liste = document.getElementById("listThemes");
+		var idSelectionnee = selection(form, action, liste);
+		document.getElementById("idThemeSelectionne").value = idSelectionnee;
+		alert(idSelectionnee);
 	}
 	
 	
@@ -116,6 +141,18 @@ function initialisation() {
 window.onload = initialisation;
 
 
+
+
+
+function selectionFormation(form, action) {
+	var listeLesFormations = document.getElementById("listFormations");
+	var indexSelectionne = listeLesFormations.selectedIndex;
+	var idFormationSelectionnee = listeLesFormations.options[indexSelectionne].value;
+	document.getElementById("idFormationSelectionnee").value=idFormationSelectionnee;
+	form.action.value=action;
+	form.submit();
+}
+
 function selectionTheme(form, action) {
 	var listeLesThemes = document.getElementById("listThemes");
 	var indexSelectionne = listeLesThemes.selectedIndex;
@@ -124,14 +161,18 @@ function selectionTheme(form, action) {
 	form.action.value=action;
 	form.submit();
 }
-/*
+
 function selectionCompetenceThemes() {
 	var listeLesCompetences = document.getElementById("lesCompetences");
 	var lesCompetencesPourModification = document.getElementById("lesCompetencesPourModification");
 	var lesCompetencesPourAjout = document.getElementById("lesCompetencesPourAjout");
 	lesCompetencesPourModification.selectedIndex = listeLesCompetences.selectedIndex;
 	lesCompetencesPourAjout.selectedIndex = listeLesCompetences.selectedIndex;
+	form.action.value=action;
+	form.submit();
 }
+
+/*
 function themesUpdateDelete(form, action) {
 	form.action.value = action;
 	if(document.getElementById("unIdTheme").value=="") {
@@ -140,6 +181,7 @@ function themesUpdateDelete(form, action) {
 		form.submit();	
 	}
 }
+
 function themesInsert(form, action) {
 	form.action.value = action;
 	if(document.getElementById("libelleThemeAAjouter").value=="") {
