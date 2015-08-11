@@ -47,7 +47,6 @@ public class GestionThemes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		processRequest(request,response);
 	}
 
@@ -55,45 +54,222 @@ public class GestionThemes extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("formationSelectionnee"));
-		System.out.println(request.getParameter("competenceSelectionnee"));
-		System.out.println(request.getParameter("themeSelectionne"));
-		System.out.println(request.getParameter("questionSelectionnee"));
-		System.out.println(request.getParameter("reponseSelectionnee"));
 		processRequest(request,response);
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		processRequestSelectAll (request, response);
-		/*
 		if (request.getMethod().equalsIgnoreCase("GET") ) {
 			processRequestSelectAll (request, response);
-		} else if (request.getAttribute("action") == null && request.getParameter("action") == null){
-			processRequestSelectAll (request, response);
 		} else {
-			if (request.getAttribute("action") != null) {
-				if (request.getAttribute("action").toString().equalsIgnoreCase("ok")) {
+			if (request.getParameter("action") == null){
+				processRequestSelectAll (request, response);
+			} else if(request.getParameter("action").toString().equalsIgnoreCase("insertQuestion")) {
+				if (request.getAttribute("action") != null) {
 					processRequestSelectAll (request, response);
-				}
-			} else {
-				if (request.getParameter("action").toString().equalsIgnoreCase("insert")) {
-					processRequestInsert (request, response);
-				} else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
-					processRequestUpdate (request, response);
-				} else if (request.getParameter("action").toString().equalsIgnoreCase("delete")) {
-					processRequestDelete (request, response);
-				} else if (request.getParameter("action").toString().equalsIgnoreCase("load")) {
-					processRequestLoad (request, response);
 				} else {
-					processRequestSelectAll (request, response);
+					processRequestInsertQuestion (request, response);
 				}
+			} else if ( request.getParameter("action").toString().equalsIgnoreCase("updateQuestion")  ) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestUpdateQuestion (request, response);
+				}
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("deleteQuestion")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestDeleteQuestion (request, response);
+				}
+			} else if(request.getParameter("action").toString().equalsIgnoreCase("insertReponse")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestInsertReponse (request, response);
+				}
+			} else if ( request.getParameter("action").toString().equalsIgnoreCase("updateReponse")  ) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestUpdateReponse (request, response);
+				}
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("deleteReponse")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+				processRequestDeleteReponse (request, response);
+				}
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("insert")) {
+				processRequestInsert (request, response);
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
+				processRequestUpdate (request, response);
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("delete")) {
+				processRequestDelete (request, response);
+			} else if (request.getParameter("action").toString().equalsIgnoreCase("load")) {
+				processRequestLoad (request, response);
+			} else {
+				processRequestSelectAll (request, response);
 			}
-		}*/
+		}
 	}
 	
+	
+	///////////////////////////
+	// GESTION DES QUESTIONS //
+	///////////////////////////
+	
+	private void processRequestDeleteQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
+		//suppression dans la base		
+		try {
+			Boolean deleteOk = CtrlQuestion.Delete(uneQuestion.getId());
+			request.setAttribute("action", "deleteQuestionOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		processRequestSelectAll (request, response);
+		
+	}
 
+	private void processRequestUpdateQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
+		//insertion dans la base		
+		try {
+			Boolean updateOk = CtrlQuestion.Update(uneQuestion);
+			request.setAttribute("action", "updateQuestionOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		//redirection
+		processRequestSelectAll (request, response);
+		
+	}
 
+	private void processRequestInsertQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Récupération des données du formulaire
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+				
+		//insertion dans la base		
+		try {
+			Boolean insertOk = CtrlQuestion.Insert(uneQuestion);
+				request.setAttribute("action", "insertQuestionOk");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//redirection
+			processRequestSelectAll (request, response);
+		
+	}
+
+	//////////////////////////
+	// GESTION DES REPONSES //
+	//////////////////////////
+	
+	private void processRequestUpdateReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
+		//insertion dans la base		
+		try {
+			Boolean updateOk = CtrlReponse.Update(uneReponse);
+			request.setAttribute("action", "updateReponseOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		//redirection
+		processRequestSelectAll (request, response);
+
+	}
+
+	private void processRequestDeleteReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
+		//suppression dans la base		
+		try {
+			Boolean deleteOk = CtrlReponse.Delete(uneReponse.getId());
+			request.setAttribute("action", "deleteReponseOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		processRequestSelectAll (request, response);
+	}
+
+	private void processRequestInsertReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Récupération des données du formulaire
+		Formation uneFormation = RecupFormation(request);
+		Competence uneCompetence = RecupCompetence(request);
+		Theme unTheme =  RecupTheme(request, uneCompetence);
+		Question uneQuestion = RecupQuestion(request, unTheme);
+		Reponse uneReponse = RecupReponse(request, uneQuestion);
+		
+		//insertion dans la base		
+		try {
+			Boolean insertOk = CtrlReponse.Insert(uneReponse);
+			request.setAttribute("action", "insertReponseOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//redirection
+		processRequestSelectAll (request, response);
+		
+	}
+
+	
+	////////////////////////////
+	// GESTION DES PARAMETRES //
+	////////////////////////////
+	
+	private void EnvoiParametresObjets(HttpServletRequest request, Formation uneFormation, Competence uneCompetence, Theme unTheme, Question uneQuestion, Reponse uneReponse) {
+		request.setAttribute("formationSelectionnee", uneFormation);
+		request.setAttribute("competenceSelectionnee", uneCompetence);
+		request.setAttribute("themeSelectionne", unTheme);
+		request.setAttribute("questionSelectionnee", uneQuestion);
+		request.setAttribute("reponseSelectionnee", uneReponse);	
+	}
+
+	///////////////////////
+	// AFFICHAGE GENERAL //
+	///////////////////////
+	
 	private void processRequestSelectAll (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String idFormation = null;
@@ -161,8 +337,8 @@ public class GestionThemes extends HttpServlet {
 			}
 			
 			listQuestions = CtrlQuestion.SelectAllByTheme(idTheme);
-			if (request.getParameter("questionSelectionnee") != null ) {
-				idQuestion = Integer.parseInt(request.getParameter("questionSelectionnee"));
+			if (request.getParameter("idQuestionSelectionnee") != null ) {
+				idQuestion = Integer.parseInt(request.getParameter("idQuestionSelectionnee"));
 				for (Question q : listQuestions) {
 					if (idQuestion == q.getId()) {
 						questionSelectionnee = q;
@@ -174,8 +350,8 @@ public class GestionThemes extends HttpServlet {
 			}
 			
 			listReponses = CtrlReponse.SelectAllByQuestion(idQuestion);
-			if (request.getParameter("reponseSelectionnee") != null) {
-				idReponse = Integer.parseInt(request.getParameter("reponseSelectionnee"));
+			if ((request.getParameter("idReponseSelectionnee") != null) || (request.getAttribute("action") == "deleteReponseOk")) {
+				idReponse = Integer.parseInt(request.getParameter("idReponseSelectionnee"));
 				for (Reponse r : listReponses) {
 					if (idReponse == r.getId()) {
 						reponseSelectionnee = r;
@@ -192,6 +368,8 @@ public class GestionThemes extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		
 		request.setAttribute("formationSelectionnee", formationSelectionnee);
 		request.setAttribute("competenceSelectionnee", competenceSelectionnee);
 		request.setAttribute("themeSelectionne", themeSelectionne);
@@ -204,16 +382,15 @@ public class GestionThemes extends HttpServlet {
 		request.setAttribute("listQuestions", listQuestions);
 		request.setAttribute("listReponses", listReponses);	
 		
-		System.out.println(((Formation)request.getAttribute("formationSelectionnee")).getId());
-		System.out.println(((Competence)request.getAttribute("competenceSelectionnee")).getId());
-		System.out.println(((Theme)request.getAttribute("themeSelectionne")).getId());
-		System.out.println(((Question)request.getAttribute("questionSelectionnee")).getId());
-		System.out.println(((Reponse)request.getAttribute("reponseSelectionnee")).getId());
-		
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionThemes/gestionThemes.jsp");
 		rd.forward(request, response);	
 	}
 	
+	
+	
+	////////////////////////
+	// GESTION DES THEMES //
+	////////////////////////
 	private void processRequestInsert (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Déclaration d'un theme et de sa compétence associé
 		Theme unTheme =  new Theme();
@@ -298,5 +475,52 @@ public class GestionThemes extends HttpServlet {
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/GestionThemes");
 		rd.forward(request, response);
 	}
+	
+	
+	
+	/////////////////////////////////
+	// RECUPERATION DES PARAMETRES //
+	/////////////////////////////////
+	
+	private static Formation RecupFormation(HttpServletRequest request) {
+		Formation uneFormation = new Formation();
+		uneFormation.setId(request.getParameter("idFormationSelectionnee"));
+		return uneFormation;
+	}
+	
+	private static Competence RecupCompetence(HttpServletRequest request) {
+		Competence uneCompetence = new Competence();
+		uneCompetence.setId(Integer.parseInt(request.getParameter("idCompetenceSelectionnee")) );
+		return uneCompetence;
+	}
+	
+	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence) {
+		Theme unTheme =  new Theme();
+		unTheme.setId(Integer.parseInt(request.getParameter("unIdTheme")) );
+		unTheme.setLibelle(request.getParameter("unLibelleTheme"));
+		unTheme.setCompetence(uneCompetence);
+		return unTheme;
+	}
+	
+	private static Question RecupQuestion(HttpServletRequest request, Theme unTheme) {
+		Question uneQuestion = new Question();
+		uneQuestion.setId(Integer.parseInt(request.getParameter("idQuestionSelectionnee")) );
+		uneQuestion.setEnonce(request.getParameter("enonceQuestionSelectionnee"));
+		//uneQuestion.setIllustration(illustration);
+		uneQuestion.setTheme(unTheme);
+		return uneQuestion;
+	}
+	
+	private static Reponse RecupReponse(HttpServletRequest request, Question uneQuestion) {
+		Reponse uneReponse = new Reponse();
+		uneReponse.setid(Integer.parseInt(request.getParameter("idReponseSelectionnee")) );
+		uneReponse.setLibelle(request.getParameter("libelleReponseSelectionnee"));
+		String validiteReponse = (request.getParameter("reponseCorrecteReponseSelectionnee"));
+		uneReponse.setEstCorrect(validiteReponse.trim().equalsIgnoreCase("true"));
+		uneReponse.setQuestion(uneQuestion);
+		return uneReponse;
+	}
+	
+	
 	
 }

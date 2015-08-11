@@ -1,25 +1,38 @@
 
+function formulaireChangeValidite(form, param) {
+	if (param == 1) {
+		document.getElementById("reponseCorrecteReponseSelectionnee").value = "true";
+	} else {
+		document.getElementById("reponseCorrecteReponseSelectionnee").value = "false";
+	}
+}
+
 function formulaireReponseVide(form, action) {
 	if (action == 'insertReponse') {
 		form.action.value = action;
 		document.getElementById("legendReponse").innerHTML="Mode ajout";
-		document.getElementById("modeReponse").value="Mode ajout";
 	}
 	document.getElementById("libelleReponseSelectionnee").value ="";
 	document.getElementById("libelleReponseSelectionnee").focus();
-	
 }
+
 function formulaireQuestionVide(form, action) {
 	if (action == 'insertQuestion') {
 		form.action.value = action;
 		document.getElementById("legendQuestion").innerHTML="Mode ajout";
 	}
 	document.getElementById("enonceQuestionSelectionnee").value ="";
-	document.getElementById("libelleQuestionSelectionnee").focus();
-	
+	document.getElementById("enonceQuestionSelectionnee").focus();
 }
 
-
+function formulaireThemeVide(form, action) {
+	if (action == 'insertTheme') {
+		form.action.value = action;
+		document.getElementById("legendTheme").innerHTML="Mode ajout";
+	}
+	document.getElementById("libelleThemeSelectionne").value ="";
+	document.getElementById("libelleThemeSelectionne").focus();
+}
 
 function formulaireSubmit(form, action, param) {
 	
@@ -35,13 +48,32 @@ function formulaireSubmit(form, action, param) {
 		form.idReponseSelectionnee.value = param;
 		form.action.value = action;
 	}
+	if (action == 'deleteQuestion') {
+		form.idQuestionSelectionnee.value = param;
+		form.action.value = action;
+	}
+	if (action == 'deleteTheme') {
+		form.idThemeSelectionne.value = param;
+		form.action.value = action;
+	}
 	if (action == 'insertUpdateReponse') {
 		if (form.action.value !=  'insertReponse') {
 			form.action.value = 'updateReponse';
 		}
 	}
+	if (action == 'insertUpdateQuestion') {
+		if (form.action.value !=  'insertQuestion') {
+			form.action.value = 'updateQuestion';
+		}
+	}
+	if (action == 'insertUpdateTheme') {
+		if (form.action.value !=  'insertTheme') {
+			form.action.value = 'updateTheme';
+		}
+	}
 	
 	
+	//alert(form.action.value);
 	form.submit();
 }
 
@@ -73,27 +105,26 @@ function initialisation() {
 	var indexThemeSelectionne = indexListe(listThemes, idThemeSelectionne);
 	listThemes.selectedIndex = indexThemeSelectionne;
 	
-	document.getElementById("unTitreTheme").value=document.getElementById("unLibelleTheme").value;
+	document.getElementById("unTitreTheme").value=document.getElementById("libelleThemeSelectionne").value;
 	
+	if (document.getElementById("reponseCorrecteReponseSelectionnee").value == 'true') {
+		document.getElementById("validiteReponseSelectionnee").selectedIndex = 0;
+	} else {
+		document.getElementById("validiteReponseSelectionnee").selectedIndex = 1;
+	}
 }
 window.onload = initialisation;
 
-/*
-function selectionFormation() {
-	
-}
+
 function selectionTheme(form, action) {
-	var listeLesThemes = document.getElementById("lesThemes");
+	var listeLesThemes = document.getElementById("listThemes");
 	var indexSelectionne = listeLesThemes.selectedIndex;
 	var idThemeSelectionne = listeLesThemes.options[indexSelectionne].value;
-	var libelleThemeSelectionne = listeLesThemes.options[indexSelectionne].text;
-	document.getElementById("unIdTheme").value=idThemeSelectionne;
-	document.getElementById("unLibelleTheme").value=libelleThemeSelectionne;
-	document.getElementById("indexThemeSelectionne").value = indexSelectionne;
-	document.getElementById("unTitreTheme").value=libelleThemeSelectionne;
+	document.getElementById("idThemeSelectionne").value=idThemeSelectionne;
 	form.action.value=action;
 	form.submit();
 }
+/*
 function selectionCompetenceThemes() {
 	var listeLesCompetences = document.getElementById("lesCompetences");
 	var lesCompetencesPourModification = document.getElementById("lesCompetencesPourModification");

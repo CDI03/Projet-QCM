@@ -16,6 +16,9 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalReponse {
 
 	private final static String SELECTALLBYQUESTION = "{ call SelectAllByQuestion_Reponse (?) }";
+	private final static String INSERT = "{ call Insert_Reponse (?,?,?,?) }";
+	private final static String DELETE = "{ call Delete_Reponse (?) }";
+	private final static String UPDATE = "{ call Update_Reponse (?,?,?,?) }";
 	
 	public static ArrayList<Reponse> SelectAll(Question question) throws SQLException, NamingException {
 	
@@ -69,5 +72,44 @@ public class DalReponse {
 			}
 		}
 		return listReponseQuestion;
+	}
+
+	public static Boolean Insert(Reponse uneReponse) throws SQLException, NamingException {
+		boolean insertOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(INSERT);
+			cstmt.setInt(1, uneReponse.getId());
+			cstmt.setInt(2, uneReponse.getQuestion().getId());
+			cstmt.setString(3, uneReponse.getLibelle());
+			cstmt.setBoolean(4, uneReponse.isEstCorrect());
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
+		return insertOk;
+	}
+
+	public static Boolean Delete(int idReponse) throws SQLException, NamingException {
+		boolean deleteOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DELETE);
+			cstmt.setInt(1, idReponse);
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
+		return deleteOk;
+	}
+
+	public static Boolean Update(Reponse uneReponse) throws SQLException, NamingException {
+		boolean updateOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(UPDATE);
+			cstmt.setInt(1, uneReponse.getId());
+			cstmt.setInt(2, uneReponse.getQuestion().getId());
+			cstmt.setString(3, uneReponse.getLibelle());
+			cstmt.setBoolean(4, uneReponse.isEstCorrect());
+			int intUpdate = cstmt.executeUpdate();
+			updateOk = (intUpdate != 0)?true:false;
+		}
+		return updateOk;
 	}
 }

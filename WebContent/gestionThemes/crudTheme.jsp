@@ -25,15 +25,15 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 
 <form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
 	
-	<input type="text" id="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
-	<input type="text" id="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
-	<input type="text" id="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
+	<input type="hidden" id="idFormationSelectionnee" name="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
+	<input type="hidden" id="idCompetenceSelectionnee" name="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
+	<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
 	
-	<input type="text" id="action" name ="action" value="">
+	<input type="hidden" id="action" name ="action" value="">
 	<article id="articleThemeChoix">
 
 		<fieldset id="fieldsetSelectionTheme">
-			<h2>Theme : sélection</h2>
+			<legend>Choix du Themes à gérer :</legend>
 			<!-- ------------------------------------- -->
 			<!--  Affichage des Formations disponibles -->
 			<!-- ------------------------------------- -->
@@ -63,17 +63,19 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 				<% for (Theme unTheme : listThemes) { %>
 					<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 				<%  } %>
-			</select>
+			</select><button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteTheme','<%=themeSelectionne.getId()%>')">Supprimer le theme</button>
 			
 		</fieldset>
 		
 		<fieldset id="fieldsetUpdateTheme">
 			<!-- ------------------------------------ -->	
 			<!--  Affichage des Update/Delete Themes  -->
-			<!-- ------------------------------------ -->	
-				<h2> Theme : Ajout / Modification</h2>
-				<input type="hidden" id="unIdTheme" name="unIdTheme" value="<%= themeSelectionne.getId() %>"> 
-				<label>Libelle du Theme : </label><input type="text" id="unLibelleTheme" value="<%= themeSelectionne.getLibelle() %>">
+			<!-- ------------------------------------ -->
+				
+				<legend id="legendTheme">Modification du Theme  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" id="addTheme" onclick="formulaireThemeVide(form, action)">Passer en mode Ajout</button></legend>	
+				<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>"> 
+				<label>Libelle du Theme : </label><input type="text" id="libelleThemeSelectionne" name="libelleThemeSelectionne" value="<%= themeSelectionne.getLibelle() %>">
 				<br>
 				<select id="listCompetencesUpdate">
 					<% 	for (Competence uneCompetence : listCompetences) { %>
@@ -81,38 +83,30 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 					<%	} %>
 				</select>
 				<br> 
-				<button type="button" id="updateTheme" onclick="formulaireSubmit(this.form,'updateTheme','')">Modifier</button>
-				<button type="button" id="deleteTheme" onclick="formulaireSubmit(this.form,'deleteTheme','')">Supprimer</button>
-				<button type="button" id="InsertTheme" onclick="formulaireSubmit(this.form,'InsertTheme','')">Ajouter</button>
+				<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTheme','')">Modifier</button>
+				<button type="button" id="Annuler" onclick="formulaireThemeVide(form, action)">Supprimer</button>
+				
 		</fieldset>
 </article>
 
-<article id="articleThemeTitre">
-	<h1>Gestion du Theme : <input type=text id="unTitreTheme" value="" disabled></h1>
-</article>
-
+<div id="articleThemeTitre">
+	<fieldset>
+	<legend id="legendQuestion">Gestion du Theme : <input type=text id="unTitreTheme" value="" disabled></legend>
 
 <article  id="articleThemeQuestion">
-	<h2>Gestion des Questions</h2><button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
+	<button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
 		
 		<!-- --------------------------------------------- -->	
 		<!--  Formulaire de Insert/Update/Delete Question  -->
 		<!-- --------------------------------------------- -->	
 		<fieldset>
 		<legend id="legendQuestion">Modification de la question</legend>
-		<input type="text" id="modeQuestion" value="Mode modification" disabled><br>
 		<div id="blocImage">
 		<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
 		</div>
 		<div id="blocEnonce">
-			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>"> -->
-			<label for="enonce" >Enoncé</label>
-				<textarea id="enonceQuestionSelectionnee"><%=questionSelectionnee.getEnonce()%></textarea>
-			<label for="nbBonnesReponses">Type de question :</label>
-			<select id="nbBonnesReponsesQuestionSelectionnee" name="nbBonnesReponsesQuestionSelectionnee">
-				<option value="1">une seule bonne réponse</option>
-				<option value="2">plusieurs bonnes réponses</option>
-			</select><br>
+			<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>">
+			<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="40" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
 			<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
 			<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 		</div>
@@ -129,7 +123,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<%  int i = 1;		
 				for (Question uneQuestion : listQuestions) { %>
 			<tr>
-			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'ChoixQuestion', this.value)"
+			<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'choixQuestion', this.value)"
 							<% if (uneQuestion.getId() == questionSelectionnee.getId()) {%>
 									checked
 							<%}%>
@@ -151,9 +145,11 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 			<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
 			<br>
 			<label for="labelReponseCorrecte" >La réponse est</label>
-			<select id="reponseCorrecteReponseSelectionnee">
-				<option>valide</option>
-				<option>invalide</option>
+			<input type="hidden" id="reponseCorrecteReponseSelectionnee" name="reponseCorrecteReponseSelectionnee"
+				value="<%=reponseSelectionnee.isEstCorrect()%>">
+			<select id="validiteReponseSelectionnee" onchange="formulaireChangeValidite(this.form,this.value)">
+				<option value="1">valide</option>
+				<option value="0">invalide</option>
 			</select> 
 			<br>
 			<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>
@@ -194,6 +190,8 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 		</table>
 	
 </article>	
-	</form>	
+	</form>
+</fieldset>
+</div>	
 
 <script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
