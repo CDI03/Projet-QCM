@@ -9,6 +9,7 @@
 Examen lExamenEnCours = (Examen)request.getAttribute("lExamenEnCours");
 
 QuestionPosee derniereQuestionMarqueeouValidee = (QuestionPosee)request.getAttribute("derniereQuestionMarqueeouValidee");
+QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnCours");
 
 ArrayList<QuestionPosee> listeQuestionExamen = (ArrayList<QuestionPosee>)request.getAttribute("listeQuestionExamen");
 
@@ -33,7 +34,7 @@ String etatBouton;
 			{
 				etatQuestion+="Marquee";
 			}
-			else if (!laQuestion.isMarque() && !laQuestion.isRepondu() && laQuestion.getOrdre()<derniereQuestionMarqueeouValidee.getOrdre())
+			else if (laQuestion.getOrdre()<questionEnCours.getOrdre() || laQuestion.getOrdre()<derniereQuestionMarqueeouValidee.getOrdre())
 			{
 				etatQuestion+="Passee";
 			}

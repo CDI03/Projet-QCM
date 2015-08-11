@@ -9,7 +9,6 @@ BEGIN
 		qp.Repondu,
 		qp.Question_Id,
 		qu.Illustration,
-		qu.NbReponses,
 		qu.Enonce,
 		qu.Theme_Id,
 		t.Libelle

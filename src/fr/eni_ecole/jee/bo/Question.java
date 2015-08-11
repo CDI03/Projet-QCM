@@ -7,7 +7,6 @@ public class Question {
 	private int id;
 	private String enonce;
 	private Theme theme;
-	private int nbReponses;
 	private Image illustration;
 	
 	public Question() {
@@ -19,7 +18,6 @@ public class Question {
 		this.id = id;
 		this.enonce = enonce;
 		this.theme = theme;
-		this.nbReponses = nbReponses;
 		this.illustration = illustration;
 	}
 
@@ -33,10 +31,6 @@ public class Question {
 
 	public Theme getTheme() {
 		return theme;
-	}
-
-	public int getNbReponses() {
-		return nbReponses;
 	}
 
 	public Image getIllustration() {
@@ -53,10 +47,6 @@ public class Question {
 
 	public void setTheme(Theme theme) {
 		this.theme = theme;
-	}
-
-	public void setNbReponses(int nbReponses) {
-		this.nbReponses = nbReponses;
 	}
 
 	public void setIllustration(Image illustration) {

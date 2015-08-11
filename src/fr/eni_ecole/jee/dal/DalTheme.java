@@ -10,6 +10,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import fr.eni_ecole.jee.bo.Competence;
+import fr.eni_ecole.jee.bo.Examen;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.outils.PoolConnection;
 
@@ -83,6 +84,27 @@ public class DalTheme {
 			deleteOk = (intDelete != 0)?true:false;
 		}
 		return deleteOk;
+	}
+
+	public static ArrayList<Theme> SelectAllByExamen(Examen examenChoisit) throws SQLException, NamingException {
+		ArrayList<Theme> listThemes = new ArrayList<Theme>();
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = null;
+			cstmt = cnx.prepareCall("{ call SELECT_ALL_THEME_BY_EXAMEN (?)}");
+			cstmt.setInt(1, examenChoisit.getId());
+			ResultSet rs = cstmt.executeQuery();
+			while (rs.next()) {
+				int themeId = rs.getInt("Theme_Id");
+				String themeLibelle = rs.getString("Theme_Libelle");
+				//construction d'un theme
+				Theme unTheme = new Theme();
+				unTheme.setId(themeId);
+				unTheme.setLibelle(themeLibelle);
+				//construction de la liste des themes
+				listThemes.add(unTheme);
+			}
+		}	
+		return listThemes;
 	}
 	
 }

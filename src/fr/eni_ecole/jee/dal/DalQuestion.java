@@ -57,19 +57,42 @@ public class DalQuestion {
 				// TODO recup illustration Question
 				int questionID = rs.getInt("Question_Id");
 				String enonce = rs.getString("Enonce");
-				int nbReponse = rs.getInt("NbReponses");
 				
 		//construction d'une question
 				Question uneQuestion = new Question();
 				uneQuestion.setId(questionID);
 				uneQuestion.setEnonce(enonce);
-				uneQuestion.setNbReponses(nbReponse);
 				
 		//construction de la liste
 				listQuestions.add(uneQuestion);
 			}
 		}	
 		return listQuestions;
+	}
+
+
+	public static ArrayList<Question> SelectAllByThemeExamen(
+			Examen examenChoisit, Theme theme) throws SQLException, NamingException {
+		// recuperer une liste de question au hasard en fonction du nombre définit par la section	
+		ArrayList<Question> listQuestionTheme = new ArrayList<Question>();
+		//Récupération des données
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_QUESTION_THEME_EXAMEN (?,?)}");
+			cmd.setInt(1, examenChoisit.getId());
+			cmd.setInt(2, theme.getId());
+			ResultSet rs = cmd.executeQuery();		
+			
+			while (rs.next()) {
+				int questionID = rs.getInt("Question_Id");
+		//construction d'une question
+				Question uneQuestion = new Question();
+				uneQuestion.setId(questionID);
+				uneQuestion.setTheme(theme);
+		//construction de la liste
+				listQuestionTheme.add(uneQuestion);
+			}
+		}	
+		return listQuestionTheme;	
 	}
 
 }
