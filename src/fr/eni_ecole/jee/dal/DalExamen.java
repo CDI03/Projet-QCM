@@ -73,4 +73,33 @@ public class DalExamen {
 		}
 		return updateOk;	
 	}
+	
+	public static int getNbReponsesCorrectesExamen(Examen examen) throws SQLException, NamingException {
+		int nbReponsesCorrectes = 0;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			
+			CallableStatement cmd = cnx.prepareCall("{ call SELECT_COUNT_NBCORRECTES (?)}");
+			cmd.setInt(1, examen.getId());	
+			
+			ResultSet rs = cmd.executeQuery();
+			
+			int taille = 0;
+			while (rs.next()) {
+				taille+=1;
+			}
+			
+			//test si le ResultSet ne contient qu'une seule ligne
+			if (taille==1)
+				{
+					nbReponsesCorrectes = rs.getInt("countNbCorrectes");
+				}	
+		}
+		return nbReponsesCorrectes;
+	}
+
+	public static int getNbReponsesCorrectesCandidat(Examen examenChoisit,
+			Candidat leCandidatChoisit) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

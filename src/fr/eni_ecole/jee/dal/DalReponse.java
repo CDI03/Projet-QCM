@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import fr.eni_ecole.jee.bo.Examen;
 import fr.eni_ecole.jee.bo.Question;
 import fr.eni_ecole.jee.bo.Reponse;
 import fr.eni_ecole.jee.outils.PoolConnection;
@@ -111,5 +112,51 @@ public class DalReponse {
 			updateOk = (intUpdate != 0)?true:false;
 		}
 		return updateOk;
+	}
+	
+	public static ArrayList<Reponse> selectAllCorrecteExamenQuestion(
+			Examen examenChoisit, Question question) throws SQLException, NamingException {
+		ArrayList<Reponse> listReponseCorrecteQuestion = new ArrayList<Reponse>();
+		//Récupération des données
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_REPONSECORRECTE_QUESTION (?,?)}");
+			cmd.setInt(1, examenChoisit.getId());
+			cmd.setInt(2, question.getId());
+			ResultSet rs = cmd.executeQuery();		
+			
+			while (rs.next()) 
+			{
+				int reponseID = rs.getInt("Id_Reponse");
+				//construction d'une reponse
+				Reponse uneReponse = new Reponse();
+				uneReponse.setid(reponseID);
+				uneReponse.setQuestion(question);
+				listReponseCorrecteQuestion.add(uneReponse);
+			}
+		}
+		return listReponseCorrecteQuestion;
+	}
+
+	public static ArrayList<Reponse> selectAllDonneesExamenQuestion(
+			Examen examenChoisit, Question question) throws SQLException, NamingException {
+		ArrayList<Reponse> listReponseDonneQuestion = new ArrayList<Reponse>();
+		//Récupération des données
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_REPONSEDONNEE_QUESTION (?,?)}");
+			cmd.setInt(1, examenChoisit.getId());
+			cmd.setInt(2, question.getId());
+			ResultSet rs = cmd.executeQuery();		
+			
+			while (rs.next()) 
+			{
+				int reponseID = rs.getInt("Id_Reponse");
+				//construction d'une reponse
+				Reponse uneReponse = new Reponse();
+				uneReponse.setid(reponseID);
+				uneReponse.setQuestion(question);
+				listReponseDonneQuestion.add(uneReponse);
+			}
+		}
+		return listReponseDonneQuestion;
 	}
 }

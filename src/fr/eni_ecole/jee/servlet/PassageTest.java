@@ -25,6 +25,7 @@ import fr.eni_ecole.jee.controler.CtrlExamen;
 import fr.eni_ecole.jee.controler.CtrlQuestionPosee;
 import fr.eni_ecole.jee.controler.CtrlReponse;
 import fr.eni_ecole.jee.controler.CtrlReponseDonnee;
+import fr.eni_ecole.jee.controler.CtrlResultatsExamen;
 
 /**
  * Servlet implementation class PassageTest
@@ -103,8 +104,10 @@ public class PassageTest extends HttpServlet {
 				System.out.println("reprend Examen");
 				break;
 			case "resultatExamen":
-				System.out.println("affiche resultats Examen");			
-							break;
+				System.out.println("affiche resultats Examen");	
+				rd = this.getServletContext().getRequestDispatcher("/VisualisationResultats");	
+				rd.forward(request, response);
+				break;
 			case "valider":
 				System.out.println("valide les réponses à la question");
 				Map<String, String[]> lesParametres = request.getParameterMap();
@@ -143,6 +146,10 @@ public class PassageTest extends HttpServlet {
 					//enregistrer etat
 					examenChoisit.setEtat("FN");
 					CtrlExamen.updateEtatTest(examenChoisit);
+					
+					//Enregistrer le résultat Examen
+					CtrlResultatsExamen.enregistreResultats(examenChoisit);
+					
 					//rediriger vers l'acceuil
 					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
@@ -192,6 +199,10 @@ public class PassageTest extends HttpServlet {
 					//enregistrer etat
 					examenChoisit.setEtat("FN");
 					CtrlExamen.updateEtatTest(examenChoisit);
+					
+					//Enregistrer le résultat Examen
+					CtrlResultatsExamen.enregistreResultats(examenChoisit);
+					
 					//rediriger vers l'acceuil
 					rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 					rd.forward(request, response);
@@ -206,6 +217,12 @@ public class PassageTest extends HttpServlet {
 				//enregistrer etat
 				examenChoisit.setEtat("FN");
 				CtrlExamen.updateEtatTest(examenChoisit);
+				
+				//Enregistrer le résultat Examen
+				CtrlResultatsExamen.enregistreResultats(examenChoisit);
+				
+				//TODO Purger les questions posées/réponses données
+				
 				//rediriger vers l'acceuil
 				rd = this.getServletContext().getRequestDispatcher("/AccueilCandidat");
 				rd.forward(request, response);
@@ -235,13 +252,13 @@ public class PassageTest extends HttpServlet {
 		try {
 			questionEnCours = CtrlQuestionPosee.recupQuestionEnCours(examenChoisit,numQuestionEnCours);
 			listeQuestionExamen = CtrlQuestionPosee.recupExamenEnCours(examenChoisit);
-			reponseQuestionEnCours = CtrlReponse.selectReponseQuestion(questionEnCours);
+			reponseQuestionEnCours = CtrlReponse.selectReponseQuestion(questionEnCours);		
 			derniereQuestionMarqueeouValidee = CtrlQuestionPosee.recupDerniereQuestion(examenChoisit);
 			if (derniereQuestionMarqueeouValidee == null)
-				{derniereQuestionMarqueeouValidee = listeQuestionExamen.get(0);}
+			{derniereQuestionMarqueeouValidee = listeQuestionExamen.get(0);}
+			request.setAttribute("derniereQuestionMarqueeouValidee", derniereQuestionMarqueeouValidee);
 			request.setAttribute("questionEnCours", questionEnCours);
 			request.setAttribute("listeQuestionExamen", listeQuestionExamen);
-			request.setAttribute("derniereQuestionMarqueeouValidee", derniereQuestionMarqueeouValidee);
 			request.setAttribute("listReponseQuestionEnCours", reponseQuestionEnCours);
 			request.setAttribute("tailleDuTest", tailleDuTest);
 			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	

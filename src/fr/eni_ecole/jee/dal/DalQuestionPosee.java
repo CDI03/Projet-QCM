@@ -150,18 +150,16 @@ public class DalQuestionPosee {
 		//Crer une question
 		QuestionPosee laQuestionEnEnregistrement = null;
 		try (Connection cnx = PoolConnection.getConnection()) 
-		{
-			
-			cnx.setAutoCommit(false);
-			
+		{	
 			CallableStatement cmd = cnx.prepareCall("{ call SELECT_LAST_QUESTIONPOSEE (?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			cmd.setInt(1, examenChoisit.getId());
 			
-			ResultSet rs = cmd.executeQuery();
-			if (rs!=null)
-			{//test si le ResultSet ne contient qu'une seule ligne
-			rs.last();	
-			laQuestionEnEnregistrement = new QuestionPosee();
+			if (cmd.execute())
+			{ResultSet rs = cmd.getResultSet();
+			if (rs.last())	
+			{
+				rs.last();
+				laQuestionEnEnregistrement = new QuestionPosee();
 			//Créer un Theme
 			//Theme leTheme = new Theme();
 			//leTheme.setId(rs.getInt("Theme_Id"));
@@ -179,8 +177,7 @@ public class DalQuestionPosee {
 			//laQuestionEnEnregistrement.setQuestion(laQuestion);
 			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Marque"));
 			//laQuestionEnEnregistrement.setMarque(rs.getBoolean("Repondu"));
-			}
-			cnx.commit();
+			}}
 		}	
 		return laQuestionEnEnregistrement;	
 	}

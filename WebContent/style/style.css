@@ -233,6 +233,13 @@ table {
 	width :475px;
 }
 
+#tableResultatCandidat{
+	border: 1px solid black;
+	width : 500px;	
+	font-size:10pt;	
+	text-align: center;
+}
+
 td {
 	//border : 1px solid red;
 	font-size:12pt;

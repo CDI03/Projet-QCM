@@ -63,4 +63,14 @@
     <servlet-name>PassageTest</servlet-name>
     <url-pattern>/PassageTest</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VisualisationResultats</display-name>
+    <servlet-name>VisualisationResultats</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.VisualisationResultats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VisualisationResultats</servlet-name>
+    <url-pattern>/VisualisationResultats</url-pattern>
+  </servlet-mapping>
 </web-app>
