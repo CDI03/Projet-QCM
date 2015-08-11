@@ -16,10 +16,12 @@ import fr.eni_ecole.jee.bo.Competence;
 import fr.eni_ecole.jee.bo.Formation;
 import fr.eni_ecole.jee.bo.Question;
 import fr.eni_ecole.jee.bo.Reponse;
+import fr.eni_ecole.jee.bo.Section;
 import fr.eni_ecole.jee.bo.Test;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.controler.CtrlCompetence;
 import fr.eni_ecole.jee.controler.CtrlFormation;
+import fr.eni_ecole.jee.controler.CtrlSection;
 import fr.eni_ecole.jee.controler.CtrlTest;
 import fr.eni_ecole.jee.controler.CtrlTheme;
 
@@ -87,6 +89,7 @@ public class GestionTests extends HttpServlet {
 		List<Competence> listCompetences = new ArrayList<Competence>();
 		List<Theme> listThemes = new ArrayList<Theme>();
 		List<Test> listTests = new ArrayList<Test>();
+		List<Section> listSections = new ArrayList<Section>();
 
 		try {
 			listFormations = CtrlFormation.SelectAll();;
@@ -100,6 +103,8 @@ public class GestionTests extends HttpServlet {
 			
 			listTests = CtrlTest.SelectAll();
 			unTest =  RecupTest(request, listTests);
+			
+			listSections = CtrlSection.SelectAllByTest(unTest.getId());
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

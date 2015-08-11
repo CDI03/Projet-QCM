@@ -286,45 +286,45 @@ INSERT INTO ResultatExamen (Examen_Id, Test_Id, Theme_Id,NbQuestionsReussies,NbQ
      VALUES (04,01,1,40,12);
 
 -- TABLE QUESTION --
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel est la valeur de x ? String x = 3 ; Boolean y = ( x == 5 ); if (y) {x = 2);',1, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel est la valeur de x ? String x = 3 ; Boolean y = ( x == 3 ); if (y) {x = 2);',1, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel est la valeur de x ? String x; Boolean y = ( x == 5 ); if (y) {x = 2);',1, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel est la valeur de x ? String x = 5 ; Boolean y = ( x == 5 ); if (y) {x = 2);',1, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel est la valeur de x ? String x = 3 ; Boolean y = ( x == 5 ); if (y) {x = 5);',1, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette fonction ? Public static boolean uneFonction (int unEntier) { int x = 3; if (x == unEntier) { return true } else { return false };',2, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette fonction ? Public static boolean uneFonction (int unEntier) { int x = 3; if (x != unEntier) { return true } else { return false };',2, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette fonction ? Public static boolean uneFonction (int unEntier) { int x = 3; if (x == unEntier) { return false } else { return true };',2, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette fonction ? Public static boolean uneFonction (int unEntier) { unEntier = 3; int x = 3; if (x == unEntier) { return true } else { return false };',2, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette fonction ? Public static boolean uneFonction (int unEntier) { unAutreEntier = 3; int x = 3; if (x == unEntier) { return true } else { return false };',2, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette procédure ? Public static boolean uneProcédure (int unEntier) { int x = unEntier; if (x == unEntier) { inserer(3) } else { delete(unEntier) };',3, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette procédure ? Public static boolean uneProcédure (int unEntier) { int x = unEntier; if (x != unEntier) { inserer(3) } else { delete(unnEtier) };',3, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette procédure ? Public static boolean uneProcédure (int unEntier) { int x = unEntier; if (x == unEntier) { delete(unEntier) } else { inserer(3) };',3, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette procédure ? Public static boolean uneProcédure (int unEntier) { unEntier = 3; int x = unEntier; if (x == unEntier) { inserer(3) } else { delete(unEtier) };',3, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Que renvoie cette procédure ? Public static boolean uneProcédure (int unEntier) { unAutreEntier = 3; int x = unEntier; if (x == unEntier) { inserer(3) } else { delete(unEtier) };',3, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel sont les éléments de la liste ? List<int> uneListe = new List<int>; uneListe.add(5);uneListe.add(4);uneListe.add(3);uneListe.removeAt(5);',4, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel sont les éléments de la liste ? List<int> uneListe = new List<int>; uneListe.add(5);uneListe.add(''uneChaine'');uneListe.add(3);uneListe.removeAt(5);',4, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel sont les éléments de la liste ? List<int> uneListe = new List<int>; uneListe.add(5);uneListe.add(4);uneListe.add(3);uneListe.removeAt(5);',4, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel sont les éléments de la liste ? List<int> uneListe = new List<int>; uneListe.add(5);uneListe.add(4);uneListe.add(5);uneListe.add(3);uneListe.removeAt(5);',4, null);
-INSERT INTO Question (Enonce,Theme_Id,NbReponses,Illustration)
+INSERT INTO Question (Enonce,Theme_Id,Illustration)
      VALUES('Quel sont les éléments de la liste ? List<int> uneListe = new List<int>; uneListe.add(5);uneListe.add(4);uneListe.add(3);uneListe.removeAt(5);uneListe.removeAt(4);uneListe.add(4);uneListe.removeAt(5);',4, null);		
 			
 -- TABLE REPONSE --

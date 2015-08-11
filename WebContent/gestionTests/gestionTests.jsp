@@ -1,7 +1,7 @@
+<%@page import="fr.eni_ecole.jee.bo.Section"%>
+<%@page import="fr.eni_ecole.jee.bo.Test"%>
 <%@page import="fr.eni_ecole.jee.bo.Formation"%>
 <%@page import="fr.eni_ecole.jee.bo.Competence"%>
-<%@page import="fr.eni_ecole.jee.bo.Reponse"%>
-<%@page import="fr.eni_ecole.jee.bo.Question"%>
 <%@page import="fr.eni_ecole.jee.bo.Theme"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
@@ -11,16 +11,15 @@
 ArrayList<Formation> listFormations = (ArrayList<Formation>)request.getAttribute("listFormations");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
 ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
-ArrayList<Question> listQuestions = (ArrayList<Question>)request.getAttribute("listQuestions");
-ArrayList<Reponse> listReponses = (ArrayList<Reponse>)request.getAttribute("listReponses");
+ArrayList<Test> listTests = (ArrayList<Test>)request.getAttribute("listTests");
+ArrayList<Section> listSections = (ArrayList<Section>)request.getAttribute("listSections");
 %>
 
 <% 
 Formation formationSelectionnee = (Formation)request.getAttribute("formationSelectionnee");
 Competence competenceSelectionnee = (Competence)request.getAttribute("competenceSelectionnee");
 Theme themeSelectionne = (Theme)request.getAttribute("themeSelectionne");
-Question questionSelectionnee = (Question)request.getAttribute("questionSelectionnee");
-Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee");
+Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 %>
 
 <%! String enTete = "/fragment/enTete.jsp"; %>
@@ -30,25 +29,25 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
  
 
 <jsp:include page="<%=enTete%>">
-	<jsp:param value="Projet QCM - Gestion des thèmes" name="titre"/>
+	<jsp:param value="Projet QCM - Gestion des Tests" name="titre"/>
 </jsp:include>
 
 <jsp:include page="<%=menu%>"></jsp:include>
 
 
-<section id="gestionThemes">
+<section id="gestionTest">
 	
-		<form action="/Projet-QCM/GestionThemes" method="post" name="formGestionThemes">
+		<form action="/Projet-QCM/GestionTests" method="post" name="formGestionTests">
 		
 				<input type="hidden" id="idFormationSelectionnee" name="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
 				<input type="hidden" id="idCompetenceSelectionnee" name="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
 				<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
 				<input type="hidden" id="action" name ="action" value="">
 				
-				<article id="articleThemeChoix">
+				<article id="articleTestChoix">
 			
-					<fieldset id="fieldsetSelectionTheme">
-						<legend>Choix du Themes à gérer :</legend>
+					<fieldset id="fieldsetSelectionTest">
+						<legend>Choix du Test à gérer :</legend>
 						<!-- ------------------------------------- -->
 						<!--  Affichage des Formations disponibles -->
 						<!-- ------------------------------------- -->
@@ -72,143 +71,82 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 						
 						
 						<!-- ---------------------- -->	
-						<!--  Affichage des themes  -->
+						<!--  Affichage des tests  -->
 						<!-- ---------------------- -->	
-						<select id="listThemes" name="listThemes" onchange="formulaireSubmit(this.form,'selectionThemes','')">
-							<% for (Theme unTheme : listThemes) { %>
-								<option  value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
+						<select id="listTests" name="listTests" onchange="formulaireSubmit(this.form,'selectionTests','')">
+							<% for (Test unTest : listTests) { %>
+								<option  value="<%=unTest.getId()%>"><%=unTest.getLibelle()%></option>
 							<%  } %>
-						</select><button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteTheme','<%=themeSelectionne.getId()%>')">Supprimer le theme</button>
-						
+						</select>
 					</fieldset>
 					
-					<fieldset id="fieldsetUpdateTheme">
+					<fieldset id="fieldsetUpdateTest">
 						<!-- ------------------------------------ -->	
-						<!--  Affichage des Update/Delete Themes  -->
+						<!--  Affichage des Update/Delete Tests  -->
 						<!-- ------------------------------------ -->
 							
-							<legend id="legendTheme">Modification du Theme  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" id="addTheme" onclick="formulaireThemeVide(form, 'insertTheme')">Passer en mode Ajout</button></legend>	
-							<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>"> 
-							<label>Libelle du Theme : </label><input type="text" id="libelleThemeSelectionne" name="libelleThemeSelectionne" value="<%= themeSelectionne.getLibelle() %>">
+							<legend id="legendTest">Modification du Test  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" id="addTest" onclick="formulaireTestVide(form, 'insertTest')">Passer en mode Ajout</button></legend>	
+							<input type="hidden" id="idTestSelectionne" name="idTestSelectionne" value="<%= testSelectionne.getId() %>"> 
+							<label>Libelle du Test : </label><input type="text" id="libelleTestSelectionne" name="libelleTestSelectionne" value="<%= testSelectionne.getLibelle() %>">
 							<br>
-							<select id="listCompetencesUpdate">
-								<% 	for (Competence uneCompetence : listCompetences) { %>
-								<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
-								<%	} %>
-							</select>
+							<label>Duree : </label><input type="text" id="dureeTestSelectionne" name="dureeTestSelectionne" value="<%= testSelectionne.getDuree() %>">
+							<label>Seuil Bas : </label><input type="text" id="seuilBasTestSelectionne" name="seuilBasTestSelectionne" value="<%= testSelectionne.getSeuilBas() %>">
+							<label>Seuil Haut : </label><input type="text" id="seuilHautTestSelectionne" name="seuilHautTestSelectionne" value="<%= testSelectionne.getSeuilHaut() %>">
 							<br> 
-							<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTheme','')">Valider</button>
-							<button type="button" id="Annuler" onclick="formulaireThemeVide(form, 'cancelTheme)">Annuler</button>
+							<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTest','')">Valider</button>
+							<button type="button" id="Annuler" onclick="formulaireThemeVide(form, 'cancelTest)">Annuler</button>
 							
 					</fieldset>
 			</article>
 			
-			<div id="articleThemeTitre">
+			<div id="articleTestTitre">
 				<fieldset>
-					<legend id="legendQuestion">Gestion du Theme : <input type=text id="unTitreTheme" value="" disabled></legend>
-					
-					<article  id="articleThemeQuestion">
-						<button type="button" id="addQuestion" onclick="formulaireQuestionVide(this.form,'insertQuestion')" >Passer en mode Ajout</button><br>
+					<legend id="legendQuestion">Gestion du Test : <input type=text id="unTitreTest" value="" disabled></legend>
+					<button type="button" id="deleteTest" onclick="formulaireSubmit(this.form,'deleteTest','<%=testSelectionne.getId()%>')">Supprimer le test</button>
 						
-						<!-- --------------------------------------------- -->	
-						<!--  Formulaire de Insert/Update/Delete Question  -->
-						<!-- --------------------------------------------- -->	
-						<fieldset>
-							<legend id="legendQuestion">Modification de la question</legend>
-							<div id="blocImage">
-								<img alt="Illustration Question" src="./style/images/firefoxlogo.png" >
-							</div>
-							<div id="blocEnonce">
-								<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>">
-								<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="20" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
-								<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
-								<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
-							</div>
-						</fieldset>
+					<article  id="articleTestSection">
 						<!-- ------------------------------------- -->	
-						<!--  Formulaire de présentation Question  -->
+						<!--  Formulaire de présentation Sections  -->
 						<!-- ------------------------------------- -->
-						<table id="questionTable">
+						<table id="sectionTable">
 							<tr>
-				    			<th></th>
-				    			<th class="enonce">Enoncé question</th>
+				    			<th>Section</th>
+				    			<th>Nb de questions</th>
 				    			<th></th>
 				  			</tr>
 							<%  int i = 1;		
-								for (Question uneQuestion : listQuestions) { %>
+								for (Section uneSection : listSections) { %>
 							<tr>
-							<td><input type = "radio" id="questionSelectionnee" name = "questionSelectionnee" onchange="formulaireSubmit(this.form,'choixQuestion', this.value)"
-											<% if (uneQuestion.getId() == questionSelectionnee.getId()) {%>
-													checked
-											<%}%>
-											value="<%=uneQuestion.getId()%>"/>
-							</td>
-				          	<td class="enonce"><label class="labelEnonceQuestion" for="<%=uneQuestion.getId()%>">n°<%= i %> : <%=uneQuestion.getEnonce()%></label></td>
-							<td><button type="button" id="deleteQuestion" onclick="formulaireSubmit(this.form,'deleteQuestion','<%=uneQuestion.getId()%>')">Supprimer</button></td>
+								<td><label for="labelLibelleSection" ><%= uneSection.getTheme().getLibelle() %></label>
+								</td>
+					          	<td> </td>
+								<td><button type="button" id="deleteSection" onclick="formulaireSubmit(this.form,'deleteSection','<%=uneSection.getTheme().getId()%>')">Supprimer</button></td>
 							</tr>
 							<% i++; } %>
 						</table>	
 					</article>
 					
-					<article  id="articleThemeReponse">
-						<h2>Gestion des Réponses </h2><button type="button" id="addReponse" onclick="formulaireReponseVide(this.form,'insertReponse')" >Passer en mode Ajout</button><br>
-							<fieldset>
-								<legend id="legendReponse">Modification de la reponse</legend>
-								<input type="hidden" id="idReponseSelectionnee" name="idReponseSelectionnee" value="<%= reponseSelectionnee.getId() %>">
-								<label for="labelLibelleReponse" >Libellé de la réponse : </label>
-								<input type="text" id="libelleReponseSelectionnee" name="libelleReponseSelectionnee" value="<%=reponseSelectionnee.getLibelle()%>">
-								<br>
-								<label for="labelReponseCorrecte" >La réponse est</label>
-								<input type="hidden" id="reponseCorrecteReponseSelectionnee" name="reponseCorrecteReponseSelectionnee"
-									value="<%=reponseSelectionnee.isEstCorrect()%>">
-								<select id="validiteReponseSelectionnee" onchange="formulaireChangeValidite(this.form,this.value)">
-									<option value="1">valide</option>
-									<option value="0">invalide</option>
-								</select> 
-								<br>
-								<button type="button" id="insertUpdateReponse" onclick="formulaireSubmit(this.form,'insertUpdateReponse','')" >Valider</button>
-								<button type="button" id="cancelReponse" onclick="formulaireReponseVide(this.form,'cancelReponse')" >Annuler</button>
-							</fieldset>
-							<table>
-								<tr>
-					    			<th></th>
-					    			<th>Réponse</th>
-					    			<th>Validité</th>
-					    			<th></th>
-					  			</tr>
-								<% 
-									int j = 1;		
-									for (Reponse uneReponse : listReponses) 
-									{
-								%>
-								<tr>
-									<td><input type = "radio"  id="listeReponseSelectionnee" name="listeReponseSelectionnee" onclick="formulaireSubmit(this.form,'choixReponse', this.value)" 
-												<% if (uneReponse.getId() == reponseSelectionnee.getId()) {%>
-														checked							
-												<% }%> 
-												value="<%=uneReponse.getId()%>"/>
-									</td>
-						          	<td><label for = "laReponseSelectionne">Reponse <%=j%> : <%= uneReponse.getLibelle() %></label></td>
-									<td>la réponse est 
-									<% if (uneReponse.isEstCorrect() == true) {%>
-										valide
-									<%} else {%>
-										invalide
-									<%}%>
-									</td>
-									<td><button type="button" id="deleteReponse" onclick="formulaireSubmit(this.form,'deleteReponse','<%=uneReponse.getId()%>')" >Supprimer</button></td>
-								</tr>
-								<%
-									j++;}
-								%>
-							</table>
-						
-						</article>	
-					</fieldset>
-				</div>
-			</form>
+					<article  id="articleAjoutSection">
+						<fieldset>
+							<legend id="legendReponse">Ajout d'une section</legend>
+							<h3>Liste des Themes</h3>
+							<input type="hidden" id="idThemeSelectionnee" name="idThemeSelectionnee" value="<%= themeSelectionne.getId() %>">
+							<select></select>
+							<select></select><label>questions pour cette année</label>
+							
+							<select id="validiteReponseSelectionnee" onchange="formulaireChangeValidite(this.form,this.value)">
+								<option value="1">valide</option>
+								<option value="0">invalide</option>
+							</select> 
+							<br>
+							<button type="button" id="addSection" onclick="formulaireSubmit(this.form,'addSection','')" >Ajouter</button>
+						</fieldset>
+					</article>	
+				</fieldset>
+			</div>
+		</form>
 </section>
-<script type="text/javascript" src="./javascript/gestionThemes.js"></script> 
+<script type="text/javascript" src="./javascript/gestionTests.js"></script> 
 
 <jsp:include page="<%=piedDePage%>"></jsp:include>
