@@ -4,7 +4,6 @@ AS
 BEGIN
 	SELECT 
 			Illustration,
-			NbReponses,
 			Enonce,
 			Id,
 			Theme_Id
