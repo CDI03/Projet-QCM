@@ -1,9 +1,11 @@
 package fr.eni_ecole.jee.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +51,7 @@ public class GestionTests extends HttpServlet {
 		processRequest(request,response);
 	}
 	
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getMethod().equalsIgnoreCase("GET") ) {
 			processRequestSelectAll (request, response);
 		} else {
@@ -69,37 +71,55 @@ public class GestionTests extends HttpServlet {
 	
 	
 
-	private void processRequestSelectAll(HttpServletRequest request, HttpServletResponse response) {
+	private void processRequestSelectAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String idFormation;
+		int idCompetence;
+		int idTheme;
+		int idTest;
+		
+		Formation uneFormation = new Formation();
+		Competence uneCompetence = new Competence();
+		Theme unTheme = new Theme();
+		Test unTest = new Test();
+		
+		List<Formation> listFormations = new ArrayList<Formation>();
+		List<Competence> listCompetences = new ArrayList<Competence>();
+		List<Theme> listThemes = new ArrayList<Theme>();
+		List<Test> listTests = new ArrayList<Test>();
+
+		try {
+			listFormations = CtrlFormation.SelectAll();;
+			uneFormation = RecupFormation(request, listFormations);
+			
+			listCompetences = CtrlCompetence.SelectAllByFormation(uneFormation.getId());
+			uneCompetence = RecupCompetence(request, listCompetences);
+			
+			listThemes = CtrlTheme.SelectAllByCompetence(uneCompetence.getId());
+			unTheme =  RecupTheme(request, uneCompetence, listThemes);
+			
+			listTests = CtrlTest.SelectAll();
+			unTest =  RecupTest(request, listTests);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
-		List<Formation> listFormations = CtrlFormation.SelectAll();;
-		Formation uneFormation = RecupFormation(request);
 		
-		String idFormation = "CDI";
-		List<Competence> listCompetences = CtrlCompetence.SelectAllByFormation(idFormation);
-		Competence uneCompetence = RecupCompetence(request);
-		
-		int idCompetence = 1;
-		List<Theme> listThemes = CtrlTheme.SelectAllByCompetence(idCompetence);
-		Theme unTheme =  RecupTheme(request, uneCompetence);
-		
-		List<Test> listTests = CtrlTest.SelectAllByCompetence(idCompetence);
-		Test unTest =  RecupTest(request);
-		
-		
-		
-		/*
-		request.setAttribute("formationSelectionnee", formationSelectionnee);
-		request.setAttribute("competenceSelectionnee", competenceSelectionnee);
-		request.setAttribute("themeSelectionne", themeSelectionne);
-		request.setAttribute("questionSelectionnee", questionSelectionnee);
-		request.setAttribute("reponseSelectionnee", reponseSelectionnee);	
+		request.setAttribute("formationSelectionnee", uneFormation);
+		request.setAttribute("competenceSelectionnee", uneCompetence);
+		request.setAttribute("themeSelectionne", unTheme);
+		request.setAttribute("testSelectionne", unTest);
 		
 		request.setAttribute("listFormations", listFormations);
 		request.setAttribute("listCompetences", listCompetences);
 		request.setAttribute("listThemes", listThemes);
-		request.setAttribute("listQuestions", listQuestions);
-		request.setAttribute("listReponses", listReponses);*/
+		request.setAttribute("listTests", listTests);
 		
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionTests/gestionTests.jsp");
 		rd.forward(request, response);	
@@ -117,29 +137,48 @@ public class GestionTests extends HttpServlet {
 	// RECUPERATION DES PARAMETRES //
 	/////////////////////////////////
 	
-	private static Formation RecupFormation(HttpServletRequest request) {
+	private static Formation RecupFormation(HttpServletRequest request, List<Formation> listFormations) {
 		Formation uneFormation = new Formation();
-		uneFormation.setId(request.getParameter("idFormationSelectionnee"));
+		String idFormationSelectionnee = request.getParameter("idFormationSelectionnee");
+		if (idFormationSelectionnee != null) {
+			uneFormation.setId(idFormationSelectionnee);
+		} else {
+			//TODO gérer le cas null
+			uneFormation = listFormations.get(1);
+		}
 		return uneFormation;
 	}
 	
-	private static Competence RecupCompetence(HttpServletRequest request) {
+	private static Competence RecupCompetence(HttpServletRequest request, List<Competence> listCompetences) {
 		Competence uneCompetence = new Competence();
-		uneCompetence.setId(Integer.parseInt(request.getParameter("idCompetenceSelectionnee")) );
+		String idCompetenceSelectionnee = request.getParameter("idCompetenceSelectionnee");
+		if (idCompetenceSelectionnee != null) {
+			uneCompetence.setId(Integer.parseInt(idCompetenceSelectionnee));
+		} else {
+			uneCompetence = listCompetences.get(0);
+		}
 		return uneCompetence;
 	}
 	
-	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence) {
+	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence, List<Theme> listThemes) {
 		Theme unTheme =  new Theme();
-		unTheme.setId(Integer.parseInt(request.getParameter("idThemeSelectionne")) );
-		unTheme.setLibelle(request.getParameter("libelleThemeSelectionne"));
-		unTheme.setCompetence(uneCompetence);
+		String idThemeSelectionne = request.getParameter("idThemeSelectionne");
+		if (idThemeSelectionne != null) {
+			unTheme.setId(Integer.parseInt(idThemeSelectionne));
+		} else {
+			unTheme = listThemes.get(0);
+		}
 		return unTheme;
 	}
 	
-	private static Test RecupTest(HttpServletRequest request) {
+	private static Test RecupTest(HttpServletRequest request, List<Test> listTest) {
 		Test unTest = new Test();
-		unTest.setId(Integer.parseInt(request.getParameter("idTestSelectionne")) );
+		String idTestSelectionne = request.getParameter("idTestSelectionne");
+		if (idTestSelectionne != null) {
+			unTest.setId(Integer.parseInt(idTestSelectionne) );
+		} else {
+			unTest = listTest.get(0);
+		}	
 		return unTest;
 	}
 	

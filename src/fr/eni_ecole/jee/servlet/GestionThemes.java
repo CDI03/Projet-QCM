@@ -523,7 +523,5 @@ public class GestionThemes extends HttpServlet {
 		uneReponse.setQuestion(uneQuestion);
 		return uneReponse;
 	}
-	
-	
-	
+
 }

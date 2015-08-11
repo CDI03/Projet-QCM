@@ -6,6 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
+
 <% 
 ArrayList<Formation> listFormations = (ArrayList<Formation>)request.getAttribute("listFormations");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
