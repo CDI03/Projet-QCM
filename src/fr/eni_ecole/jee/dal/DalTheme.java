@@ -33,10 +33,12 @@ public class DalTheme {
 				int themeId = rs.getInt("Theme_Id");
 				String themeLibelle = rs.getString("Theme_Libelle");
 				int competenceId = rs.getInt("Competence_Id");
+				int nbQuestions = rs.getInt("NbQuestions");
 				//construction d'un theme
 				Theme unTheme = new Theme();
 				unTheme.setId(themeId);
 				unTheme.setLibelle(themeLibelle);
+				unTheme.setNbQuestions(nbQuestions);
 				//Construction de la compétence associé
 				Competence uneCompetence = new Competence();
 				uneCompetence.setId(competenceId);

@@ -121,10 +121,12 @@ public class GestionTests extends HttpServlet {
 		request.setAttribute("themeSelectionne", unTheme);
 		request.setAttribute("testSelectionne", unTest);
 		
+		
 		request.setAttribute("listFormations", listFormations);
 		request.setAttribute("listCompetences", listCompetences);
 		request.setAttribute("listThemes", listThemes);
 		request.setAttribute("listTests", listTests);
+		request.setAttribute("listSections", listSections);
 		
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/gestionTests/gestionTests.jsp");
 		rd.forward(request, response);	

@@ -102,7 +102,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 			
 			<div id="articleTestTitre">
 				<fieldset>
-					<legend id="legendQuestion">Gestion du Test : <input type=text id="unTitreTest" value="" disabled></legend>
+					<legend id="legendQuestion">Gestion du Test : <input type=text id="unTitreTest" value="<%= testSelectionne.getLibelle() %>" disabled></legend>
 					<button type="button" id="deleteTest" onclick="formulaireSubmit(this.form,'deleteTest','<%=testSelectionne.getId()%>')">Supprimer le test</button>
 						
 					<article  id="articleTestSection">
@@ -115,15 +115,25 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 				    			<th>Nb de questions</th>
 				    			<th></th>
 				  			</tr>
-							<%  int i = 1;		
-								for (Section uneSection : listSections) { %>
+							<%  for (Section uneSection : listSections) { %>
 							<tr>
-								<td><label for="labelLibelleSection" ><%= uneSection.getTheme().getLibelle() %></label>
-								</td>
-					          	<td> </td>
+								<td><label for="labelLibelleSection" ><%= uneSection.getTheme().getLibelle() %></label></td>
+					          	<td>
+					          		<select>
+					          			<% for (int i = 1; i <= uneSection.getNombreQuestion(); i++) {  %>
+					          				<option 
+					          						<% if (i == uneSection.getNombreQuestion()) { %>
+					          							selected
+					          						<% } %>
+					          						value="<%= i %>"  >
+					          						<%= i %>
+					          				</option>  
+					          			<% } %>
+					          		</select>
+					          	</td>
 								<td><button type="button" id="deleteSection" onclick="formulaireSubmit(this.form,'deleteSection','<%=uneSection.getTheme().getId()%>')">Supprimer</button></td>
 							</tr>
-							<% i++; } %>
+							<% } %>
 						</table>	
 					</article>
 					
@@ -131,18 +141,32 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 						<fieldset>
 							<legend id="legendReponse">Ajout d'une section</legend>
 							<h3>Liste des Themes</h3>
-							<input type="hidden" id="idThemeSelectionnee" name="idThemeSelectionnee" value="<%= themeSelectionne.getId() %>">
-							<select></select>
-							<select></select><label>questions pour cette année</label>
-							
-							<select id="validiteReponseSelectionnee" onchange="formulaireChangeValidite(this.form,this.value)">
-								<option value="1">valide</option>
-								<option value="0">invalide</option>
-							</select> 
+							<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
+							<input type="hidden" id="nbQuestionsSection" name="nbQuestionsSection" value="<%= themeSelectionne.getNbQuestions() %>">
+							<select>
+								<% for (Theme unTheme : listThemes) { %>
+									<option 
+										<% if (unTheme.getId() == themeSelectionne.getId()) { %>
+											selected
+										<% } %>
+									 value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
+								<%  } %>
+							</select>
+							<select>
+								<% for (int j = 1; j <= themeSelectionne.getNbQuestions(); j++) { %>
+									<option 
+										value ="<%= j %>">
+									<%= j %></option>
+								<% } %>
+								
+							</select>
+								
+							<label>questions</label>
 							<br>
 							<button type="button" id="addSection" onclick="formulaireSubmit(this.form,'addSection','')" >Ajouter</button>
 						</fieldset>
 					</article>	
+			
 				</fieldset>
 			</div>
 		</form>

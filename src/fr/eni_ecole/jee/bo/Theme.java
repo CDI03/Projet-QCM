@@ -5,6 +5,7 @@ public class Theme {
 	private int id;
 	private String libelle;
 	private Competence competence;
+	private int nbQuestions;
 	
 	public Theme() {
 		super();
@@ -41,6 +42,15 @@ public class Theme {
 		this.competence = competence;
 	}
 
+	public int getNbQuestions() {
+		return nbQuestions;
+	}
+
+	public void setNbQuestions(int nbQuestions) {
+		this.nbQuestions = nbQuestions;
+	}
+
+	
 	
 	
 	
