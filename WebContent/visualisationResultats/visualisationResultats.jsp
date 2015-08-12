@@ -18,8 +18,9 @@ Candidat leCandidatChoisit = (Candidat)request.getAttribute("leCandidatChoisit")
 <jsp:include page="<%=menu%>"></jsp:include>
 
 <Section>
+	<jsp:include page="./choixCandidats.jsp"></jsp:include>
 	<jsp:include page="./affichageResultats.jsp"></jsp:include>
 </section>
 
-
+<script type="text/javascript" src="./javascript/visualisationResultats.js"></script>
 <jsp:include page="<%=piedDePage%>"></jsp:include>

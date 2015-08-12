@@ -3,6 +3,7 @@ package fr.eni_ecole.jee.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -13,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni_ecole.jee.bo.Candidat;
 import fr.eni_ecole.jee.bo.Examen;
+import fr.eni_ecole.jee.bo.Inscription;
 import fr.eni_ecole.jee.bo.ResultatExamen;
 import fr.eni_ecole.jee.controler.CtrlExamen;
+import fr.eni_ecole.jee.controler.CtrlInscription;
 import fr.eni_ecole.jee.controler.CtrlResultatsExamen;
 import fr.eni_ecole.jee.controler.CtrlTest;
 
@@ -27,6 +30,8 @@ public class VisualisationResultats extends HttpServlet {
 	private Examen examenChoisit;
 	private Candidat leCandidatChoisit;
 	private ArrayList<ResultatExamen> resultatsDuCandidat;
+	
+	private ArrayList<Inscription> listDesInscrits;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -53,18 +58,25 @@ public class VisualisationResultats extends HttpServlet {
 	
 	
 	private void processRequest(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		try {
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/visualisationResultats/visualisationResultats.jsp");	
+		try {			
 			//Brouillon à revoir avec la mise en forme pour l'acces formateur
+			
 			leCandidatChoisit = (Candidat)request.getSession().getAttribute("candidatConnecte");
 			request.setAttribute("leCandidatChoisit", leCandidatChoisit);
+			
+			
 			examenChoisit = (Examen) request.getAttribute("lExamenEnCours");
-			//TODO recup en base l'état de l'examen
 			request.setAttribute("examenChoisit", examenChoisit);
+			
 			resultatsDuCandidat = CtrlResultatsExamen.SelectAll(examenChoisit);
 			request.setAttribute("resultatsDuCandidat", resultatsDuCandidat);
-			System.out.println("visualise");
+			
+			listDesInscrits = CtrlInscription.SelectAll();
+			request.setAttribute("listDesInscrits", listDesInscrits);
+			
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/visualisationResultats/visualisationResultats.jsp");	
 			rd.forward(request, response);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
