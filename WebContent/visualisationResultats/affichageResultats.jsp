@@ -6,8 +6,6 @@
 <%
 Candidat leCandidatChoisit = (Candidat)request.getAttribute("leCandidatChoisit");
 
-Examen examenChoisit = (Examen)request.getAttribute("examenChoisit");
-
 ArrayList<ResultatExamen> resultatsDuCandidat = (ArrayList<ResultatExamen>)request.getAttribute("resultatsDuCandidat");
 
 int nbQuestionsDuTest=0;
@@ -22,7 +20,7 @@ int poucentageTest = nbQUestionReussiesDuTest/nbQuestionsDuTest*100;
 
 <article id="affichageResultats">
 <h1>Résultats de <%=leCandidatChoisit.getPrenom() +" " + leCandidatChoisit.getNom()%></h1>
-<h2><%=examenChoisit.getTest().getLibelle()%></h2>
+<h2>TODO</h2>
 <br>
 <br>
 	<p>
