@@ -14,4 +14,13 @@ public class CtrlSection {
 		return DalSection.SelectAllByTest(idTest);
 	}
 
+	public static Boolean Insert(Section uneSection) throws SQLException, NamingException {
+		return DalSection.Insert(uneSection);
+	}
+
+	public static Boolean Delete(Section uneSection) throws SQLException, NamingException {
+		return DalSection.Delete(uneSection);
+		
+	}
+
 }

@@ -21,6 +21,7 @@ import fr.eni_ecole.jee.bo.Test;
 import fr.eni_ecole.jee.bo.Theme;
 import fr.eni_ecole.jee.controler.CtrlCompetence;
 import fr.eni_ecole.jee.controler.CtrlFormation;
+import fr.eni_ecole.jee.controler.CtrlQuestion;
 import fr.eni_ecole.jee.controler.CtrlSection;
 import fr.eni_ecole.jee.controler.CtrlTest;
 import fr.eni_ecole.jee.controler.CtrlTheme;
@@ -59,12 +60,20 @@ public class GestionTests extends HttpServlet {
 		} else {
 			if (request.getParameter("action") == null){
 				processRequestSelectAll (request, response);
-			} else if(request.getParameter("action").toString().equalsIgnoreCase("insertQuestion")) {
+			} else if(request.getParameter("action").toString().equalsIgnoreCase("insertSection")) {
 				if (request.getAttribute("action") != null) {
 					processRequestSelectAll (request, response);
 				} else {
-					//processRequestInsertQuestion (request, response);
+					processRequestInsertSection (request, response);
 				}
+			} else if(request.getParameter("action").toString().equalsIgnoreCase("deleteSection")) {
+				if (request.getAttribute("action") != null) {
+					processRequestSelectAll (request, response);
+				} else {
+					processRequestdeleteSection (request, response);
+				}
+				
+				
 			} else {
 				processRequestSelectAll (request, response);
 			}
@@ -73,6 +82,10 @@ public class GestionTests extends HttpServlet {
 	
 	
 
+	///////////////////////////
+	// CHARGEMENT DE LA PAGE //
+	///////////////////////////
+	
 	private void processRequestSelectAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String idFormation;
@@ -133,10 +146,91 @@ public class GestionTests extends HttpServlet {
 		
 	}
 	
+	//////////////
+	// SECTIONS //
+	//////////////
+	
+	private void processRequestInsertSection(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				
+		//Récupération des données du formulaire
+		Formation uneFormation = RecupJSPFormation(request);
+		Competence uneCompetence = RecupJSPCompetence(request);
+		Theme unTheme =  RecupJSPTheme(request, uneCompetence);
+		Test unTest = RecupJSPTest(request);
+		Section uneSection = RecupJSPSection(request, unTest, unTheme);
+						
+		//insertion dans la base		
+		try {
+			Boolean insertOk = CtrlSection.Insert(uneSection);
+				request.setAttribute("action", "insertSectionOk");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//redirection
+			processRequestSelectAll (request, response);
+	}
+
+	private void processRequestdeleteSection(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Récupération des données du formulaire
+		Formation uneFormation = RecupJSPFormation(request);
+		Competence uneCompetence = RecupJSPCompetence(request);
+		Theme unTheme =  RecupJSPTheme(request, uneCompetence);
+		Test unTest = RecupJSPTest(request);
+		Section uneSection = RecupJSPSection(request, unTest, unTheme);
+		try {
+			CtrlSection.Delete(uneSection);
+			request.setAttribute("action", "deleteSectionOk");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		processRequestSelectAll (request, response);
+		
+	}
+
 	
 	
+	private Formation RecupJSPFormation(HttpServletRequest request) {
+		Formation uneFormation = new Formation();
+		uneFormation.setId(request.getParameter("idFormationSelectionnee"));
+		return uneFormation;
+	}
+
+	private static Competence RecupJSPCompetence(HttpServletRequest request) {
+		Competence uneCompetence = new Competence();
+		uneCompetence.setId(Integer.parseInt(request.getParameter("idCompetenceSelectionnee")) );
+		return uneCompetence;
+	}
 	
+	private static Theme RecupJSPTheme(HttpServletRequest request, Competence uneCompetence) {
+		Theme unTheme =  new Theme();
+		unTheme.setId(Integer.parseInt(request.getParameter("idThemeSelectionne")) );
+		unTheme.setLibelle(request.getParameter("libelleThemeSelectionne"));
+		unTheme.setCompetence(uneCompetence);
+		return unTheme;
+	}
 	
+	private static Test RecupJSPTest(HttpServletRequest request) {
+		Test unTest = new Test();
+		unTest.setId(Integer.parseInt(request.getParameter("idTestSelectionne")) );
+		unTest.setLibelle(request.getParameter("libelleTestSelectionne"));
+		unTest.setDuree(Integer.parseInt(request.getParameter("dureeTestSelectionne")) );
+		unTest.setSeuilBas(Integer.parseInt(request.getParameter("seuilBasTestSelectionne")) );
+		unTest.setSeuilHaut(Integer.parseInt(request.getParameter("seuilHautTestSelectionne")) );
+		return unTest;
+	}
+	
+	private static Section RecupJSPSection (HttpServletRequest request, Test unTest, Theme unTheme) {
+		Section uneSection = new Section();
+		uneSection.setTest(unTest);
+		uneSection.setTheme(unTheme);
+		uneSection.setNombreQuestion(Integer.parseInt(request.getParameter("nbQuestionsSection")));
+		return uneSection;
+	}
 	
 	
 	

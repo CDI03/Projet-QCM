@@ -22,6 +22,8 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalSection {
 
 	private final static String SELECTALLBYTEST = "{call SelectAllByTest_Section (?)}";
+	private final static String INSERT = "{ call Insert_Section (?,?,?) }";
+	private final static String DELETE = "{ call Delete_Section (?,?) }";
 	
 	public static ArrayList<Section> SelectAll(Examen examenChoisit) throws SQLException, NamingException {
 		ArrayList<Section> listSection = new ArrayList<Section>();
@@ -89,5 +91,30 @@ public class DalSection {
 			}
 		}	
 		return listSection;	
+	}
+
+	public static Boolean Insert(Section uneSection) throws SQLException, NamingException {
+		boolean insertOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(INSERT);
+			cstmt.setInt(1, uneSection.getTest().getId());
+			cstmt.setInt(2, uneSection.getTheme().getId());
+			cstmt.setInt(3, uneSection.getNombreQuestion());
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
+		return insertOk;
+	}
+
+	public static Boolean Delete(Section uneSection) throws SQLException, NamingException {
+		boolean deleteOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DELETE);
+			cstmt.setInt(1, uneSection.getTest().getId());
+			cstmt.setInt(2, uneSection.getTheme().getId());
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
+		return deleteOk;
 	}	
 }

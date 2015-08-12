@@ -41,7 +41,6 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 		
 				<input type="hidden" id="idFormationSelectionnee" name="idFormationSelectionnee" value="<%=formationSelectionnee.getId()%>">
 				<input type="hidden" id="idCompetenceSelectionnee" name="idCompetenceSelectionnee" value="<%=competenceSelectionnee.getId()%>">
-				<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%=themeSelectionne.getId()%>">
 				<input type="hidden" id="action" name ="action" value="">
 				
 				<article id="articleTestChoix">
@@ -109,6 +108,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 						<!-- ------------------------------------- -->	
 						<!--  Formulaire de présentation Sections  -->
 						<!-- ------------------------------------- -->
+						
 						<table id="sectionTable">
 							<tr>
 				    			<th>Section</th>
@@ -139,11 +139,11 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 					
 					<article  id="articleAjoutSection">
 						<fieldset>
-							<legend id="legendReponse">Ajout d'une section</legend>
+							<legend id="legendSection">Ajout d'une section</legend>
 							<h3>Liste des Themes</h3>
-							<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
+							<input type="text" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
 							<input type="hidden" id="nbQuestionsSection" name="nbQuestionsSection" value="<%= themeSelectionne.getNbQuestions() %>">
-							<select>
+							<select id="listThemes" onchange="formulaireSubmit(this.form,'selectionTheme','')">
 								<% for (Theme unTheme : listThemes) { %>
 									<option 
 										<% if (unTheme.getId() == themeSelectionne.getId()) { %>
@@ -152,7 +152,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 									 value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 								<%  } %>
 							</select>
-							<select>
+							<select id="selectionNombreQuestion">
 								<% for (int j = 1; j <= themeSelectionne.getNbQuestions(); j++) { %>
 									<option 
 										value ="<%= j %>">
@@ -163,7 +163,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 								
 							<label>questions</label>
 							<br>
-							<button type="button" id="addSection" onclick="formulaireSubmit(this.form,'addSection','')" >Ajouter</button>
+							<button type="button" id="insertSection" onclick="formulaireSubmit(this.form,'insertSection','')" >Ajouter</button>
 						</fieldset>
 					</article>	
 			
