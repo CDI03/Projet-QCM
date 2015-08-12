@@ -53,7 +53,7 @@ public class DalSection {
 		return listSection;	
 	}
 
-	public static List<Section> SelectAllByTest(int idTest) {
+	public static List<Section> SelectAllByTest(int idTest) throws SQLException, NamingException {
 		ArrayList<Section> listSection = new ArrayList<Section>();
 		
 		//Récupération des données
@@ -63,19 +63,27 @@ public class DalSection {
 			ResultSet rs = cmd.executeQuery();			
 			
 			while (rs.next()) {
+				int testId = rs.getInt("Test_Id");
 				int nbQuestion = rs.getInt("NombreQuestion");
-				int themeID = rs.getInt("Id_Theme");
-				String themeLibelle = rs.getString("Libelle_Theme");
-				
-		//Construction du theme
-				Theme leTheme = new Theme();
-				leTheme.setId(themeID);
-				leTheme.setLibelle(themeLibelle);
+				int themeId = rs.getInt("Theme_Id");
+				String themeLibelle = rs.getString("Libelle");
+				int competenceId = rs.getInt("Competence_Id");
+		//Construction de la competence
+				Competence uneCompetence = new Competence();
+				uneCompetence.setId(competenceId);
+		//Construction du theme		
+				Theme unTheme = new Theme();
+				unTheme.setId(themeId);
+				unTheme.setLibelle(themeLibelle);
+				unTheme.setCompetence(uneCompetence);
+		//Construction du test
+				Test unTest = new Test();
+				unTest.setId(testId);
 		//construction d'une section
 				Section uneSection = new Section();
+				uneSection.setTest(unTest);	
+				uneSection.setTheme(unTheme);
 				uneSection.setNombreQuestion(nbQuestion);
-				uneSection.setTest(idTest);	
-				uneSection.setTheme(leTheme);	
 		//construction de la liste
 				listSection.add(uneSection);
 			}
