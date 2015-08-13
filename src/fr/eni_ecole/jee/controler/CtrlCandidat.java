@@ -1,6 +1,7 @@
 package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.naming.NamingException;
 
@@ -17,5 +18,9 @@ public class CtrlCandidat {
 	public static Candidat SelectOne(String id, String mdp) throws SQLException, NamingException 
 	{
 		return DalCandidat.SelectOne(id, mdp);
+	}
+
+	public static List<Candidat> SelectAll() throws SQLException, NamingException {
+		return DalCandidat.SelectAll();
 	}
 }

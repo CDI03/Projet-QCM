@@ -8,6 +8,7 @@
 
 
 <% 
+
 ArrayList<Formation> listFormations = (ArrayList<Formation>)request.getAttribute("listFormations");
 ArrayList<Competence> listCompetences = (ArrayList<Competence>)request.getAttribute("listCompetences");
 ArrayList<Theme> listThemes = (ArrayList<Theme>)request.getAttribute("listThemes");
@@ -47,35 +48,17 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 			
 					<fieldset id="fieldsetSelectionTest">
 						<legend>Choix du Test à gérer :</legend>
-						<!-- ------------------------------------- -->
-						<!--  Affichage des Formations disponibles -->
-						<!-- ------------------------------------- -->
-						<select id="listFormations" name="listFormations" onchange="formulaireSubmit(this.form,'selectionFormations','')">
-							<% for (Formation uneFormation : listFormations) { %>
-							<option value="<%=uneFormation.getId().trim()%>"><%=uneFormation.getTitre()%></option>
-							<% } %>
-						</select>
-						<br>
-				
-						
-						<!-- -------------------------------------- -->		
-						<!--  Affichage des compétences disponibles -->
-						<!-- -------------------------------------- -->	
-						<select id="listCompetences" name="listCompetences" onchange="formulaireSubmit(this.form,'selectionCompetences','')">
-							<% for (Competence uneCompetence : listCompetences) { %>
-							<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
-							<% } %>
-						</select>
-						<br>
-						
-						
+									
 						<!-- ---------------------- -->	
 						<!--  Affichage des tests  -->
 						<!-- ---------------------- -->	
 						<select id="listTests" name="listTests" onchange="formulaireSubmit(this.form,'selectionTests','')">
-							<% for (Test unTest : listTests) { %>
+							<% if (!listTests.isEmpty()) {
+									for (Test unTest : listTests) { %>
 								<option  value="<%=unTest.getId()%>"><%=unTest.getLibelle()%></option>
-							<%  } %>
+							<%  } } else { %>
+							<option>Aucun test disponible</option>									
+							<%	} %>
 						</select>
 					</fieldset>
 					
@@ -140,6 +123,36 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 					<article  id="articleAjoutSection">
 						<fieldset>
 							<legend id="legendSection">Ajout d'une section</legend>
+							<!-- ------------------------------------- -->
+							<!--  Affichage des Formations disponibles -->
+							<!-- ------------------------------------- -->
+							<select id="listFormations" name="listFormations" onchange="formulaireSubmit(this.form,'selectionFormations','')">
+								
+								<%	if (!listFormations.isEmpty()) {
+										for (Formation uneFormation : listFormations) { %>
+								<option value="<%=uneFormation.getId().trim()%>"><%=uneFormation.getTitre()%></option>
+								<%  } } else { %>
+								<option>Aucune Formation disponible</option>									
+								<%	} %>
+								
+							
+							</select>
+							<br>
+					
+							
+							<!-- -------------------------------------- -->		
+							<!--  Affichage des compétences disponibles -->
+							<!-- -------------------------------------- -->	
+							<select id="listCompetences" name="listCompetences" onchange="formulaireSubmit(this.form,'selectionCompetences','')">
+								<% 	if (!listCompetences.isEmpty()) {
+										for (Competence uneCompetence : listCompetences) { %>
+								<option value="<%=uneCompetence.getId()%>"><%=uneCompetence.getLibelle()%></option>
+								<%  } } else { %>
+								<option>Aucune Compétence disponible</option>									
+								<%	} %>
+							</select>
+							<br>
+							
 							<h3>Liste des Themes</h3>
 							<input type="text" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
 							<input type="hidden" id="nbQuestionsSection" name="nbQuestionsSection" value="<%= themeSelectionne.getNbQuestions() %>">

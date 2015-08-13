@@ -5,5 +5,6 @@
 		<li><a href="<%= request.getContextPath() %>/siteEmploye.jsp">Accueil</a></li>
         <li><a href="<%= request.getContextPath() %>/GestionThemes">Gestion des thèmes</a></li>
         <li><a href="<%= request.getContextPath() %>/GestionTests">Gestion des tests</a></li>
+         <li><a href="<%= request.getContextPath() %>/InscriptionCandidats">Inscription Candidats</a></li>
     </ul>
 </nav>

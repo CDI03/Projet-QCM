@@ -83,4 +83,14 @@
     <servlet-name>VisualisationResultats</servlet-name>
     <url-pattern>/VisualisationResultats</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InscriptionCandidats</display-name>
+    <servlet-name>InscriptionCandidats</servlet-name>
+    <servlet-class>fr.eni_ecole.jee.servlet.InscriptionCandidats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InscriptionCandidats</servlet-name>
+    <url-pattern>/InscriptionCandidats</url-pattern>
+  </servlet-mapping>
 </web-app>

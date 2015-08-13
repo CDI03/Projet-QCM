@@ -22,6 +22,8 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalExamen {
 
+	private final static String SelectAllCandidatsByTest = "{ call SelectAllCandidatsByTest_Examen (?) }";
+	
 	//Récupérer tous les examens du candidat
 	public static ArrayList<Examen> SelectAll(Candidat leCandidat) throws SQLException, NamingException {
 		ArrayList<Examen> listExamen = new ArrayList<Examen>();
@@ -101,5 +103,31 @@ public class DalExamen {
 			Candidat leCandidatChoisit) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public static List<Candidat> SelectAllCandidatsByTest(int idTest) throws SQLException, NamingException {
+		List<Candidat> listCandidats = new ArrayList<Candidat>();
+		
+		//Récupération des données
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cmd = cnx.prepareCall(SelectAllCandidatsByTest);
+			cmd.setInt(1, idTest);
+			ResultSet rs = cmd.executeQuery();			
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String motDePasse = rs.getString("motDePasse");
+				//construction d'un candidat
+				Candidat unCandidat = new Candidat();
+				unCandidat.setId(id);
+				unCandidat.setMotDePasse(motDePasse);
+				unCandidat.setNom(nom);
+				unCandidat.setPrenom(prenom);
+				//construction de la liste des Candidats
+				listCandidats.add(unCandidat);
+			}
+		}
+		return listCandidats;
 	}
 }

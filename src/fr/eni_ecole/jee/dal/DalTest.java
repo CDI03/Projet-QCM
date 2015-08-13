@@ -19,6 +19,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalTest {
 
 	private final static String SELECTALL = "{ call SelectAll_Test }";
+	private final static String SELECTONE = "{ call SelectOne_Test (?) }";
 	
 	public static List<Test> SelectAll() throws SQLException, NamingException {
 		
@@ -47,5 +48,30 @@ public class DalTest {
 		}	
 
 		return listTests;
+	}
+
+	public static Test SelectOne(int idTestSelectionne) throws SQLException, NamingException {
+		Test unTest = new Test();
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = null;
+			cstmt = cnx.prepareCall(SELECTONE);
+			cstmt.setInt(1, idTestSelectionne);
+			ResultSet rs = cstmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("Id");
+				String libelle = rs.getString("Libelle");
+				int duree = rs.getInt("Duree");
+				int seuilHaut = rs.getInt("SeuilHaut");
+				int seuilBas = rs.getInt("SeuilBas");
+				
+				unTest = new Test();
+				unTest.setId(id);
+				unTest.setLibelle(libelle);
+				unTest.setDuree(duree);
+				unTest.setSeuilHaut(seuilHaut);
+				unTest.setSeuilBas(seuilHaut);
+			}
+		}
+		return unTest;	
 	}
 }

@@ -4,16 +4,20 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.NamingException;
 
 import fr.eni_ecole.jee.bo.Candidat;
+import fr.eni_ecole.jee.bo.Formation;
 import fr.eni_ecole.jee.outils.PoolConnection;
 
 public class DalCandidat {
 	
 	//TODO A réfléchir : transaction(commit) au sein de java utile? ou déjà effetué au sein des procédures stockées
-
+	private final static String SELECTALL = "{ call SelectAll_Candidat }";
+	
 	//Ajouter un candidat
 	public static boolean Insert(Candidat candidat) throws SQLException, NamingException {
 		boolean insertOk = false;
@@ -69,5 +73,28 @@ public class DalCandidat {
 			e.printStackTrace();
 		}
 		return leCandidat;
+	}
+
+	public static List<Candidat> SelectAll() throws SQLException, NamingException {
+		List<Candidat> listCandidats = new ArrayList<Candidat>();
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(SELECTALL);
+			ResultSet rs = cstmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String motDePasse = rs.getString("motDePasse");
+				//construction d'un candidat
+				Candidat unCandidat = new Candidat();
+				unCandidat.setId(id);
+				unCandidat.setMotDePasse(motDePasse);
+				unCandidat.setNom(nom);
+				unCandidat.setPrenom(prenom);
+				//construction de la liste des Candidats
+				listCandidats.add(unCandidat);
+			}
+		}
+		return listCandidats;
 	}
 }

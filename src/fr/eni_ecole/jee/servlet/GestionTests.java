@@ -72,8 +72,6 @@ public class GestionTests extends HttpServlet {
 				} else {
 					processRequestdeleteSection (request, response);
 				}
-				
-				
 			} else {
 				processRequestSelectAll (request, response);
 			}
@@ -106,18 +104,29 @@ public class GestionTests extends HttpServlet {
 
 		try {
 			listFormations = CtrlFormation.SelectAll();;
-			uneFormation = RecupFormation(request, listFormations);
-			
-			listCompetences = CtrlCompetence.SelectAllByFormation(uneFormation.getId());
-			uneCompetence = RecupCompetence(request, listCompetences);
-			
-			listThemes = CtrlTheme.SelectAllByCompetence(uneCompetence.getId());
-			unTheme =  RecupTheme(request, uneCompetence, listThemes);
+			if (listFormations != null) {
+				uneFormation = RecupFormation(request, listFormations);
+			}
+			if (uneFormation != null) {
+				listCompetences = CtrlCompetence.SelectAllByFormation(uneFormation.getId());
+			}
+			if (listCompetences != null) {
+				uneCompetence = RecupCompetence(request, listCompetences);
+			}
+			if (uneCompetence != null) {
+				listThemes = CtrlTheme.SelectAllByCompetence(uneCompetence.getId());
+			}
+			if (listThemes != null) {
+				unTheme =  RecupTheme(request, uneCompetence, listThemes);
+			}
 			
 			listTests = CtrlTest.SelectAll();
-			unTest =  RecupTest(request, listTests);
-			
-			listSections = CtrlSection.SelectAllByTest(unTest.getId());
+			if (listTests != null) {
+				unTest =  RecupTest(request, listTests);
+			}
+			if (unTest != null) {
+				listSections = CtrlSection.SelectAllByTest(unTest.getId());
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -127,13 +136,10 @@ public class GestionTests extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-		
 		request.setAttribute("formationSelectionnee", uneFormation);
 		request.setAttribute("competenceSelectionnee", uneCompetence);
 		request.setAttribute("themeSelectionne", unTheme);
 		request.setAttribute("testSelectionne", unTest);
-		
 		
 		request.setAttribute("listFormations", listFormations);
 		request.setAttribute("listCompetences", listCompetences);
@@ -244,7 +250,6 @@ public class GestionTests extends HttpServlet {
 		if (idFormationSelectionnee != null) {
 			uneFormation.setId(idFormationSelectionnee);
 		} else {
-			//TODO gérer le cas null
 			uneFormation = listFormations.get(1);
 		}
 		return uneFormation;
@@ -272,11 +277,12 @@ public class GestionTests extends HttpServlet {
 		return unTheme;
 	}
 	
-	private static Test RecupTest(HttpServletRequest request, List<Test> listTest) {
+	private static Test RecupTest(HttpServletRequest request, List<Test> listTest) throws SQLException, NamingException {
 		Test unTest = new Test();
 		String idTestSelectionne = request.getParameter("idTestSelectionne");
 		if (idTestSelectionne != null) {
-			unTest.setId(Integer.parseInt(idTestSelectionne) );
+			int intIdTestSelectionne = Integer.parseInt(idTestSelectionne) ;
+			unTest = CtrlTest.SelectOne(intIdTestSelectionne);
 		} else {
 			unTest = listTest.get(0);
 		}	
