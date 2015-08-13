@@ -1,19 +1,48 @@
+//Fonction de récupération des valeurs. 
+function splitValue(chaine) {
+        var val = chaine.split('-');
+        alert (val[0]);
+        alert (val[1]); 
+}
+
+//Validité de la date
+function dateValide() {
+	var retour = false;
+	var jour = document.getElementById("jourDateExamen").value;
+	var mois = document.getElementById("moisDateExamen").value;
+	var an = document.getElementById("anDateExamen").value;
+	if ( !isNaN(jour) && !isNaN(mois) && !isNaN(an)) {
+		retour = true;
+	}
+	return retour;
+}
+
+
 //Soumission du formulaire
 function formulaireSubmit(form,param) {
 	if (param == 'selectionTests') {
 		index = document.getElementById("listTests").selectedIndex;
 		valeur = document.getElementById("listTests").options[index].value;
 		document.getElementById("idTestSelectionne").value = valeur;
+		form.action.value = param;
 		form.submit();
 	} else if (param == 'inscrire') {
-		if (document.getElementById("idCandidatAInscrire").value != '') {
+		var laDateEstValide = dateValide()
+		var candidat = document.getElementById("idCandidatAInscrire").value
+		if ((candidat != '') && laDateEstValide) {
+			form.action.value = param;
 			form.submit();
 		} else {
 			document.getElementById("erreurDesinscrire").innerHTML = "";
-			document.getElementById("erreurInscrire").innerHTML = "Veuillez choisir un candidat";
+			if (candidat == '') {
+				document.getElementById("erreurInscrire").innerHTML = "Veuillez choisir un candidat";
+			} else {
+				document.getElementById("erreurInscrire").innerHTML = "Veuillez saisie une date correcte (01/01/15)";
+			}	
 		}
 	} else if (param == 'desinscrire') {
 		if (document.getElementById("idCandidatInscrit").value != '') {
+			form.action.value = param;
 			form.submit();
 		} else {
 			document.getElementById("erreurInscrire").innerHTML = "";
@@ -38,7 +67,9 @@ function selection(param) {
 	} else if (param == 'selectionCandidatsInscrits') {
 		index = document.getElementById("listCandidatsInscrits").selectedIndex;
 		valeur = document.getElementById("listCandidatsInscrits").options[index].value;
-		document.getElementById("idCandidatInscrit").value = valeur;
+		var val = valeur.split('-');
+		document.getElementById("idCandidatInscrit").value = val[0];
+		document.getElementById("dateExamen").value = val[1];
 	}
 }
 
@@ -59,6 +90,5 @@ function initialisation() {
 	var idTestSelectionne = document.getElementById("listTest").value;
 	var indexTestSelectionne = indexListe(listTest, idTestSelectionne);
 	listTest.selectedIndex = indexTestSelectionne;
-	
 }
 window.onload = initialisation;

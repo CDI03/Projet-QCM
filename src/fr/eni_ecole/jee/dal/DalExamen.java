@@ -23,6 +23,8 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalExamen {
 
 	private final static String SelectAllCandidatsByTest = "{ call SelectAllCandidatsByTest_Examen (?) }";
+	private final static String InsertExamen = "{ call Insert_Examen (?,?,?) }";
+	private final static String DeleteExamen = "{ call Delete_Examen (?,?,?) }";
 	
 	//Récupérer tous les examens du candidat
 	public static ArrayList<Examen> SelectAll(Candidat leCandidat) throws SQLException, NamingException {
@@ -118,16 +120,49 @@ public class DalExamen {
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				String motDePasse = rs.getString("motDePasse");
+				java.sql.Date sqlDatePassage = rs.getDate("DatePassage");
+				Date datePassage = new Date(sqlDatePassage.getTime());
+				
 				//construction d'un candidat
 				Candidat unCandidat = new Candidat();
 				unCandidat.setId(id);
 				unCandidat.setMotDePasse(motDePasse);
 				unCandidat.setNom(nom);
 				unCandidat.setPrenom(prenom);
+				unCandidat.setDatePassage(datePassage);
 				//construction de la liste des Candidats
 				listCandidats.add(unCandidat);
 			}
 		}
 		return listCandidats;
 	}
+
+	public static Boolean Insert(int idTestSelectionne, String idCandidat, Date datePassage) throws SQLException, NamingException {
+		boolean insertOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(InsertExamen);
+			cstmt.setInt(1, idTestSelectionne);
+			cstmt.setString(2, idCandidat.trim());
+			java.sql.Timestamp sqlDatePassage = new java.sql.Timestamp(datePassage.getTime());
+			cstmt.setTimestamp(3, sqlDatePassage);
+			int intInsert = cstmt.executeUpdate();
+			insertOk = (intInsert != 0)?true:false;
+		}
+		return insertOk;	
+	}
+	
+	public static Boolean Delete(int idTestSelectionne, String idCandidat, Date datePassage) throws SQLException, NamingException {
+		boolean deleteOk = false;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall(DeleteExamen);
+			cstmt.setInt(1, idTestSelectionne);
+			cstmt.setString(2, idCandidat.trim());
+			java.sql.Timestamp sqlDatePassage = new java.sql.Timestamp(datePassage.getTime());
+			cstmt.setTimestamp(3, sqlDatePassage);
+			int intDelete = cstmt.executeUpdate();
+			deleteOk = (intDelete != 0)?true:false;
+		}
+		return deleteOk;	
+	}
+	
 }

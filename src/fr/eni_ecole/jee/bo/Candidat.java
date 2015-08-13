@@ -1,12 +1,16 @@
 package fr.eni_ecole.jee.bo;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Candidat {
 	
 	private String id;
 	private String nom;
 	private String prenom;
 	private String motDePasse;
-	
+	private Date datePassage;
+
 	public Candidat() {
 		super();
 	}
@@ -52,4 +56,11 @@ public class Candidat {
 		this.motDePasse = motDePasse;
 	}
 	
+	public Date getDatePassage() {
+		return datePassage;
+	}
+
+	public void setDatePassage(Date datePassage) {
+		this.datePassage = datePassage;
+	}
 }

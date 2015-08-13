@@ -2,7 +2,10 @@ package fr.eni_ecole.jee.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -30,6 +33,7 @@ public class InscriptionCandidats extends HttpServlet {
 	private List<Candidat> listCandidats;
 	private List<Candidat> listCandidatsInscrits;
 	private Test testSelectionne;
+	private int idTestSelectionne;
 	
 	private static final long serialVersionUID = 1L;
        
@@ -66,20 +70,20 @@ public class InscriptionCandidats extends HttpServlet {
 	
 	/**
 	 * FONCTION D'AFFICHAGE DE LA PAGE
-	 * @throws IOException 
-	 * @throws ServletException 
-	 * @throws NamingException 
-	 * @throws SQLException 
 	 */
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		 
 		//choix du test selectionne
-		int idTestSelectionne = choixDuTestSelectionne(request);
+		choixDuTestSelectionne(request);
+		
+		//réalisation d'une action si le parametre est défini
+		RealisationAction(request);
 		
 		try {
 			this.listTests = CtrlTest.SelectAll();
 			this.listCandidats = CtrlCandidat.SelectAll();
-			this.testSelectionne = CtrlTest.SelectOne(idTestSelectionne);
+			this.testSelectionne = CtrlTest.SelectOne(this.idTestSelectionne);
 			this.listCandidatsInscrits = CtrlExamen.SelectAllCandidatsByTest(this.testSelectionne.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,16 +98,70 @@ public class InscriptionCandidats extends HttpServlet {
 	}
 	
 	/**
+	 * Realisation d'une inscription ou d'une desinscription
+	 */
+	private void RealisationAction(HttpServletRequest request) {
+		String idCandidat;
+		if (request.getParameter("action") != null) {
+			
+			
+			
+			if (request.getParameter("action").equalsIgnoreCase("inscrire")) {
+				//récupération parametre
+				idCandidat = request.getParameter("idCandidatAInscrire");
+				int jourDateExamen = Integer.parseInt(request.getParameter("jourDateExamen"));
+				int moisDateExamen = Integer.parseInt(request.getParameter("moisDateExamen"));
+				int anDateExamen = Integer.parseInt(request.getParameter("anDateExamen"));
+				String chaineDate = jourDateExamen + "-" + moisDateExamen + "-20" + anDateExamen;
+				//création de la date
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Date datePassage = null;
+				try {
+					datePassage = simpleDateFormat.parse(chaineDate);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//insertion de l'examen
+				try {
+					CtrlExamen.Insert(this.idTestSelectionne, idCandidat, datePassage);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (NamingException e) {
+					e.printStackTrace();
+				}
+			} else if (request.getParameter("action").equalsIgnoreCase("desinscrire")) {
+				idCandidat = request.getParameter("idCandidatInscrit");
+				String dateExamen = request.getParameter("dateExamen");
+				//création de la date
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				Date datePassage = null;
+				try {
+					datePassage = simpleDateFormat.parse(dateExamen);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//suppression de l'examen
+				try {
+					CtrlExamen.Delete(this.idTestSelectionne, idCandidat, datePassage);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (NamingException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
+
+	/**
 	 * CHOIX DU TEST
 	 */
-	private int choixDuTestSelectionne(HttpServletRequest request) {
-		int idTestSelectionne;
+	private void choixDuTestSelectionne(HttpServletRequest request) {
 		if (request.getParameter("idTestSelectionne") != null) {
-			idTestSelectionne = Integer.parseInt(request.getParameter("idTestSelectionne"));
+			this.idTestSelectionne = Integer.parseInt(request.getParameter("idTestSelectionne"));
 		} else {
-			idTestSelectionne = 1;
+			this.idTestSelectionne = 1;
 		}
-		return idTestSelectionne;
 	}
 
 

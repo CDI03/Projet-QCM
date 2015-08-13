@@ -2,6 +2,7 @@ package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -34,4 +35,13 @@ public class CtrlExamen {
 	public static List<Candidat> SelectAllCandidatsByTest(int idTest) throws SQLException, NamingException {
 		return DalExamen.SelectAllCandidatsByTest(idTest);
 	}
+
+	public static Boolean Insert(int idTestSelectionne, String idCandidat, Date datePassage) throws SQLException, NamingException {
+		return DalExamen.Insert(idTestSelectionne, idCandidat, datePassage);
+	}
+	
+	public static Boolean Delete(int idTestSelectionne, String idCandidat, Date datePassage) throws SQLException, NamingException {
+		return DalExamen.Delete(idTestSelectionne, idCandidat, datePassage);
+	}
+	
 }
