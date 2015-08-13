@@ -15,4 +15,8 @@ public class CtrlTest {
 		return DalTest.SelectAll();
 	}
 
+	public static Test SelectOne(int idTestSelectionne) throws SQLException, NamingException {
+		return DalTest.SelectOne(idTestSelectionne);
+	}
+
 }

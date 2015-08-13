@@ -2,6 +2,7 @@ package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.NamingException;
 
@@ -28,5 +29,9 @@ public class CtrlExamen {
 	public static int getNbReponsesCorrectesCandidat(Examen examenChoisit,
 			Candidat leCandidatChoisit) {
 		return DalExamen.getNbReponsesCorrectesCandidat(examenChoisit, leCandidatChoisit);
+	}
+
+	public static List<Candidat> SelectAllCandidatsByTest(int idTest) throws SQLException, NamingException {
+		return DalExamen.SelectAllCandidatsByTest(idTest);
 	}
 }

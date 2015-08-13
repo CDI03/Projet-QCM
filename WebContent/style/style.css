@@ -209,6 +209,19 @@ fieldset {
  	width : 30%
 }
 
+#divSelectionCandidats {
+	display : inline-block;
+ 	vertical-align: top;
+ 	width : 30%
+}
+
+#divSelectionCandidatsInscrits {
+	display : inline-block;
+ 	vertical-align: top;
+ 	width : 30%
+}
+
+
 /********
 * TABLE *
 ********/
