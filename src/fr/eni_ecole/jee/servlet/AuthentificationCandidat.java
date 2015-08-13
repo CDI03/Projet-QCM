@@ -38,7 +38,7 @@ public class AuthentificationCandidat extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/accueilCandidat/connexionCandidat.jsp");
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/connexionCandidat/connexionCandidat.jsp");
 		rd.forward(request, response);
 	}
 
@@ -51,7 +51,7 @@ public class AuthentificationCandidat extends HttpServlet {
 			String mdp = request.getParameter("mdpCandidat");
 			if (mdp == null && id == null)
 			{
-				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/accueilCandidat/connexionCandidat.jsp");
+				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/connexionCandidat/connexionCandidat.jsp");
 				rd.forward(request, response);
 			}
 			else 
@@ -69,7 +69,7 @@ public class AuthentificationCandidat extends HttpServlet {
 					{
 						//Pb d'authentification: le couple login/mdp pas bon
 						request.setAttribute("erreur", "Le login et/ou le mot de passe sont erronés");
-						RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/acceuilCandidat/connexionCandidat.jsp");
+						RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/connexionCandidat/connexionCandidat.jsp");
 						rd.forward(request, response);
 					}
 				}

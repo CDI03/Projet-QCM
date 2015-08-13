@@ -79,7 +79,22 @@ button{
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);	
     background: rgb(105, 105, 105); /* this is dark gray */
 }
-.etatQuestionRepondue {
+
+button[disabled] {
+	background: rgb(211, 211, 211);
+}
+
+.etatQuestionRepondue[disabled] {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+.etatQuestionPassee[disabled] {
+    background: rgb(202, 60, 60); /* this is a red */
+ }
+.etatQuestionMarquee[disabled] {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.etatQuestionRepondue{
     background: rgb(28, 184, 65); /* this is a green */
 }
 .etatQuestionPassee {
@@ -137,6 +152,12 @@ textarea{
 #enonceQuestionSelectionnee {
 	font-size : 0.8em;
 }
+
+form.selectExamen label{
+	width: 250px;
+	float: left; 
+}
+
 
 /************
 * ARTICLES  *

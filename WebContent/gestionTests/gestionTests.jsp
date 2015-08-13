@@ -23,7 +23,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 %>
 
 <%! String enTete = "/fragment/enTete.jsp"; %>
-<%! String menu = "/fragment/menu.jsp"; %>
+<%! String menu = "/fragment/menuEmploye.jsp"; %>
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
  
  

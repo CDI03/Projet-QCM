@@ -18,7 +18,8 @@ String etatBouton;
 %>
  
 <article id="articleEtatTest">
-	<h1>Résumé du test</h1>
+	<fieldset>
+	<legend>Résumé du test</legend>
 	<form action="/Projet-QCM/PassageTest" method="post" name="reprendreQuestion">
 	
 	<%
@@ -26,13 +27,13 @@ String etatBouton;
 		{
 			etatQuestion = "etatQuestion";
 			etatBouton = "";
-			if (laQuestion.isRepondu())
-			{
-				etatQuestion+="Repondue";
-				}
-			else if(laQuestion.isMarque())
+			if (laQuestion.isMarque())
 			{
 				etatQuestion+="Marquee";
+			}
+			else if(laQuestion.isRepondu())
+			{
+				etatQuestion+="Repondue";
 			}
 			else if (laQuestion.getOrdre()<questionEnCours.getOrdre() || laQuestion.getOrdre()<derniereQuestionMarqueeouValidee.getOrdre())
 			{
@@ -51,7 +52,7 @@ String etatBouton;
 	
 	
 	<br>
-	<input type="hidden" name="hiddenField" id="hiddenField"/>
+	<input type="hidden" name="action" id="action"/>
 	<input type="hidden" name="choixNumQuestion" id="choixNumQuestion"/>
 	<input type="hidden" name="lExamen" value=<%= lExamenEnCours.getId()%>>
 	<br><br>Légende :<br>
@@ -61,4 +62,5 @@ String etatBouton;
 	<br><br>
 	<button type="button" name="finDuTest" onclick="choixBouton(this.form,this.name,'FIN DU TEST')" >Terminer le test</button>
 	</form>
+	</fieldset>
 </article>

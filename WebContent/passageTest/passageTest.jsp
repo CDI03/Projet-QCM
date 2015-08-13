@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%! String enTete = "/fragment/enTete.jsp"; %>
-<%! String menu = "/fragment/menu.jsp"; %>
+<%! String menu = ""; %>
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
 
 <%
@@ -24,7 +24,9 @@ QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnC
 	<jsp:include page="./ecranTest.jsp"></jsp:include>
 	<jsp:include page="./etatTest.jsp"></jsp:include>
 </section>
+
 <script type="text/javascript" src="./javascript/choixBouton.js"></script>
 <script type="text/javascript" src="./javascript/choixQuestion.js"></script>
+
 <jsp:include page="<%=piedDePage%>"></jsp:include>
 

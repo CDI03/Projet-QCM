@@ -331,56 +331,55 @@ INSERT INTO Question (Enonce,Theme_Id,Illustration)
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0001,'x vaut 3',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0001,'x vaut 5',0);
+     VALUES (002,0001,'x vaut 5',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0001,'x vaut 2',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (004,0001,'x vaut null',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0002,'x vaut 3',0);
+     VALUES (001,0002,'x vaut 3',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0002,'x vaut 5',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0002,'x vaut 2',1);
+     VALUES (003,0002,'x vaut 2',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (004,0002,'x vaut null',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0003,'x vaut 3',0);
+     VALUES (001,0003,'x vaut 3',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0003,'x vaut 5',0);
+     VALUES (002,0003,'x vaut 5',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0003,'x vaut 2',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (004,0003,'x vaut null',1);
+     VALUES (004,0003,'x vaut null',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0004,'x vaut 3',0);
+     VALUES (001,0004,'x vaut 3',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0004,'x vaut 5',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0004,'x vaut 2',2);
+     VALUES (003,0004,'x vaut 2',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (004,0004,'x vaut null',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0005,'x vaut 3',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0005,'x vaut 5',0);
+     VALUES (002,0005,'x vaut 5',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0005,'x vaut 2',0);   
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (004,0005,'x vaut null',0);
-
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0006,'true',0);
+     VALUES (001,0006,'true',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0006,'false',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0006,'on ne peut pas savoir',1);   
+     VALUES (003,0006,'on ne peut pas savoir',0);   
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0007,'true',0);
+     VALUES (001,0007,'true',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0007,'false',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0007,'on ne peut pas savoir',1);   
+     VALUES (003,0007,'on ne peut pas savoir',0);   
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0008,'true',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
@@ -388,69 +387,67 @@ INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0008,'on ne peut pas savoir',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0009,'true',1);
+     VALUES (001,0009,'true',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0009,'false',0);
+     VALUES (002,0009,'false',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0009,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0010,'true',0);
+     VALUES (001,0010,'true',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0010,'false',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0010,'on ne peut pas savoir',1);
-
+     VALUES (003,0010,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0011,'inserer(3)',0);
+     VALUES (001,0011,'inserer(3)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0011,'delete(unEntier)',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0011,'on ne peut pas savoir',1);
+     VALUES (003,0011,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0012,'inserer(3)',0);
+     VALUES (001,0012,'inserer(3)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0012,'delete(unEntier)',0);
+     VALUES (002,0012,'delete(unEntier)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0012,'on ne peut pas savoir',1);
+     VALUES (003,0012,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0013,'inserer(3)',0);
+     VALUES (001,0013,'inserer(3)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0013,'delete(unEntier)',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0013,'on ne peut pas savoir',1);
+     VALUES (003,0013,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0014,'inserer(3)',0);
+     VALUES (001,0014,'inserer(3)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0014,'delete(unEntier)',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0014,'on ne peut pas savoir',1);
+     VALUES (003,0014,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0015,'inserer(3)',0);
+     VALUES (001,0015,'inserer(3)',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0015,'delete(unEntier)',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0015,'on ne peut pas savoir',1);
-
+     VALUES (003,0015,'on ne peut pas savoir',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0016,'{5, 4, 3}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0016,'{5, 4, 3, 5}',0);
+     VALUES (002,0016,'{5, 4, 3, 5}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (003,0016,'{5, 4}',0);
+     VALUES (003,0016,'{5, 4}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (004,0016,'Aucune de ces réponses',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (001,0017,'{5, 4, 3}',1);
+     VALUES (001,0017,'{5, 4, 3}',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (002,0017,'{5, 4, 3, 5}',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0017,'{5, 4}',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (004,0017,'Aucune de ces réponses',0);
+     VALUES (004,0017,'Aucune de ces réponses',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0018,'{5, 4, 3}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0018,'{5, 4, 3, 5}',0);
+     VALUES (002,0018,'{5, 4, 3, 5}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0018,'{5, 4}',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
@@ -458,7 +455,7 @@ INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (001,0019,'{5, 4, 3}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
-     VALUES (002,0019,'{5, 4, 3, 5}',0);
+     VALUES (002,0019,'{5, 4, 3, 5}',1);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)
      VALUES (003,0019,'{5, 4}',0);
 INSERT INTO Reponse (Id,Question_Id,Libelle,EstCorrect)

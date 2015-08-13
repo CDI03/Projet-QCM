@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.naming.NamingException;
+import javax.swing.JApplet;
 
 import fr.eni_ecole.jee.bo.Candidat;
 import fr.eni_ecole.jee.bo.Examen;
@@ -74,7 +75,6 @@ public class DalQuestionPosee {
 		return insertOk;
 	}
 
-
 	public static QuestionPosee SelectOne(Examen examenChoisit, int numeroQuestion) throws SQLException, NamingException {
 		
 		//Crer une question
@@ -122,24 +122,14 @@ public class DalQuestionPosee {
 		return laQuestionEnEnregistrement;	
 	}
 
-	public static boolean UpdateRepondu(QuestionPosee questionPosee) throws SQLException, NamingException {
+	public static boolean UpdateEtat(QuestionPosee questionPosee) throws SQLException, NamingException {
 		boolean updateOk = false;
 		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cstmt = cnx.prepareCall("{ call UPDATE_REPONDU_QUESTIONPOSEE (?,?)}");
+			CallableStatement cstmt = cnx.prepareCall("{ call UPDATE_ETAT_QUESTIONPOSEE (?,?,?,?)}");
 			cstmt.setInt(1, questionPosee.getOrdre());
 			cstmt.setInt(2, questionPosee.getExamen().getId());
-			int intUpdate = cstmt.executeUpdate();
-			updateOk = (intUpdate != 0)?true:false;
-		}
-		return updateOk;	
-	}
-
-	public static boolean UpdateMarque(QuestionPosee questionPosee) throws SQLException, NamingException {
-		boolean updateOk = false;
-		try (Connection cnx = PoolConnection.getConnection()) {
-			CallableStatement cstmt = cnx.prepareCall("{ call UPDATE_MARQUE_QUESTIONPOSEE (?,?)}");
-			cstmt.setInt(1, questionPosee.getOrdre());
-			cstmt.setInt(2, questionPosee.getExamen().getId());
+			cstmt.setBoolean(3, questionPosee.isRepondu());
+			cstmt.setBoolean(4, questionPosee.isMarque());
 			int intUpdate = cstmt.executeUpdate();
 			updateOk = (intUpdate != 0)?true:false;
 		}
@@ -180,5 +170,17 @@ public class DalQuestionPosee {
 			}}
 		}	
 		return laQuestionEnEnregistrement;	
+	}
+
+	
+	public static int Size(Examen examenChoisit) throws SQLException, NamingException {
+		int taille = 0;
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall("{ ?=call NBQUESTIONPOSEE_BY_EXAMEN (?)}");
+			cstmt.setInt(2, examenChoisit.getId());
+			cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
+			cstmt.execute();
+			taille = cstmt.getInt(1);}	
+		return taille;	
 	}
 }

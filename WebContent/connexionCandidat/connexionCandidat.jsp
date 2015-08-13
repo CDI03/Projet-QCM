@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%! String enTete = "/fragment/enTete.jsp"; %>
-<%! String menu = "/fragment/menu.jsp"; %>
+<%! String menu = "/fragment/menuCandidat.jsp"; %>
 <%! String piedDePage = "/fragment/piedDePage.jsp"; %>
 
 <jsp:include page="<%=enTete%>">

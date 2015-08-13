@@ -16,9 +16,9 @@ import fr.eni_ecole.jee.dal.DalSection;
 
 public class CtrlQuestionPosee {
 
-	public static int creerQuestionsExamen(Examen examenChoisit) throws SQLException, NamingException{
+	public static boolean creerQuestionsExamen(Examen examenChoisit) throws SQLException, NamingException{
 		
-		int tailleTest = 0;
+		boolean creationTest = false;
 		
 		//1 - Recup liste des Section
 		ArrayList<Section> listSection = DalSection.SelectAll(examenChoisit);
@@ -36,26 +36,16 @@ public class CtrlQuestionPosee {
 		}
 		
 		//3 - Choisir des questions au hasard dans cette liste
-		int i = 0;
-		for (Question question : listQuestionHasard) {
-			System.out.println(question.getId()+" "+ i);
-			i++;
-		}
 		System.out.println("melange");
-		int j = 0;
 		Collections.shuffle(listQuestionHasard);
-		for (Question question : listQuestionHasard) {
-			System.out.println(question.getId()+" "+j);
-			j++;
-		}
 		
 		//4 - Constitue donc une liste de question posée
 		//Enregistrer cette liste de questions dans la DAL
 		if (DalQuestionPosee.InsertAll(examenChoisit, listQuestionHasard))
 		{
-			tailleTest = listQuestionHasard.size();
+			creationTest = true;
 		}
-		return tailleTest;
+		return creationTest;
 	}
 	
 	public static QuestionPosee recupQuestionEnCours(Examen examenChoisit, int numeroQuestion) throws SQLException, NamingException {
@@ -63,12 +53,8 @@ public class CtrlQuestionPosee {
 		return DalQuestionPosee.SelectOne(examenChoisit,numeroQuestion);
 	}
 
-	public static boolean UpdateRepondu(QuestionPosee questionPosee) throws SQLException, NamingException {
-		return DalQuestionPosee.UpdateRepondu(questionPosee);
-	}
-
-	public static boolean UpdateMarque(QuestionPosee questionPosee) throws SQLException, NamingException {
-		return DalQuestionPosee.UpdateMarque(questionPosee);
+	public static boolean UpdateEtat(QuestionPosee questionPosee) throws SQLException, NamingException {
+		return DalQuestionPosee.UpdateEtat(questionPosee);
 	}
 
 	public static ArrayList<QuestionPosee> recupExamenEnCours(
@@ -78,5 +64,9 @@ public class CtrlQuestionPosee {
 
 	public static QuestionPosee recupDerniereQuestion(Examen examenChoisit) throws SQLException, NamingException {
 		return DalQuestionPosee.SelectLast(examenChoisit);
+	}
+
+	public static int tailleDuTest(Examen examenChoisit) throws SQLException, NamingException {
+		return DalQuestionPosee.Size(examenChoisit);
 	}
 }

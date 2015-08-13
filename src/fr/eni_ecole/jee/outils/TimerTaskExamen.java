@@ -25,8 +25,17 @@ public class TimerTaskExamen extends TimerTask {
 
 	@Override
 	public void run() {
-		this.tempsRestant = this.tempsRestant + 6000;
-		System.out.println(tempsRestant);
+		//enregistrer ttes les 30 secondes
+		if (this.tempsRestant > 0)
+		{
+			this.tempsRestant = this.tempsRestant - (30*1000);
+			System.out.println(tempsRestant);
+		}
+		else
+		{
+			System.out.println("temps écoulé");
+			this.cancel();
+		}
 	}
 	
 }

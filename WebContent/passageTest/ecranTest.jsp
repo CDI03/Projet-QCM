@@ -44,7 +44,7 @@ else
 		<br>
 		<p><%=typesReponses%></p>
 		<br>
-		<form action="/Projet-QCM/PassageTest" method="post" name="repondreQuestion">
+		<form action="/Projet-QCM/PassageTest" method="post" name="repondreQuestion" onsubmit="return zeroReponses()">
 			<%
 				int i = 0;
 				String leNomReponse = "";
@@ -55,15 +55,15 @@ else
 					else if (typesBoutons.equals("radio"))
 					{leNomReponse="laReponse";}
 			%>
-			<input type=<%=typesBoutons%> name=<%=leNomReponse%> value=<%=laReponse.getId()%>><%=laReponse.getLibelle()%>
+			<input type=<%=typesBoutons%> name="<%=leNomReponse%>" value=<%=laReponse.getId()%> onclick="ReponsesCoche()"><%=laReponse.getLibelle()%>
 			<br>
 			<%
 				i++;}
 			%>
-			<button type="button" name="valider" onclick="choixBouton(this.form,'valider');">Valider</button>
+			<button type="button" name="valider" id="valider" onclick="choixBouton(this.form,'valider');">Valider</button>
 			<button type="button" name="passer" onclick="choixBouton(this.form,'passer');">Passer</button>
 			<button type="button" name="marquer" onclick="choixBouton(this.form,'marquer');">Marquer la question</button>
-			<input type="hidden" name="hiddenField" id="hiddenField"/>
+			<input type="hidden" name="action" id="action"/>
 			<input type="hidden" name="numQuestionPosee" id="numQuestionPosee" value=<%=questionEnCours.getOrdre()%>>
 			<input type="hidden" name="idQuestion" id="idQuestion" value=<%=questionEnCours.getQuestion().getId()%>>
 			<input type="hidden" name="lExamen" value=<%= lExamenEnCours.getId()%>>
