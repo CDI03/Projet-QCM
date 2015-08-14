@@ -30,4 +30,8 @@ public class CtrlTheme {
 		
 	}
 
+	public static Theme SelectOne(int idTheme) throws SQLException, NamingException {
+		return DalTheme.SelectOne(idTheme);
+	}
+
 }

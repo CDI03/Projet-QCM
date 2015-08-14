@@ -267,13 +267,13 @@ INSERT INTO Section (Test_Id, Theme_Id, NombreQuestion)
 
 -- TABLE EXAMEN --
 INSERT INTO Examen (Test_Id,Candidat_Id,TempsRestant,DatePassage,Etat)
-     VALUES(01,'BER01',null,'20150814 14:00:00.000','EA');
+     VALUES(01,'BER01',null,'20150814 00:00:00.000','EA');
 INSERT INTO Examen (Test_Id,Candidat_Id,TempsRestant,DatePassage,Etat)
-     VALUES(01,'BER01',null,'20150825 15:00:00.000','EA');
+     VALUES(01,'BER01',null,'20150825 00:00:00.000','EA');
 INSERT INTO Examen (Test_Id,Candidat_Id,TempsRestant,DatePassage,Etat)
-     VALUES(01,'BEL01',null,'20150814 14:00:00.000','EA');
+     VALUES(01,'BEL01',null,'20150814 00:00:00.000','EA');
 INSERT INTO Examen (Test_Id,Candidat_Id,TempsRestant,DatePassage,Etat)
-     VALUES(01,'BEL01',null,'20150825 15:00:00.000','EA');
+     VALUES(01,'BEL01',null,'20150825 00:00:00.000','EA');
 
 -- TABLE RESULTAT EXAMEN --
 INSERT INTO ResultatExamen (Examen_Id, Test_Id, Theme_Id,NbQuestionsReussies,NbQuestionsTotales)

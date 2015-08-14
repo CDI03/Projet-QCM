@@ -4,7 +4,7 @@
 		name="jdbc/TP_QCM"
 		type="javax.sql.DataSource"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://10.41.100.2:1433;databasename=TP_QCM"
+		url="jdbc:sqlserver://localhost:1433;databasename=TP_QCM"
 		username="sa"
 		password="Pa$$w0rd"
 		maxActive="20"

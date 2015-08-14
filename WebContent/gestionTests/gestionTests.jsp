@@ -70,21 +70,21 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 							<legend id="legendTest">Modification du Test  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="button" id="addTest" onclick="formulaireTestVide(form, 'insertTest')">Passer en mode Ajout</button></legend>	
 							<input type="hidden" id="idTestSelectionne" name="idTestSelectionne" value="<%= testSelectionne.getId() %>"> 
-							<label>Libelle du Test : </label><input type="text" id="libelleTestSelectionne" name="libelleTestSelectionne" value="<%= testSelectionne.getLibelle() %>">
+							<label>Libelle du Test : </label><input type="text" id="libelleTestSelectionne" name="libelleTestSelectionne" value="<%= testSelectionne.getLibelle() %>" style="width:400px">
 							<br>
 							<label>Duree : </label><input type="text" id="dureeTestSelectionne" name="dureeTestSelectionne" value="<%= testSelectionne.getDuree() %>">
 							<label>Seuil Bas : </label><input type="text" id="seuilBasTestSelectionne" name="seuilBasTestSelectionne" value="<%= testSelectionne.getSeuilBas() %>">
 							<label>Seuil Haut : </label><input type="text" id="seuilHautTestSelectionne" name="seuilHautTestSelectionne" value="<%= testSelectionne.getSeuilHaut() %>">
 							<br> 
 							<button type="button" id="Valider" onclick="formulaireSubmit(this.form,'insertUpdateTest','')">Valider</button>
-							<button type="button" id="Annuler" onclick="formulaireThemeVide(form, 'cancelTest)">Annuler</button>
+							<button type="button" id="Annuler" onclick="formulaireSubmit(form, 'cancelTest)">Annuler</button>
 							
 					</fieldset>
 			</article>
 			
 			<div id="articleTestTitre">
 				<fieldset>
-					<legend id="legendQuestion">Gestion du Test : <input type=text id="unTitreTest" value="<%= testSelectionne.getLibelle() %>" disabled></legend>
+					<legend id="legendQuestion">Gestion du Test : <input type=text id="unTitreTest" value="<%= testSelectionne.getLibelle()%>" style="width:400px" disabled></legend>
 					<button type="button" id="deleteTest" onclick="formulaireSubmit(this.form,'deleteTest','<%=testSelectionne.getId()%>')">Supprimer le test</button>
 						
 					<article  id="articleTestSection">
@@ -154,8 +154,8 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 							<br>
 							
 							<h3>Liste des Themes</h3>
-							<input type="text" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
-							<input type="hidden" id="nbQuestionsSection" name="nbQuestionsSection" value="<%= themeSelectionne.getNbQuestions() %>">
+							<input type="hidden" id="idThemeSelectionne" name="idThemeSelectionne" value="<%= themeSelectionne.getId() %>">
+							<input type="hidden" id="nbQuestionsSection" name="nbQuestionsSection" value="">
 							<select id="listThemes" onchange="formulaireSubmit(this.form,'selectionTheme','')">
 								<% for (Theme unTheme : listThemes) { %>
 									<option 
@@ -165,7 +165,7 @@ Test testSelectionne = (Test)request.getAttribute("testSelectionne");
 									 value="<%=unTheme.getId()%>"><%=unTheme.getLibelle()%></option>
 								<%  } %>
 							</select>
-							<select id="selectionNombreQuestion">
+							<select id="selectionNombreQuestion" onchange="changeNbQuestionsSection()">
 								<% for (int j = 1; j <= themeSelectionne.getNbQuestions(); j++) { %>
 									<option 
 										value ="<%= j %>">

@@ -120,7 +120,7 @@ Reponse reponseSelectionnee = (Reponse)request.getAttribute("reponseSelectionnee
 							</div>
 							<div id="blocEnonce">
 								<input type="hidden" id="idQuestionSelectionnee" name="idQuestionSelectionnee" value="<%= questionSelectionnee.getId() %>">
-								<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee" cols="20" rows="3"><%=questionSelectionnee.getEnonce()%></textarea>
+								<textarea id="enonceQuestionSelectionnee" name="enonceQuestionSelectionnee"><%=questionSelectionnee.getEnonce()%></textarea>
 								<button type="button" id="insertUpdateQuestion" onclick="formulaireSubmit(this.form,'insertUpdateQuestion','')" >Valider</button>
 								<button type="button" id="cancelQestion" onclick="formulaireQuestionVide(this.form,'cancelQestion')" >Annuler</button>
 							</div>
