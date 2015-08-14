@@ -2,6 +2,7 @@ package fr.eni_ecole.jee.controler;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.naming.NamingException;
 
@@ -22,8 +23,8 @@ public class CtrlResultatsExamen {
 		
 		ArrayList<Theme> lesThemesDuTest = DalTheme.SelectAllByExamen(examenChoisit);
 		ArrayList<Question> listeQuestionThemeTest = null;
-		ArrayList<Reponse> reponseCorrecteQuestion = null;
-		ArrayList<Reponse> reponseDonneesQuestion = null;
+		int[]  reponseCorrecteQuestion = null;
+		int[] reponseDonneesQuestion = null;
 		int nbQuestionsReussies = 0;
 		int nbQuestionsTotales = 0;
 		
@@ -33,7 +34,7 @@ public class CtrlResultatsExamen {
 			for (Question question : listeQuestionThemeTest) {
 				reponseCorrecteQuestion = DalReponse.selectAllCorrecteExamenQuestion(examenChoisit, question);
 				reponseDonneesQuestion = DalReponse.selectAllDonneesExamenQuestion(examenChoisit, question);
-				if (reponseCorrecteQuestion.containsAll(reponseDonneesQuestion) && reponseDonneesQuestion.containsAll(reponseCorrecteQuestion))
+				if (Arrays.equals(reponseCorrecteQuestion, reponseDonneesQuestion))
 				{nbQuestionsReussies+=1;}
 			}
 			DalResultatsExamen.Insert(examenChoisit,lesThemesDuTest.get(i),nbQuestionsTotales,nbQuestionsReussies);
@@ -42,8 +43,8 @@ public class CtrlResultatsExamen {
 			listeQuestionThemeTest.clear();
 			nbQuestionsTotales = 0;
 			nbQuestionsReussies = 0;
-			reponseCorrecteQuestion.clear();
-			reponseDonneesQuestion.clear();
+			reponseCorrecteQuestion = null;
+			reponseDonneesQuestion = null;
 		}
 		
 		enregistrementResultat = true;

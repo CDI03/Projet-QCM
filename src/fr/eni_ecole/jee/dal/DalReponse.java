@@ -114,47 +114,41 @@ public class DalReponse {
 		return updateOk;
 	}
 	
-	public static ArrayList<Reponse> selectAllCorrecteExamenQuestion(
+	public static int[] selectAllCorrecteExamenQuestion(
 			Examen examenChoisit, Question question) throws SQLException, NamingException {
-		ArrayList<Reponse> listReponseCorrecteQuestion = new ArrayList<Reponse>();
+		int[] listReponseCorrecteQuestion = new int[10];
 		//Récupération des données
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_REPONSECORRECTE_QUESTION (?,?)}");
 			cmd.setInt(1, examenChoisit.getId());
 			cmd.setInt(2, question.getId());
 			ResultSet rs = cmd.executeQuery();		
-			
+			int index = 0;
 			while (rs.next()) 
 			{
 				int reponseID = rs.getInt("Id_Reponse");
-				//construction d'une reponse
-				Reponse uneReponse = new Reponse();
-				uneReponse.setid(reponseID);
-				uneReponse.setQuestion(question);
-				listReponseCorrecteQuestion.add(uneReponse);
+				listReponseCorrecteQuestion[index] = reponseID;
+				index +=1;
 			}
 		}
 		return listReponseCorrecteQuestion;
 	}
 
-	public static ArrayList<Reponse> selectAllDonneesExamenQuestion(
+	public static int[] selectAllDonneesExamenQuestion(
 			Examen examenChoisit, Question question) throws SQLException, NamingException {
-		ArrayList<Reponse> listReponseDonneQuestion = new ArrayList<Reponse>();
+		int[] listReponseDonneQuestion = new int[10];
 		//Récupération des données
 		try (Connection cnx = PoolConnection.getConnection()) {
 			CallableStatement cmd = cnx.prepareCall("{ call SELECT_ALL_REPONSEDONNEE_QUESTION (?,?)}");
 			cmd.setInt(1, examenChoisit.getId());
 			cmd.setInt(2, question.getId());
 			ResultSet rs = cmd.executeQuery();		
-			
+			int index = 0;
 			while (rs.next()) 
 			{
 				int reponseID = rs.getInt("Id_Reponse");
-				//construction d'une reponse
-				Reponse uneReponse = new Reponse();
-				uneReponse.setid(reponseID);
-				uneReponse.setQuestion(question);
-				listReponseDonneQuestion.add(uneReponse);
+				listReponseDonneQuestion[index] = reponseID;
+				index +=1;
 			}
 		}
 		return listReponseDonneQuestion;

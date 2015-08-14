@@ -41,6 +41,9 @@ public class DalExamen {
 				int examenId = rs.getInt("Examen_Id");
 				Date examenDatePassage = rs.getDate("DatePassage");
 				String examenEtat = rs.getString("Etat").trim();
+				int seuilHaut = rs.getInt("SeuilHaut");
+				int seuilBas = rs.getInt("SeuilBas");
+				
 				int examenTempsRestant;
 				if(rs.getObject("TempsRestant")!=null)
 					{examenTempsRestant = rs.getInt("TempsRestant");}
@@ -51,6 +54,8 @@ public class DalExamen {
 				Test unTest = new Test();
 				unTest.setId(testId);
 				unTest.setLibelle(testLibelle);
+				unTest.setSeuilHaut(seuilHaut);
+				unTest.setSeuilBas(seuilBas);
 		//construction d'un examen
 				Examen unExamen = new Examen();
 				unExamen.setId(examenId);
