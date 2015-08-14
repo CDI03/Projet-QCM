@@ -234,7 +234,11 @@ public class GestionTests extends HttpServlet {
 		Section uneSection = new Section();
 		uneSection.setTest(unTest);
 		uneSection.setTheme(unTheme);
-		uneSection.setNombreQuestion(Integer.parseInt(request.getParameter("nbQuestionsSection")));
+		if (request.getParameter("nbQuestionsSection").equalsIgnoreCase("")) {
+			uneSection.setNombreQuestion(1);
+		} else {
+			uneSection.setNombreQuestion(Integer.parseInt(request.getParameter("nbQuestionsSection")));
+		}
 		return uneSection;
 	}
 	
@@ -266,11 +270,12 @@ public class GestionTests extends HttpServlet {
 		return uneCompetence;
 	}
 	
-	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence, List<Theme> listThemes) {
+	private static Theme RecupTheme(HttpServletRequest request, Competence uneCompetence, List<Theme> listThemes) throws SQLException, NamingException {
 		Theme unTheme =  new Theme();
 		String idThemeSelectionne = request.getParameter("idThemeSelectionne");
 		if (idThemeSelectionne != null) {
 			unTheme.setId(Integer.parseInt(idThemeSelectionne));
+			unTheme =  CtrlTheme.SelectOne(unTheme.getId());
 		} else {
 			unTheme = listThemes.get(0);
 		}

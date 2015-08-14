@@ -147,6 +147,10 @@ form input {
 
 textarea{ 
 	resize:none;
+	max-width: 400px;
+	max-height:80px;
+	width: 400px;
+	height:80px;
 }
 
 #enonceQuestionSelectionnee {

@@ -17,6 +17,7 @@ import fr.eni_ecole.jee.outils.PoolConnection;
 public class DalTheme {
 
 	private final static String SELECTALLBYCOMPETENCE = "{ call SelectAllByCompetence_Theme (?) }";
+	private final static String SELECTONE = "{ call SelectOne_Theme (?) }";
 	private final static String INSERT = "{ call Insert_Theme (?,?) }";
 	private final static String UPDATE = "{ call Update_Theme (?,?,?) }";
 	private final static String DELETE = "{ call Delete_Theme (?) }";
@@ -107,6 +108,30 @@ public class DalTheme {
 			}
 		}	
 		return listThemes;
+	}
+
+	public static Theme SelectOne(int idTheme) throws SQLException, NamingException {
+		Theme unTheme = new Theme();
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = null;
+			cstmt = cnx.prepareCall(SELECTONE);
+			cstmt.setInt(1, idTheme);
+			ResultSet rs = cstmt.executeQuery();
+			while (rs.next()) {
+				int themeId = rs.getInt("Theme_Id");
+				String themeLibelle = rs.getString("Theme_Libelle");
+				int competenceId = rs.getInt("Competence_Id");
+				int nbQuestions = rs.getInt("NbQuestions");
+				//construction d'un theme
+				unTheme = new Theme();
+				unTheme.setId(themeId);
+				unTheme.setLibelle(themeLibelle);
+				unTheme.setNbQuestions(nbQuestions);
+			}
+		}	
+
+		return unTheme;
+
 	}
 	
 }

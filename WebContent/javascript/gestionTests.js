@@ -5,6 +5,21 @@ function selection (liste) {
 	return idListeSelectionnee;
 }
 
+function changeNbQuestionsSection() {
+	var indexSelectionne = document.getElementById("selectionNombreQuestion").selectedIndex;
+	document.getElementById("nbQuestionsSection").value = indexSelectionne + 1;
+}
+
+function formulaireTestVide(form, action) {
+	form.action.value = 'insertTest';
+	document.getElementById("libelleTestSelectionne").value="";
+	document.getElementById("dureeTestSelectionne").value="";
+	document.getElementById("seuilBasTestSelectionne").value="";
+	document.getElementById("seuilHautTestSelectionne").value="";
+	document.getElementById("seuilHautTestSelectionne").value="";
+	document.getElementById("libelleTestSelectionne").focus();
+}
+
 function formulaireSubmit(form, action, param) {
 	
 	if (action == 'selectionFormations') {
@@ -23,9 +38,7 @@ function formulaireSubmit(form, action, param) {
 		document.getElementById("idTestSelectionne").value = idSelectionnee;
 	}
 	if (action == 'insertSection') {
-		var liste = document.getElementById("listThemes");
-		var idSelectionnee = selection(liste);
-		document.getElementById("nbQuestionsSection").value = idSelectionnee; 
+		
 	}
 	if (action == 'deleteSection') {
 		document.getElementById("idThemeSelectionne").value = param;
@@ -34,6 +47,10 @@ function formulaireSubmit(form, action, param) {
 		var liste = document.getElementById("listThemes");
 		var idSelectionnee = selection(liste);
 		document.getElementById("idThemeSelectionne").value = idSelectionnee;
+		alert (idSelectionne);
+	}
+	if (action = 'insertSection') {
+		
 	}
 		
 	form.action.value = action;
@@ -67,7 +84,6 @@ function initialisation() {
 	var idCompetenceSelectionnee = document.getElementById("idCompetenceSelectionnee").value;
 	var indexCompetenceSelectionnee = indexListe(listCompetences, idCompetenceSelectionnee);
 	listCompetences.selectedIndex = indexCompetenceSelectionnee;
-	document.getElementById("listCompetencesUpdate").selectedIndex  = indexCompetenceSelectionnee;
 	
 	var listTests = document.getElementById("listTests");
 	var idTestSelectionne = document.getElementById("idTestSelectionne").value;
