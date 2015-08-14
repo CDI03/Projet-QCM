@@ -28,7 +28,7 @@ public class TimerTaskExamen extends TimerTask {
 		//enregistrer ttes les 30 secondes
 		if (this.tempsRestant > 0)
 		{
-			this.tempsRestant = this.tempsRestant - (30*1000);
+			this.tempsRestant = this.tempsRestant - (60*1000);
 			System.out.println(tempsRestant);
 		}
 		else

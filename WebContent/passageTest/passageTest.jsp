@@ -22,6 +22,7 @@ QuestionPosee questionEnCours = (QuestionPosee)request.getAttribute("questionEnC
 
 <Section>
 	<jsp:include page="./ecranTest.jsp"></jsp:include>
+	<jsp:include page="./minuterie.jsp"></jsp:include>
 	<jsp:include page="./etatTest.jsp"></jsp:include>
 </section>
 

@@ -43,5 +43,9 @@ public class CtrlExamen {
 	public static Boolean Delete(int idTestSelectionne, String idCandidat, Date datePassage) throws SQLException, NamingException {
 		return DalExamen.Delete(idTestSelectionne, idCandidat, datePassage);
 	}
+
+	public static void updateTpsRestantExamen(Examen examenChoisit) throws SQLException, NamingException {
+		DalExamen.UpdateTpRestant(examenChoisit);
+	}
 	
 }

@@ -26,6 +26,7 @@ import fr.eni_ecole.jee.controler.CtrlQuestionPosee;
 import fr.eni_ecole.jee.controler.CtrlReponse;
 import fr.eni_ecole.jee.controler.CtrlReponseDonnee;
 import fr.eni_ecole.jee.controler.CtrlResultatsExamen;
+import fr.eni_ecole.jee.outils.TimerTaskExamen;
 
 /**
  * Servlet implementation class PassageTest
@@ -42,7 +43,9 @@ public class PassageTest extends HttpServlet {
 	private ArrayList<QuestionPosee> listeQuestionExamen;
 	private ArrayList<Reponse> reponseQuestionSuivante;	
 	private int tailleDuTest;
-	private RequestDispatcher rd;
+	private RequestDispatcher rd;	
+	//private TimerTaskExamen timer;
+	private int tempsRestantTest;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -55,6 +58,7 @@ public class PassageTest extends HttpServlet {
     public void init() throws ServletException {
     	this.questionPrecedente = new QuestionPosee();
     	this.questionSuivante = new QuestionPosee();
+    	//this.timer = new TimerTaskExamen();
     }
 
 	/**
@@ -86,11 +90,15 @@ public class PassageTest extends HttpServlet {
 					if (creerExamen(request,response))
 						{
 						recupInfoExamen(request,response);
+						tempsRestantTest = (examenChoisit.getTempsRestant())*1000;
+						//timer.setTempsRestant(tempsRestantTest);
+						//timer.run();
 						affichageQuestionSuivante(request, response);}
 					break;
 				case "reprendreExamen":
 					System.out.println("reprend Examen");
 					recupInfoExamen(request,response);
+				//	timer.setTempsRestant(examenChoisit.getTempsRestant());
 					this.numQuestionSuivante = this.derniereQuestionMarqueeOuValidee.getOrdre()+1;
 					affichageQuestionSuivante(request, response);
 					break;
@@ -106,7 +114,8 @@ public class PassageTest extends HttpServlet {
 					if (enregistrerReponses(request,response));
 						{
 							recupInfoExamen(request,response);
-							affichageQuestionSuivante(request, response);}
+							affichageQuestionSuivante(request, response);
+						}
 					break;
 				case "passer":
 					System.out.println("passe la question");
@@ -167,6 +176,7 @@ public class PassageTest extends HttpServlet {
 				}
 			}
 		request.setAttribute("lExamenEnCours", examenChoisit);	
+		tempsRestantTest = examenChoisit.getTempsRestant();
 	}
 	
 	private boolean creerExamen(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, ServletException, IOException 
@@ -217,7 +227,9 @@ public class PassageTest extends HttpServlet {
 		//enregistrer l'etat de la question posée
 		if (CtrlQuestionPosee.UpdateEtat(this.questionPrecedente))
 			{updateEtatQuestion = true;
-			this.numQuestionSuivante = this.numQuestionPrecedente+1;}	
+			this.numQuestionSuivante = this.numQuestionPrecedente+1;}
+		//examenChoisit.setTempsRestant(timer.getTempsRestant());
+		//CtrlExamen.updateTpsRestantExamen(examenChoisit);
 		return updateEtatQuestion;
 	}
 		
@@ -231,29 +243,27 @@ public class PassageTest extends HttpServlet {
 	
 	private void affichageQuestionSuivante(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, ServletException, IOException
 	{
-		if (this.numQuestionSuivante<=CtrlQuestionPosee.tailleDuTest(examenChoisit))
+		if (this.numQuestionSuivante>CtrlQuestionPosee.tailleDuTest(examenChoisit))
 		{
-			this.questionSuivante = CtrlQuestionPosee.recupQuestionEnCours(examenChoisit,this.numQuestionSuivante);
-			this.reponseQuestionSuivante = CtrlReponse.selectReponseQuestion(this.questionSuivante);			
-			
-			request.setAttribute("derniereQuestionMarqueeouValidee", this.derniereQuestionMarqueeOuValidee);
-			request.setAttribute("questionEnCours", this.questionSuivante);
-			request.setAttribute("listeQuestionExamen", this.listeQuestionExamen);
-			request.setAttribute("listReponseQuestionEnCours", this.reponseQuestionSuivante);
-			request.setAttribute("tailleDuTest", this.tailleDuTest);
-			
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	
-			rd.forward(request, response);
+			this.numQuestionSuivante = 1;
 		}
-		else 
-		{
-			terminerTest(request,response);
-		}
+		this.questionSuivante = CtrlQuestionPosee.recupQuestionEnCours(examenChoisit,this.numQuestionSuivante);
+		this.reponseQuestionSuivante = CtrlReponse.selectReponseQuestion(this.questionSuivante);			
+		
+		request.setAttribute("derniereQuestionMarqueeouValidee", this.derniereQuestionMarqueeOuValidee);
+		request.setAttribute("questionEnCours", this.questionSuivante);
+		request.setAttribute("listeQuestionExamen", this.listeQuestionExamen);
+		request.setAttribute("listReponseQuestionEnCours", this.reponseQuestionSuivante);
+		request.setAttribute("tailleDuTest", this.tailleDuTest);
+		
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/passageTest/passageTest.jsp");	
+		rd.forward(request, response);
 	}
 
 	private void terminerTest(HttpServletRequest request,HttpServletResponse response) throws SQLException, NamingException, ServletException, IOException {
 		//enregistrer etat
 		examenChoisit.setEtat("FN");
+		//timer.cancel();
 		if (CtrlExamen.updateEtatTest(examenChoisit))
 		{	//Enregistrer le résultat Examen
 			CtrlResultatsExamen.enregistreResultats(examenChoisit);

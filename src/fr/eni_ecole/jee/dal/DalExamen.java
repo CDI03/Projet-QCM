@@ -169,5 +169,14 @@ public class DalExamen {
 		}
 		return deleteOk;	
 	}
+
+	public static void UpdateTpRestant(Examen examenChoisit) throws SQLException, NamingException {
+		try (Connection cnx = PoolConnection.getConnection()) {
+			CallableStatement cstmt = cnx.prepareCall("{ call UPDATE_TPS_EXAMEN (?,?)}");
+			cstmt.setInt(1, examenChoisit.getId());
+			cstmt.setInt(2, examenChoisit.getTempsRestant());
+			cstmt.executeUpdate();
+		}
+	}
 	
 }

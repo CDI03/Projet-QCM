@@ -227,12 +227,21 @@ fieldset {
 #articleEcranTest{
  	display : inline-block;
  	vertical-align: top;
+ 	float : left;
  	width : 60%
+}
+
+#articleMinuterie{
+ 	display : inline-block;
+ 	vertical-align: top;
+ 	float : left;
+ 	width : 30%
 }
 
 #articleEtatTest{
  	display : inline-block;
  	vertical-align: top;
+ 	float : left;
  	width : 30%
 }
 
